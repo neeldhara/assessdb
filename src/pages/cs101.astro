@@ -76,7 +76,7 @@ function getDifficultyStyles(difficulty: string): { bg: string, border: string, 
   }
 }
 
-let assessments: any[] = [];
+let assessments = [];
 
 try {
   const response = await notion.databases.query({

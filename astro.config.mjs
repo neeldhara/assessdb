@@ -4,7 +4,6 @@ import tailwind from "@astrojs/tailwind";
 import icon from "astro-icon";
 import lottie from "astro-integration-lottie";
 import sitemap from "@astrojs/sitemap";
-import netlify from "@astrojs/netlify";
 
 import react from "@astrojs/react";
 import markdoc from "@astrojs/markdoc";
@@ -12,14 +11,7 @@ import keystatic from "@keystatic/astro";
 
 // https://astro.build/config
 export default defineConfig({
-  site: "https://gurusetu-assessdb.netlify.app",
-  output: "server",
-  adapter: netlify(),
-  build: {
-    rollupOptions: {
-      external: ['@notionhq/client'],
-    },
-  },
+  site: "https://foxi-pro.netlify.app",
   i18n: {
     defaultLocale: "en",
     locales: ["es", "en"],
