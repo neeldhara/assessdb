@@ -1,7 +1,6 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import { Client } from '@notionhq/client';
-import UserbaseAuth from '../components/ui/UserbaseAuth.astro';
 import BookmarkManager from '../components/ui/BookmarkManager.astro';
 
 // Initialize Notion client
@@ -76,7 +75,7 @@ function getDifficultyStyles(difficulty: string): { bg: string, border: string, 
   }
 }
 
-let assessments = [];
+let assessments: any[] = [];
 
 try {
   const response = await notion.databases.query({
