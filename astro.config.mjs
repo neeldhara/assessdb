@@ -15,6 +15,11 @@ export default defineConfig({
   site: "https://gurusetu-assessdb.netlify.app",
   output: "server",
   adapter: netlify(),
+  build: {
+    rollupOptions: {
+      external: ['@notionhq/client'],
+    },
+  },
   i18n: {
     defaultLocale: "en",
     locales: ["es", "en"],
