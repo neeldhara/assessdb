@@ -1,0 +1,46 @@
+---
+// Components
+// - Layout
+import Layout from '../../layouts/Layout.astro'
+// - UI
+import Hero from '../../components/blocks/hero/PageHeader.astro'
+import SimpleFeed from '../../components/blocks/feeds/BasicFeed.astro'
+import CTA from '../../components/blocks/CTA/BasicLight.astro'
+
+// Data
+import feedData from '../../data/json-files/es/changelogData.json'
+
+// Content
+// - SEO
+const SEO = {
+	title: 'Foxi | Actualizaciones y Mejoras de Versión',
+	description:
+		'Explora las potentes características de Foxi diseñadas para mejorar la productividad, garantizar una seguridad de primer nivel e integrarse sin problemas con tus herramientas favoritas. ¡Únete a miles de usuarios satisfechos y transforma tu flujo de trabajo con Foxi hoy!'
+}
+
+// - Page Header
+const header = {
+	title: 'Actualizaciones y <strong>mejoras</strong> de la versión Foxi',
+	text: 'Mantente informado sobre todas las nuevas actualizaciones y mejoras de Foxi.'
+}
+// - CTA Data
+const ctaData = {
+	title: '¡Únete a la Revolución de Foxi!',
+	text: 'Descubre por qué miles de profesionales confían en nuestra plataforma para optimizar su flujo de trabajo y mejorar la productividad. ¡Empieza hoy y comprueba la diferencia por ti mismo!',
+	rating: {
+		value: 5,
+		text: '30K calificaciones de clientes'
+	},
+	button: {
+		size: 'lg',
+		style: 'primary',
+		text: 'Empieza Ahora'
+	}
+}
+---
+
+<Layout title={SEO.title} description={SEO.description} lang="es">
+	<Hero title={header.title} text={header.text} />
+	<SimpleFeed data={feedData} />
+	<CTA data={ctaData} />
+</Layout>

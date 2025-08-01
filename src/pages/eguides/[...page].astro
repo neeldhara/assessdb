@@ -1,0 +1,59 @@
+---
+// EGuides Page
+// ------------
+// Description: The EGuides page is a page that displays all the EGuides.
+
+// Components
+// - Layout
+import Layout from '../../layouts/Layout.astro'
+// - UI
+import Hero from '../../components/blocks/hero/PageHeader.astro'
+import EGuidePosts from '../../components/blocks/eGuides/eGuidePosts.astro'
+import { getCollection } from 'astro:content'
+
+export async function getStaticPaths({ paginate }: any) {
+	const allEguides = await getCollection('eguides', ({ id }) => {
+		return id.startsWith('en/')
+	})
+
+	// Generate pages from our array of eguides, with 10 to a page
+	return paginate(allEguides, { pageSize: 10 })
+}
+// All paginated data is passed on the "page" prop
+const { page } = Astro.props as any
+
+// Content
+// - SEO
+const SEO = {
+	title: 'Foxi | Latest Foxi News and updates',
+	description:
+		"Explore Foxi's latest news designed to enhance productivity, ensure top-notch security, and integrate seamlessly with your favorite tools. Join thousands of satisfied users and transform your workflow with Foxi today!"
+}
+// - Page Header
+const header = {
+	title: 'The <strong>Foxi</strong> eGuides. Insights, Strategies & Resources.',
+	text: 'Discover valuable insights and practical strategies designed to enhance your workflow with Foxi. Stay ahead with our comprehensive guides that delve into the best practices and tools to maximize your productivity.'
+}
+---
+
+<Layout title={SEO.title} description={SEO.description} noindex>
+	<Hero title={header.title} text={header.text} />
+	<EGuidePosts
+		data={page.data}
+		lang="en"
+		{...page.lastPage === 1
+			? {}
+			: {
+					pagination: {
+						first: page.url.first,
+						current: page.url.current,
+						length: page.lastPage,
+						prev: page.url.prev,
+						next: page.url.next,
+						last: page.url.last,
+						size: page.size,
+						total: page.total
+					}
+				}}
+	/>
+</Layout>

@@ -1,0 +1,362 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import { Client } from '@notionhq/client';
+import Accordion from '../../components/ui/Accordion.astro';
+import Card from '../../components/ui/cards/partials/Card.astro';
+
+// Enable server-side rendering for dynamic routes
+export const prerender = false;
+
+// Required for Astro dynamic routes
+export async function getStaticPaths() {
+  // Initialize Notion client
+  const notion = new Client({
+    auth: import.meta.env.NOTION_API_KEY
+  });
+  
+  const databaseId = "23c05d2578808077b28be0afcc89994f";
+  
+  try {
+    // Fetch all pages from the database
+    const databasePages = await notion.databases.query({
+      database_id: databaseId
+    });
+    
+    // Return an array of objects with params for each page
+    return databasePages.results.map(page => ({
+      params: { id: page.id }
+    }));
+  } catch (error) {
+    console.error('Error fetching paths from Notion:', error);
+    // Return empty array if there's an error
+    return [];
+  }
+}
+
+// Get the ID from the URL parameters
+const { id } = Astro.params;
+
+// Initialize Notion client
+const notion = new Client({
+  auth: import.meta.env.NOTION_API_KEY
+});
+
+// Function to safely extract text from rich text or title properties
+function extractText(property: any, type: 'rich_text' | 'title' = 'rich_text'): string {
+  if (!property) return 'N/A';
+  
+  if (type === 'title') {
+    return property.title?.[0]?.plain_text || 'N/A';
+  } else {
+    return property.rich_text?.[0]?.plain_text || 'N/A';
+  }
+}
+
+// Function to extract select property
+function extractSelect(property: any): string {
+  return property?.select?.name || 'N/A';
+}
+
+// Function to extract multi-select property
+function extractMultiSelect(property: any): string[] {
+  return property?.multi_select?.map((item: any) => item.name) || [];
+}
+
+// Function to extract checkbox property
+function extractCheckbox(property: any): boolean {
+  return property?.checkbox || false;
+}
+
+// Function to extract number property
+function extractNumber(property: any): number | null {
+  return property?.number || null;
+}
+
+let pageData: any = null;
+let error: string | null = null;
+
+try {
+  // Fetch the specific page
+  pageData = await notion.pages.retrieve({ page_id: id as string });
+} catch (err) {
+  console.error('Error fetching page:', err);
+  error = 'Failed to fetch assessment data';
+}
+
+// Extract all the properties
+const title = pageData ? extractText(pageData.properties.Title, 'title') : 'Assessment';
+const problemStatement = pageData ? extractText(pageData.properties["Problem Statement"]) : '';
+const modelSolution = pageData ? extractText(pageData.properties["Model Solution"]) : '';
+const gradingRubric = pageData ? extractText(pageData.properties["Grading Rubric"]) : '';
+const instructorNotes = pageData ? extractText(pageData.properties["Instructor Notes"]) : '';
+const studentNotes = pageData ? extractText(pageData.properties["Student Notes"]) : '';
+
+// Extract metadata
+const tags = pageData ? extractMultiSelect(pageData.properties.Tags) : [];
+const difficulty = pageData ? extractSelect(pageData.properties.Difficulty) : 'N/A';
+const timeToComplete = pageData ? extractText(pageData.properties["Time to Complete"]) : 'N/A';
+const bestSuitedFor = pageData ? extractText(pageData.properties["Best suited for"]) : 'N/A';
+const prerequisite = pageData ? extractText(pageData.properties.Prerequisite) : 'N/A';
+const bloomLevel = pageData ? extractSelect(pageData.properties["Bloom Level"]) : 'N/A';
+const solvedPercentage = pageData ? extractNumber(pageData.properties["Solved Percentage"]) : null;
+const interactiveElements = pageData ? extractText(pageData.properties["Interactive Elements"]) : 'N/A';
+const autogradable = pageData ? extractCheckbox(pageData.properties.Autogradable) : false;
+const autograder = pageData ? extractText(pageData.properties.Autograder) : 'N/A';
+const classroomUse = pageData ? extractCheckbox(pageData.properties["Classroom Use"]) : false;
+const source = pageData ? extractText(pageData.properties.Source) : 'N/A';
+const remarks = pageData ? extractText(pageData.properties.Remarks) : 'N/A';
+
+// Function to get difficulty color
+function getDifficultyColor(diff: string): string {
+  const normalized = diff.toLowerCase();
+  if (normalized.includes('easy')) return 'bg-green-100 text-green-800 border-green-200 dark:bg-green-900/20 dark:text-green-300 dark:border-green-800';
+  if (normalized.includes('medium')) return 'bg-yellow-100 text-yellow-800 border-yellow-200 dark:bg-yellow-900/20 dark:text-yellow-300 dark:border-yellow-800';
+  if (normalized.includes('hard')) return 'bg-red-100 text-red-800 border-red-200 dark:bg-red-900/20 dark:text-red-300 dark:border-red-800';
+  return 'bg-gray-100 text-gray-800 border-gray-200 dark:bg-gray-900/20 dark:text-gray-300 dark:border-gray-800';
+}
+---
+
+<Layout title={title}>
+  <div class="container mx-auto px-4 py-8">
+    {error ? (
+      <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative" role="alert">
+        <strong class="font-bold">Error: </strong>
+        <span class="block sm:inline">{error}</span>
+      </div>
+    ) : (
+      <div class="flex flex-col lg:flex-row gap-8">
+        <!-- Metadata Sidebar -->
+        <aside class="lg:w-1/3 order-2 lg:order-1">
+          <div class="sticky top-8">
+            <Card classes="p-6">
+              <h3 class="text-xl font-semibold mb-4 text-gray-800 dark:text-gray-200">Assessment Details</h3>
+              
+              <!-- Tags -->
+              <div class="mb-4">
+                <h4 class="text-sm font-medium text-gray-600 dark:text-gray-400 mb-1 flex items-center">
+                  <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z"></path>
+                  </svg>
+                  Tags
+                </h4>
+                <div class="flex flex-wrap gap-1">
+                  {tags.length > 0 ? (
+                    tags.map(tag => (
+                      <span class="px-2 py-1 text-xs font-medium bg-blue-100 text-blue-800 rounded-full border border-blue-200 dark:bg-blue-900/20 dark:text-blue-300 dark:border-blue-800">
+                        {tag}
+                      </span>
+                    ))
+                  ) : (
+                    <span class="text-gray-500 dark:text-gray-400 text-sm">N/A</span>
+                  )}
+                </div>
+              </div>
+
+              <!-- Difficulty -->
+              <div class="mb-4">
+                <h4 class="text-sm font-medium text-gray-600 dark:text-gray-400 mb-1 flex items-center">
+                  <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+                  </svg>
+                  Difficulty
+                </h4>
+                <span class={`px-2 py-1 text-xs font-medium rounded-full border ${getDifficultyColor(difficulty)}`}>
+                  {difficulty}
+                </span>
+              </div>
+
+              <!-- Time to Complete -->
+              <div class="mb-4">
+                <h4 class="text-sm font-medium text-gray-600 dark:text-gray-400 mb-1 flex items-center">
+                  <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                  </svg>
+                  Time to Complete
+                </h4>
+                <p class="text-sm text-gray-700 dark:text-gray-300">{timeToComplete}</p>
+              </div>
+
+              <!-- Best Suited For -->
+              <div class="mb-4">
+                <h4 class="text-sm font-medium text-gray-600 dark:text-gray-400 mb-1 flex items-center">
+                  <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path>
+                  </svg>
+                  Best Suited For
+                </h4>
+                <p class="text-sm text-gray-700 dark:text-gray-300">{bestSuitedFor}</p>
+              </div>
+
+              <!-- Prerequisite -->
+              <div class="mb-4">
+                <h4 class="text-sm font-medium text-gray-600 dark:text-gray-400 mb-1 flex items-center">
+                  <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"></path>
+                  </svg>
+                  Prerequisite
+                </h4>
+                <p class="text-sm text-gray-700 dark:text-gray-300">{prerequisite}</p>
+              </div>
+
+              <!-- Bloom Level -->
+              <div class="mb-4">
+                <h4 class="text-sm font-medium text-gray-600 dark:text-gray-400 mb-1 flex items-center">
+                  <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z"></path>
+                  </svg>
+                  Bloom Level
+                </h4>
+                <span class="px-2 py-1 text-xs font-medium bg-purple-100 text-purple-800 rounded-full border border-purple-200 dark:bg-purple-900/20 dark:text-purple-300 dark:border-purple-800">
+                  {bloomLevel}
+                </span>
+              </div>
+
+              <!-- Solved Percentage -->
+              <div class="mb-4">
+                <h4 class="text-sm font-medium text-gray-600 dark:text-gray-400 mb-1 flex items-center">
+                  <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path>
+                  </svg>
+                  Solved Percentage
+                </h4>
+                <p class="text-sm text-gray-700 dark:text-gray-300">{solvedPercentage !== null ? `${solvedPercentage}%` : 'N/A'}</p>
+              </div>
+
+              <!-- Interactive Elements -->
+              <div class="mb-4">
+                <h4 class="text-sm font-medium text-gray-600 dark:text-gray-400 mb-1 flex items-center">
+                  <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 15l-2 5L9 9l11 4-5 2zm0 0l5 5M7.188 2.239l.777 2.897M5.136 7.965l-2.898-.777M13.95 4.05l-2.122 2.122m-5.657 5.656l-2.12 2.122"></path>
+                  </svg>
+                  Interactive Elements
+                </h4>
+                <p class="text-sm text-gray-700 dark:text-gray-300">{interactiveElements}</p>
+              </div>
+
+              <!-- Autogradable -->
+              <div class="mb-4">
+                <h4 class="text-sm font-medium text-gray-600 dark:text-gray-400 mb-1 flex items-center">
+                  <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                  </svg>
+                  Autogradable
+                </h4>
+                <div class="flex items-center">
+                  {autogradable ? (
+                    <svg class="w-4 h-4 text-green-500 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                    </svg>
+                  ) : (
+                    <svg class="w-4 h-4 text-red-500 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                    </svg>
+                  )}
+                  <span class="text-sm text-gray-700 dark:text-gray-300">{autogradable ? 'Yes' : 'No'}</span>
+                </div>
+              </div>
+
+              <!-- Autograder -->
+              <div class="mb-4">
+                <h4 class="text-sm font-medium text-gray-600 dark:text-gray-400 mb-1 flex items-center">
+                  <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"></path>
+                  </svg>
+                  Autograder
+                </h4>
+                <p class="text-sm text-gray-700 dark:text-gray-300">{autograder}</p>
+              </div>
+
+              <!-- Classroom Use -->
+              <div class="mb-4">
+                <h4 class="text-sm font-medium text-gray-600 dark:text-gray-400 mb-1 flex items-center">
+                  <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"></path>
+                  </svg>
+                  Classroom Use
+                </h4>
+                <div class="flex items-center">
+                  {classroomUse ? (
+                    <svg class="w-4 h-4 text-green-500 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                    </svg>
+                  ) : (
+                    <svg class="w-4 h-4 text-red-500 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                    </svg>
+                  )}
+                  <span class="text-sm text-gray-700 dark:text-gray-300">{classroomUse ? 'Yes' : 'No'}</span>
+                </div>
+              </div>
+
+              <!-- Source -->
+              <div class="mb-4">
+                <h4 class="text-sm font-medium text-gray-600 dark:text-gray-400 mb-1 flex items-center">
+                  <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1"></path>
+                  </svg>
+                  Source
+                </h4>
+                <p class="text-sm text-gray-700 dark:text-gray-300">{source}</p>
+              </div>
+
+              <!-- Remarks -->
+              <div class="mb-4">
+                <h4 class="text-sm font-medium text-gray-600 dark:text-gray-400 mb-1 flex items-center">
+                  <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 8h10M7 12h4m1 8l-4-4H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-3l-4 4z"></path>
+                  </svg>
+                  Remarks
+                </h4>
+                <p class="text-sm text-gray-700 dark:text-gray-300">{remarks}</p>
+              </div>
+            </Card>
+          </div>
+        </aside>
+        
+        <!-- Main Content -->
+        <main class="lg:w-2/3 order-1 lg:order-2">
+          <div class="mb-6">
+            <h1 class="text-3xl font-bold text-gray-900 dark:text-gray-100 mb-2">{title}</h1>
+            <p class="text-gray-600 dark:text-gray-400">
+              <a href="/cs101" class="hover:text-blue-600 dark:hover:text-blue-400 transition-colors cursor-pointer">
+                CS101 - Introduction to Programming
+              </a>
+            </p>
+          </div>
+
+          <Card classes="divide-y divide-gray-200 dark:divide-gray-700">
+            <Accordion 
+              title="Problem Statement" 
+              text={problemStatement || 'No problem statement provided.'} 
+              open={false} 
+            />
+
+            <Accordion 
+              title="Grading Rubric" 
+              text={gradingRubric || 'No grading rubric provided.'} 
+              open={false} 
+            />
+
+            <Accordion 
+              title="Model Solution" 
+              text={modelSolution || 'No model solution provided.'} 
+              open={false} 
+            />
+
+            <Accordion 
+              title="Instructor Notes" 
+              text={instructorNotes || 'No instructor notes provided.'} 
+              open={false} 
+            />
+
+            <Accordion 
+              title="Student Notes" 
+              text={studentNotes || 'No student notes provided.'} 
+              open={false} 
+            />
+          </Card>
+        </main>
+      </div>
+    )}
+  </div>
+</Layout>

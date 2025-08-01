@@ -1,0 +1,83 @@
+---
+// Social Proof Section with marquee
+// ------------
+// Description: A section with logos of social media platforms to enchance the trust of the users.
+// Properties:
+// - classes: Additional classes to be added to the section
+
+// Components
+// - UI
+import LogosMarquee from '../../ui/Marquee.astro'
+import { Image } from 'astro:assets'
+
+// Content
+// - Images
+import airtable from '../../../assets/logos/airtable-logo.svg'
+import asana from '../../../assets/logos/asana-logo.svg'
+import basecamp from '../../../assets/logos/basecamp-logo.svg'
+import evernote from '../../../assets/logos/evernote-logo.svg'
+import notion from '../../../assets/logos/notion-logo.svg'
+import slack from '../../../assets/logos/slack-logo.svg'
+import nextdoor from '../../../assets/logos/nextdoor-logo.svg'
+import tatari from '../../../assets/logos/tatari-logo.svg'
+import assembled from '../../../assets/logos/assembled-logo.svg'
+import brex from '../../../assets/logos/brex-logo.svg'
+
+// Data
+const images = [
+	{
+		image: airtable,
+		alt: 'Airtable logo'
+	},
+	{
+		image: asana,
+		alt: 'Asana logo'
+	},
+	{
+		image: basecamp,
+		alt: 'Basecamp logo'
+	},
+	{
+		image: evernote,
+		alt: 'Evernote logo'
+	},
+	{
+		image: notion,
+		alt: 'Notion logo'
+	},
+	{
+		image: slack,
+		alt: 'Slack logo'
+	},
+	{
+		image: nextdoor,
+		alt: 'Nextdoor logo'
+	},
+	{
+		image: tatari,
+		alt: 'Tatari logo'
+	},
+	{
+		image: assembled,
+		alt: 'Assembled logo'
+	},
+	{
+		image: brex,
+		alt: 'Brex logo'
+	}
+]
+
+// Props
+type Props = {
+	classes?: string
+}
+const { classes } = Astro.props
+---
+
+<LogosMarquee classes={classes}>
+	{
+		images.map((item) => (
+			<Image src={item.image} alt={item.alt} height={44} class="mx-6 inline-block lg:mx-12" />
+		))
+	}
+</LogosMarquee>

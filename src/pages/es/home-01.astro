@@ -1,0 +1,69 @@
+---
+// Components
+// - Layout
+import Layout from '../../layouts/Layout.astro'
+// - UI
+import Hero from '../../components/blocks/hero/HomeCTAVideoPopUp.astro'
+import Features from '../../components/blocks/features/FeatureImageBlocks.astro'
+import Testimonial from '../../components/blocks/testimonials/BasicDark.astro'
+import HighlightBlocks from '../../components/blocks/highlights/HightlightRows.astro'
+import CTA from '../../components/blocks/CTA/BasicDark.astro'
+import YoutubePopup from '../../components/blocks/modal/VideoPopup.astro'
+
+// Content
+// - Backgrounds
+import testimonialBackground from '../../assets/testimonial-bg-03.webp'
+
+// - SEO
+const SEO = {
+	title: 'Foxi | Tu Kit de Herramientas de Productividad',
+	description:
+		'Foxi es un potente kit de herramientas de productividad diseñado para mejorar tu flujo de trabajo y aumentar tu productividad. Con funciones como analítica, seguridad e integraciones, Foxi es la solución perfecta para tu negocio.'
+}
+// - Hero Data
+const heroData = {
+	title: 'La plataforma de gestión de usuarios más <strong>completa</strong>',
+	text: '¿Necesitas más que solo un cuadro de inicio de sesión? Clerk es un conjunto completo de interfaces de usuario embebibles, APIs flexibles y paneles de administración para autenticar y gestionar a tus usuarios. Comienza a construir gratis.',
+	actions: {
+		neutral: {
+			text: 'Contactar ventas'
+		},
+		primary: {
+			text: 'Ver demostración'
+		}
+	}
+}
+// - Features Data
+import featureData from '../../data/json-files/es/featureImageBlocks.json'
+// - CTA Data
+const ctaData = {
+	title: '¡Únete a más de 30,000 usuarios satisfechos!',
+	text: 'Descubre por qué miles de profesionales confían en nuestra plataforma para optimizar su flujo de trabajo y mejorar la productividad. ¡Empieza hoy y comprueba la diferencia por ti mismo!',
+	chipNotification: {
+		text: 'Producto del Año #1',
+		highlight: 'Product Hunt'
+	},
+	button: {
+		size: 'lg',
+		style: 'primary',
+		text: '¡Empieza ahora!'
+	}
+}
+// - Highlights Data
+import highlightData from '../../data/json-files/es/highlightData.json'
+---
+
+<Layout title={SEO.title} description={SEO.description} lang="es">
+	<Hero data={heroData} />
+	<Features data={featureData} />
+	<Testimonial
+		blockquote="El tema de Foxi es un soplo de aire fresco en el mundo del desarrollo web. Su velocidad y opciones de personalización son increíbles."
+		figcaption="Satya Nadella"
+		cite="CEO, Microsoft"
+		bg={testimonialBackground}
+		bgPosition="right"
+	/>
+	<HighlightBlocks data={highlightData} />
+	<CTA data={ctaData} />
+	<YoutubePopup lang="es" />
+</Layout>

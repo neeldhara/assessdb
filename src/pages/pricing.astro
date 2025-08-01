@@ -1,0 +1,87 @@
+---
+// Components
+// - Layout
+import Layout from '../layouts/Layout.astro'
+// - UI
+import Hero from '../components/blocks/hero/PageHeader.astro'
+import Price from '../components/blocks/pricing/PricingColumns.astro'
+import SocialProof from '../components/blocks/socialproof/Basic.astro'
+import FAQ from '../components/blocks/FAQ/Basic.astro'
+import Testimonial from '../components/blocks/testimonials/BasicDark.astro'
+import Feature from '../components/blocks/features/FeatureList.astro'
+import CTA from '../components/blocks/CTA/BasicDark.astro'
+
+// Content
+// - SEO
+const SEO = {
+	title: 'Foxi | Pricing made simple',
+	description:
+		'Discover the perfect SaaS pricing plan for your business. From startups to enterprises, our scalable solutions offer unparalleled features and 24/7 support.'
+}
+// - Page Header
+const header = {
+	title: 'Choose the plan that works for <strong>your</strong> needs',
+	text: 'All plans come with a 30-day money-back guarantee.'
+}
+// - SocialProof Data
+const SocialProofData = {
+	title: 'Trusted by <strong>50,000+</strong> businesses'
+}
+// - Pricing Data
+import pricingTablesData from '../data/json-files/en/pricingTablesdata.json'
+const billingData = {
+	option1: 'Monthly',
+	option2: 'Annually'
+}
+// - FAQ Data
+import faqData from '../data/json-files/en/pricingFaqData.json'
+// - Feature Data
+import featureData from '../data/json-files/en/featuresData.json'
+// - Testimonial data
+import testimonialBackground from '../assets/testimonial-bg-02.webp'
+const testimonialData = {
+	blockquote:
+		"Foxi isn't just an app—it's like having a mischievous yet brilliant sidekick for your business. It streamlines tasks and also cracks jokes to keep spirits high",
+	figcaption: 'Max Widgetson',
+	cite: ' CEO, Widgetify Ltd'
+}
+// - CTA Data
+const ctaData = {
+	title: 'Join Over 30,000 Satisfied Users!',
+	text: 'Discover why thousands of professionals trust our platform to streamline their workflow and enhance productivity. Get started today and see the difference for yourself!',
+	chipNotification: {
+		text: '#1 Product of the Year',
+		highlight: 'Product Hunt'
+	},
+	button: {
+		size: 'lg',
+		style: 'primary',
+		text: 'Get started now!'
+	}
+}
+---
+
+<Layout title={SEO.title} description={SEO.description}>
+	<Hero title={header.title} text={header.text} />
+	<Price billing={billingData} pricingTableData={pricingTablesData} />
+	<SocialProof data={SocialProofData} />
+	<Feature
+		title=`Innovative tools to <strong>transform</strong> your workflow`
+		text="Explore the suite of tools designed to streamline your workflow, enhance productivity, and drive growth. Each product is crafted with precision to meet your needs and exceed your expectations."
+		features={featureData}
+	/>
+	<Testimonial
+		bg={testimonialBackground}
+		bgPosition="left"
+		blockquote={testimonialData.blockquote}
+		figcaption={testimonialData.figcaption}
+		cite={testimonialData.cite}
+	/>
+	<FAQ
+		title="Demystifying <strong>pricing,</strong> common queries resolved"
+		text="Curious about our pricing plans? We’re here to help. Below are some of the most frequently asked questions about our pricing options."
+		data={faqData}
+		classes="bg-slate-50 dark:bg-neutral-900/40"
+	/>
+	<CTA data={ctaData} />
+</Layout>

@@ -1,0 +1,53 @@
+---
+// Signup Modal
+// ------------
+// Description: A modal with a form to sign up.
+// Properties:
+// - classes: Additional classes to be added to the Modal
+
+// Components
+// - UI
+import Modal from '../../ui/Modal.astro'
+import Form from '../../ui/forms/Form.astro'
+import FormField from '../../ui/forms/partials/FormField.astro'
+import InputField from '../../ui/forms/form-elements/InputField.astro'
+import Button from '../../ui/Button.astro'
+import { Icon } from 'astro-icon/components'
+
+// Props
+type Props = {
+	lang?: 'en' | 'es'
+	classes?: string
+}
+const { lang = 'en', classes } = Astro.props
+
+// - Misc translations
+import miscTranslations from '../../../data/json-files/string-translations.json'
+// -- Get translations for the current language
+const trls = miscTranslations[lang] || miscTranslations['en']
+---
+
+<Modal id="signup" classes={classes} title={trls.modal.title}>
+	<p class="mb-0">{trls.modal.signupText}</p>
+	<Form>
+		<FormField>
+			<InputField type="email" id="email" label="Your Email" />
+		</FormField>
+		<Button style="primary" type="submit" classes="w-full" size="lg">
+			{trls.modal.signupButton}
+		</Button>
+		<div class="my-2 text-center">
+			{trls.modal.or}
+		</div>
+		<Button
+			style="primary"
+			type="submit"
+			classes="w-full"
+			size="lg"
+			classes="!bg-white w-full !text-neutral-500 border border-neutral-100"
+		>
+			<Icon name="google-logo" class="h-6 w-6" />
+			{trls.modal.googleSignupButton}
+		</Button>
+	</Form>
+</Modal>

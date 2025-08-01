@@ -1,0 +1,60 @@
+---
+// EGuides Page
+// ------------
+// Description: The EGuides page is a page that displays all the EGuides.
+
+// Components
+// - Layout
+import Layout from '../../../layouts/Layout.astro'
+// - UI
+import Hero from '../../../components/blocks/hero/PageHeader.astro'
+import EGuidePosts from '../../../components/blocks/eGuides/eGuidePosts.astro'
+import { getCollection } from 'astro:content'
+
+export async function getStaticPaths({ paginate }: any) {
+	const allEguides = await getCollection('eguides', ({ id }) => {
+		return id.startsWith('es/')
+	})
+
+	// Generate pages from our array of eguides, with 10 to a page
+	return paginate(allEguides, { pageSize: 10 })
+}
+// All paginated data is passed on the "page" prop
+const { page } = Astro.props as any
+
+// Content
+// - SEO
+const SEO = {
+	title: 'Foxi | Últimas noticias y actualizaciones de Foxi',
+	description:
+		'Explora las últimas noticias de Foxi diseñadas para mejorar la productividad, garantizar una seguridad de primer nivel e integrarse sin problemas con tus herramientas favoritas. ¡Únete a miles de usuarios satisfechos y transforma tu flujo de trabajo con Foxi hoy!'
+}
+
+// - Page Header
+const header = {
+	title: 'Los <strong>eGuides</strong> de Foxi. Perspectivas, Estrategias y Recursos.',
+	text: 'Descubre valiosas perspectivas y estrategias prácticas diseñadas para mejorar tu flujo de trabajo con Foxi. Mantente a la vanguardia con nuestras guías completas que profundizan en las mejores prácticas y herramientas para maximizar tu productividad.'
+}
+---
+
+<Layout title={SEO.title} description={SEO.description} noindex lang="es">
+	<Hero title={header.title} text={header.text} />
+	<EGuidePosts
+		data={page.data}
+		lang="es"
+		{...page.lastPage === 1
+			? {}
+			: {
+					pagination: {
+						first: page.url.first,
+						current: page.url.current,
+						length: page.lastPage,
+						prev: page.url.prev,
+						next: page.url.next,
+						last: page.url.last,
+						size: page.size,
+						total: page.total
+					}
+				}}
+	/>
+</Layout>

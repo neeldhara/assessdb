@@ -1,0 +1,79 @@
+---
+// Feature Cards grid Section
+// ------------
+// Description: A grid of cards with feature information in a 4 column layout.
+// Properties:
+// - classes: Additional classes to be added to the Section
+
+// Components
+// - Layout
+import Section from '../../ui/Section.astro'
+import Row from '../../ui/Row.astro'
+import Col from '../../ui/Col.astro'
+// - UI
+import Card from '../../ui/cards/FeatureCard.astro'
+
+// Content
+// - Props
+type Props = {
+	data: {
+		title: string
+		text: string
+	}
+	features: any
+	classes?: string
+}
+const { data, features, classes } = Astro.props
+
+const [firstCard, ...rest] = features
+const secondColumnCards = rest.slice(0, 2)
+const thirdColumnCards = rest.slice(2)
+---
+
+<Section id="features" classes={classes}>
+	<Row>
+		<Col span="12" align="center" classes="mb-12 max-w-4xl mx-auto">
+			<h2 class="text-pretty" set:html={data.title} />
+			<p class="pb-0 text-lg" set:html={data.text} />
+		</Col>
+	</Row>
+	<Row>
+		{/* First column with one card */}
+		<Col span="4">
+			<Card
+				title={firstCard.title}
+				subtitle={firstCard.subtitle}
+				image={firstCard.image}
+				link={firstCard.link}
+			/>
+		</Col>
+
+		{/* Second column with two cards */}
+		<Col span="4" classes="flex flex-col gap-6">
+			{
+				secondColumnCards.map((feature: any) => (
+					<Card
+						title={feature.title}
+						subtitle={feature.subtitle}
+						image={feature.image}
+						link={feature.link}
+					/>
+				))
+			}
+		</Col>
+
+		{/* Third column with two cards */}
+		<Col span="4" classes="flex flex-col gap-6">
+			{
+				thirdColumnCards.map((feature: any) => (
+					<Card
+						title={feature.title}
+						subtitle={feature.subtitle}
+						image={feature.image}
+						link={feature.link}
+					/>
+				))
+			}
+		</Col>
+	</Row>
+</Section>

@@ -1,0 +1,46 @@
+---
+// Home page Hero Section
+// ------------
+
+// Components
+// - Layout
+import Section from '../../ui/Section.astro'
+import Row from '../../ui/Row.astro'
+import Col from '../../ui/Col.astro'
+// - UI
+import Button from '../../ui/Button.astro'
+import LottieAnimation from 'astro-integration-lottie/Lottie.astro'
+
+// Content
+// - Props
+type Props = {
+	data: {
+		title: string
+		text: string
+		actions: {
+			primary: string
+			neutral: string
+		}
+	}
+}
+const { data } = Astro.props
+---
+
+<Section id="intro" padding="top">
+	<Row>
+		<Col
+			span="6"
+			classes="flex flex-col justify-center items-center text-center lg:text-left lg:items-start"
+		>
+			<h1 class="max-w-[37.5rem] lg:max-w-full" set:html={data.title} />
+			<p class="max-w-xl pb-0 text-lg" set:html={data.text} />
+
+		</Col>
+
+		<Col span="6">
+			<div class="aspect-square">
+				<img src="/home.png" alt="Homepage graphic" class="w-full h-full object-contain" />
+			</div>
+		</Col>
+	</Row>
+</Section>

@@ -1,0 +1,75 @@
+---
+// Components
+// - Layout
+import Layout from '../layouts/Layout.astro'
+// - UI
+import Feature from '../components/blocks/features/FeatureStickyCards.astro'
+import Hero from '../components/blocks/hero/PageHeader.astro'
+import CTA from '../components/blocks/CTA/BasicDark.astro'
+
+// Data
+import integrationData from '../data/json-files/en/integrationData.json'
+// - Feature Categories
+const integrationsCommunication = integrationData.filter(
+	(integration) => integration.category === 'Communication'
+)
+const integrationsProductivity = integrationData.filter(
+	(integration) => integration.category === 'Productivity'
+)
+const integrationsSupport = integrationData.filter(
+	(integration) => integration.category === 'Customer Support'
+)
+
+// Content
+// - SEO
+// SEO Configuration
+const SEO = {
+	title: 'Foxi | Seamless Integrations with Your Favorite Tools',
+	description:
+		'Discover how Foxi integrates effortlessly with your preferred tools and platforms to enhance productivity, streamline workflows, and improve communication. Explore our wide range of integrations and see how Foxi can work seamlessly within your existing ecosystem.'
+}
+
+// Page Header
+const header = {
+	title: 'Integrate Foxi with Your <strong>Favorite</strong> Tools',
+	text: 'Unlock new possibilities by connecting Foxi with the tools you already use. Enhance your workflow and stay productive with our powerful integrations!'
+}
+// - CTA Data
+const ctaData = {
+	title: 'Join Over 30,000 Satisfied Users!',
+	text: 'Discover why thousands of professionals trust our platform to streamline their workflow and enhance productivity. Get started today and see the difference for yourself!',
+	chipNotification: {
+		text: '#1 Product of the Year',
+		highlight: 'Product Hunt'
+	},
+	button: {
+		size: 'lg',
+		style: 'primary',
+		text: 'Get started now!'
+	}
+}
+---
+
+<Layout title={SEO.title} description={SEO.description}>
+	<Hero title={header.title} text={header.text} />
+	<Feature
+		title="Streamlined Communication"
+		text="Integrate your favorite communication tools with Foxi to manage calls and notifications seamlessly."
+		data={integrationsCommunication}
+	/>
+
+	<Feature
+		title="Boost Your Productivity"
+		text="Optimize your project and task management with Foxi to enhance productivity and streamline your workflow."
+		data={integrationsProductivity}
+		classes="bg-neutral-50 dark:bg-neutral-900"
+	/>
+
+	<Feature
+		title="Reliable Support"
+		text="Access comprehensive customer support and assistance to resolve any issues and ensure smooth operations."
+		data={integrationsSupport}
+	/>
+
+	<CTA data={ctaData} />
+</Layout>

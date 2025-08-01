@@ -1,0 +1,30 @@
+---
+// Video Modal
+// ------------
+// Description: A modal with a video.
+// Properties:
+// - classes: Additional classes to be added to the Modal
+
+// Components
+// - UI
+import Modal from '../../ui/Modal.astro'
+
+// Props
+type Props = {
+	lang?: 'en' | 'es'
+	classes?: string
+}
+const { lang = 'en', classes } = Astro.props
+
+// - Misc translations
+import miscTranslations from '../../../data/json-files/string-translations.json'
+// -- Get translations for the current language
+const trls = miscTranslations[lang] || miscTranslations['en']
+---
+
+<Modal id="video" classes={classes} title="video popup" type="media">
+	<video autoplay loop controls class="w-full">
+		<source src="https://oxygenna-themes.b-cdn.net/foxi-astro/foxi.mp4" type="video/mp4" />
+		{trls.videoPopup.helperText}
+	</video>
+</Modal>

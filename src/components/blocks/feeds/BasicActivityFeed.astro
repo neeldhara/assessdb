@@ -1,0 +1,38 @@
+---
+// A Feed section
+// ------------
+// Description: A  section with feeds organised a a vertical list of items.
+// Properties:
+// - data: An array of feed items
+// - classes: Additional classes to be added to the section
+// Reference: https://wind-ui.com/components/feeds/
+
+// Components
+// - Layout
+import Section from '../../ui/Section.astro'
+import Col from '../../ui/Col.astro'
+import Row from '../../ui/Row.astro'
+// - UI
+import ActivityFeed from '../../ui/Feeds/ActivityFeed.astro'
+
+// Content
+// -Props
+type Props = {
+	data: Array<{
+		title: string
+		date?: string
+		icon: string
+		progress?: string
+	}>
+	classes?: string
+}
+const { data, classes } = Astro.props
+---
+
+<Section id="roadmap">
+	<Row>
+		<Col span="12" classes="flex flex-col items-center justify-center order-1 md:order-2">
+			<ActivityFeed data={data} classes={classes} />
+		</Col>
+	</Row>
+</Section>

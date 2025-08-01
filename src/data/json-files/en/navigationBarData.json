@@ -1,0 +1,45 @@
+{
+	"logo": {
+		"src": "/gurusetu-logo.png",
+		"alt": "GuruSetu Assessment Database",
+		"text": ""
+	},
+	"navItems": [
+		{
+			"name": "Home",
+			"link": "/"
+		},
+		{
+			"name": "Featured Courses",
+			"link": "#",
+			"align": "center",
+			"submenu": [
+				{
+					"name": "Computer Science",
+					"links": [
+						{ "name": "CS101 - Introduction to Programming", "link": "/cs101" },
+						{ "name": "Data Structures and Algorithms", "link": "/dsa" }
+					]
+				},
+				{
+					"name": "Mathematics",
+					"links": [
+						{ "name": "Linear Algebra", "link": "/linear-algebra" },
+						{ "name": "Calculus", "link": "/calculus" },
+						{ "name": "Discrete Mathematics", "link": "/discrete-math" },
+						{ "name": "Probability", "link": "/probability" }
+					]
+				},
+				{
+					"name": "Liberal Arts",
+					"links": [
+						{ "name": "Critical Thinking", "link": "/critical-thinking" },
+						{ "name": "Writing", "link": "/writing" }
+					]
+				}
+			]
+		},
+		{ "name": "Contact", "link": "/contact" }
+	],
+	"navActions": [{ "name": "Login", "style": "primary", "size": "lg", "link": "/login" }]
+}

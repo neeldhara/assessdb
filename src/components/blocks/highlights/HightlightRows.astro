@@ -1,0 +1,32 @@
+---
+// Highlights Section
+// ------------
+// Description: A section with multiple text and image rows.
+// Properties:
+// - classes: Additional classes to be added to the section
+// - highlightBlocks: An array of highlight blocks with title, text, image, imageWidth, imageHeight, imagePosition
+
+// Components
+// - UI
+import TextImage from '../basic/TextImage.astro'
+
+const { data } = Astro.props
+---
+
+<>
+	{
+		data.map((highlight: any, key: number) => (
+			<TextImage
+				id={`highlight-${key}`}
+				title={highlight.title}
+				text={highlight.text}
+				image={highlight.image}
+				imageWidth={highlight.image.width}
+				imageHeight={highlight.image.height}
+				mobileImage={highlight.mobileImage}
+				imagePosition={highlight.imagePosition}
+				classes={key === 0 ? '!pb-0' : key === data.length - 1 ? '!pt-0' : '!py-0'}
+			/>
+		))
+	}
+</>

@@ -1,0 +1,81 @@
+{
+	"data": [
+		{
+			"title": "Project Kickoff",
+			"date": "2024-01-15",
+			"icon": "light-bulb",
+			"progress": "completed",
+			"description": "The initial meeting to outline the project's goals, deliverables, and timeline. Key stakeholders and team members will be introduced, and a high-level overview of the project plan will be discussed. This meeting sets the stage for the entire project."
+		},
+		{
+			"title": "Requirements Gathering",
+			"date": "2024-01-22",
+			"icon": "clipboard-document-list",
+			"progress": "completed",
+			"description": "Collecting detailed requirements from stakeholders to ensure all needs are met. This phase involves interviews, surveys, and reviewing existing documentation to gather comprehensive requirements. Clear and concise requirements are critical for the project's success."
+		},
+		{
+			"title": "Initial Review",
+			"date": "2024-01-30",
+			"icon": "document-text",
+			"progress": "rejected",
+			"description": "First round of review to evaluate initial deliverables and project alignment. Feedback will be collected to identify any discrepancies or areas for improvement. This step helps ensure that the project is on the right track before proceeding further."
+		},
+		{
+			"title": "Final Review",
+			"date": "2024-01-30",
+			"icon": "clipboard-document-check",
+			"progress": "completed",
+			"description": "Comprehensive review of all gathered requirements and initial designs. This review ensures that all stakeholder needs are addressed and the project is ready to move into the design phase. Any necessary adjustments will be made based on the feedback received."
+		},
+		{
+			"title": "Design Phase",
+			"date": "2024-02-05",
+			"icon": "paint-brush",
+			"progress": "ongoing",
+			"description": "Creating design mockups and prototypes based on collected requirements. This phase includes wireframing, UI/UX design, and creating visual assets. The design will be iterated upon based on feedback to ensure it meets all project requirements and user expectations."
+		},
+		{
+			"title": "Development Sprint",
+			"date": "2024-02-19",
+			"icon": "cube-transparent",
+			"progress": "ongoing",
+			"description": "Initial development sprint to start building core features of the project. This involves setting up the development environment, writing code, and implementing functionalities. Regular check-ins and code reviews will be conducted to maintain quality and progress."
+		},
+		{
+			"title": "Testing Phase 1",
+			"date": "2024-03-18",
+			"icon": "cursor-arrow-ripple",
+			"progress": "upcoming",
+			"description": "First round of testing to identify and fix bugs and issues in the developed features. This phase includes unit testing, integration testing, and user acceptance testing. Early testing helps catch issues before they become more complex and costly to fix."
+		},
+		{
+			"title": "Bug Fixes and Improvements",
+			"date": "2024-04-01",
+			"icon": "bug-ant",
+			"progress": "upcoming",
+			"description": "Addressing reported bugs and making necessary improvements based on feedback. This phase ensures that the product is stable and performs well under various conditions. Continuous improvement is key to delivering a high-quality product."
+		},
+		{
+			"title": "Testing Phase 2",
+			"date": "2024-05-01",
+			"icon": "cursor-arrow-ripple",
+			"progress": "upcoming",
+			"description": "Second round of testing to ensure stability and performance of the application. This includes extensive stress testing, load testing, and final user acceptance testing. Ensuring the product is ready for launch is the primary goal of this phase."
+		},
+		{
+			"title": "Feature Enhancements",
+			"date": "2024-06-01",
+			"icon": "chart-pie",
+			"progress": "upcoming",
+			"description": "Implementing additional features and enhancements to improve user experience. Based on user feedback and market trends, new features will be added to keep the product competitive. Enhancements focus on usability, functionality, and overall satisfaction."
+		},
+		{
+			"title": "Product Launch",
+			"date": "2024-08-01",
+			"icon": "rocket",
+			"progress": "upcoming",
+			"description": "Official launch of the product to the market, making it available to end users. Marketing and promotional activities will accompany the launch to maximize reach and impact. This marks the culmination of all efforts and the beginning of the product's lifecycle in the market."
+		}
+	]
+}

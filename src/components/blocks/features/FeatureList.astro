@@ -1,0 +1,64 @@
+---
+// Feature List Section
+// ------------
+// Description: A list of features with icons and descriptions in a 4 column layout.
+// Properties:
+// - title: The title of the section
+// - text: The text of the section
+// - sliceStart: The start index of the feature list
+// - sliceEnd: The end index of the feature list
+// - classes: Additional classes to be added to the section
+
+// Components
+// - Layout
+import Section from '../../ui/Section.astro'
+import Row from '../../ui/Row.astro'
+import Col from '../../ui/Col.astro'
+// - UI
+import Feature from '../../ui/Feature.astro'
+
+// Props
+type Props = {
+	title: string
+	text?: string
+	sliceStart?: number
+	sliceEnd?: number
+	classes?: string
+	features?: any
+}
+const { title, text, sliceStart = 0, sliceEnd = 8, features, classes } = Astro.props
+---
+
+<Section id="features" classes={classes}>
+	<Row>
+		<Col span="12" align="center" classes="mb-12 max-w-3xl mx-auto">
+			<h2 class="text-pretty" set:html={title} />
+			{text && <p class="pb-0 text-lg" set:html={text} />}
+		</Col>
+	</Row>
+
+	<Row>
+		{
+			features.slice(sliceStart, sliceEnd).map((feature: any) => (
+				<Col span="3">
+					{feature.url ? (
+						<a href={feature.url} class="block h-full group hover:scale-105 transition-transform duration-200">
+							<div class="h-full p-6 rounded-lg border border-gray-200 dark:border-gray-700 hover:border-blue-300 dark:hover:border-blue-600 hover:shadow-lg transition-all duration-200">
+								<Feature title={feature.title} icon={feature.icon} align="left" classes="mb-0">
+									{feature.description}
+								</Feature>
+								<div class="mt-4 text-blue-600 dark:text-blue-400 font-medium text-sm group-hover:text-blue-700 dark:group-hover:text-blue-300 transition-colors">
+									Explore →
+								</div>
+							</div>
+						</a>
+					) : (
+						<Feature title={feature.title} icon={feature.icon} align="left" classes="mb-12">
+							{feature.description}
+						</Feature>
+					)}
+				</Col>
+			))
+		}
+	</Row>
+</Section>

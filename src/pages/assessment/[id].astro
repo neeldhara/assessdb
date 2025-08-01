@@ -1,0 +1,356 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import { Client } from '@notionhq/client';
+import Accordion from '../../components/ui/Accordion.astro';
+import Card from '../../components/ui/cards/partials/Card.astro';
+
+// Enable server-side rendering for dynamic routes
+export const prerender = false;
+
+// Required for Astro dynamic routes
+export async function getStaticPaths() {
+  // Initialize Notion client
+  const notion = new Client({
+    auth: import.meta.env.NOTION_API_KEY
+  });
+  
+  const databaseId = "23c05d2578808077b28be0afcc89994f";
+  
+  try {
+    // Fetch all pages from the database
+    const databasePages = await notion.databases.query({
+      database_id: databaseId
+    });
+    
+    // Return an array of objects with params for each page
+    return databasePages.results.map(page => ({
+      params: { id: page.id }
+    }));
+  } catch (error) {
+    console.error('Error fetching paths from Notion:', error);
+    // Return empty array if there's an error
+    return [];
+  }
+}
+
+// Get the ID from the URL parameters
+const { id } = Astro.params;
+
+// Initialize Notion client
+const notion = new Client({
+  auth: import.meta.env.NOTION_API_KEY
+});
+
+// Function to safely extract text from rich text or title properties
+function extractText(property: any, type: 'rich_text' | 'title' = 'rich_text'): string {
+  if (!property) return 'N/A';
+  
+  if (type === 'title') {
+    return property.title?.[0]?.plain_text || 'N/A';
+  } else {
+    return property.rich_text?.[0]?.plain_text || 'N/A';
+  }
+}
+
+// Function to extract select property
+function extractSelect(property: any): string {
+  return property?.select?.name || 'N/A';
+}
+
+// Function to extract multi-select property
+function extractMultiSelect(property: any): string[] {
+  return property?.multi_select?.map((item: any) => item.name) || [];
+}
+
+// Function to extract checkbox property
+function extractCheckbox(property: any): boolean {
+  return property?.checkbox || false;
+}
+
+// Function to extract number property
+function extractNumber(property: any): string {
+  return property?.number?.toString() || 'N/A';
+}
+
+let title = 'Untitled';
+let problemStatement = 'N/A';
+let modelSolutions = 'N/A';
+let gradingRubric = 'N/A';
+let instructorNotes = 'N/A';
+let studentNotes = 'N/A';
+let metadata: any = {};
+let error = null;
+
+try {
+  // Fetch the specific page from the database
+  const page: any = await notion.pages.retrieve({ page_id: id });
+  
+  // Check if page is a full page object
+  if (!('properties' in page)) {
+    throw new Error('Failed to retrieve page properties');
+  }
+  
+  const props = page.properties;
+  
+  // Extract main content fields
+  title = extractText(props.Title, 'title');
+  problemStatement = extractText(props["Problem Statement"]);
+  modelSolutions = extractText(props["Model Solutions"]);
+  gradingRubric = extractText(props["Grading Rubric"]);
+  instructorNotes = extractText(props["Instructor Notes"]);
+  studentNotes = extractText(props["Student Notes"]);
+  
+  // Extract all metadata for sidebar
+  metadata = {
+    tags: extractMultiSelect(props.Tags),
+    difficulty: extractSelect(props.Difficulty),
+    timeToComplete: extractText(props["Time to Complete"]),
+    bestSuitedFor: extractText(props["Best suited for"]),
+    prerequisite: extractText(props.Prerequisite),
+    bloomLevel: extractSelect(props["Bloom Level"]),
+    solvedPercentage: extractNumber(props["Solved Percentage"]),
+    interactiveElements: extractText(props["Interactive Elements"]),
+    autogradable: extractCheckbox(props.Autogradable),
+    autograder: extractText(props.Autograder),
+    classroomUse: extractCheckbox(props["Classroom Use"]),
+    source: extractText(props.Source),
+    remarks: extractText(props.Remarks)
+  };
+  
+  console.log('Fetched assessment details:', { title, metadata });
+} catch (err: any) {
+  console.error('Error fetching Notion data:', err);
+  error = err.message;
+  title = 'Error Loading Assessment';
+}
+---
+
+<Layout title={title}>
+  <div class="container mx-auto px-4 py-8">
+    {error ? (
+      <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative" role="alert">
+        <strong class="font-bold">Error: </strong>
+        <span class="block sm:inline">{error}</span>
+      </div>
+    ) : (
+      <div class="flex flex-col lg:flex-row gap-8">
+        <!-- Metadata Sidebar -->
+        <aside class="lg:w-1/3 order-2 lg:order-1">
+          <div class="sticky top-8">
+            <Card classes="p-6">
+              <h3 class="text-xl font-semibold mb-4 text-gray-800 dark:text-gray-200">Assessment Details</h3>
+              
+              <!-- Tags -->
+              <div class="mb-4">
+                <h4 class="text-sm font-medium text-gray-600 dark:text-gray-400 mb-2 flex items-center">
+                  <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z"></path>
+                  </svg>
+                  Tags
+                </h4>
+                <div class="flex flex-wrap gap-1">
+                  {metadata.tags.length > 0 ? (
+                    metadata.tags.map((tag: string) => (
+                      <span class="px-2 py-1 text-xs bg-blue-100 text-blue-800 rounded-full dark:bg-blue-900 dark:text-blue-200">
+                        {tag}
+                      </span>
+                    ))
+                  ) : (
+                    <span class="text-sm text-gray-500 dark:text-gray-400">N/A</span>
+                  )}
+                </div>
+              </div>
+              
+              <!-- Difficulty -->
+              <div class="mb-4">
+                <h4 class="text-sm font-medium text-gray-600 dark:text-gray-400 mb-2 flex items-center">
+                  <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+                  </svg>
+                  Difficulty
+                </h4>
+                <span class={`inline-flex px-2 py-1 text-xs font-medium rounded-full ${
+                  metadata.difficulty.toLowerCase().includes('easy') ? 'bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200' :
+                  metadata.difficulty.toLowerCase().includes('medium') ? 'bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-200' :
+                  metadata.difficulty.toLowerCase().includes('hard') ? 'bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-200' :
+                  'bg-gray-100 text-gray-800 dark:bg-gray-900 dark:text-gray-200'
+                }`}>
+                  {metadata.difficulty}
+                </span>
+              </div>
+              
+              <!-- Time to Complete -->
+              <div class="mb-4">
+                <h4 class="text-sm font-medium text-gray-600 dark:text-gray-400 mb-1 flex items-center">
+                  <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                  </svg>
+                  Time to Complete
+                </h4>
+                <p class="text-sm text-gray-700 dark:text-gray-300">{metadata.timeToComplete}</p>
+              </div>
+              
+              <!-- Best Suited For -->
+              <div class="mb-4">
+                <h4 class="text-sm font-medium text-gray-600 dark:text-gray-400 mb-1 flex items-center">
+                  <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path>
+                  </svg>
+                  Best suited for
+                </h4>
+                <p class="text-sm text-gray-700 dark:text-gray-300">{metadata.bestSuitedFor}</p>
+              </div>
+              
+              <!-- Prerequisite -->
+              <div class="mb-4">
+                <h4 class="text-sm font-medium text-gray-600 dark:text-gray-400 mb-1 flex items-center">
+                  <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                  </svg>
+                  Prerequisite
+                </h4>
+                <p class="text-sm text-gray-700 dark:text-gray-300">{metadata.prerequisite}</p>
+              </div>
+              
+              <!-- Bloom Level -->
+              <div class="mb-4">
+                <h4 class="text-sm font-medium text-gray-600 dark:text-gray-400 mb-1 flex items-center">
+                  <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"></path>
+                  </svg>
+                  Bloom Level
+                </h4>
+                <span class="inline-flex px-2 py-1 text-xs font-medium bg-purple-100 text-purple-800 rounded-full dark:bg-purple-900 dark:text-purple-200">
+                  {metadata.bloomLevel}
+                </span>
+              </div>
+              
+              <!-- Solved Percentage -->
+              <div class="mb-4">
+                <h4 class="text-sm font-medium text-gray-600 dark:text-gray-400 mb-1 flex items-center">
+                  <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path>
+                  </svg>
+                  Solved Percentage
+                </h4>
+                <p class="text-sm text-gray-700 dark:text-gray-300">{metadata.solvedPercentage}%</p>
+              </div>
+              
+              <!-- Interactive Elements -->
+              <div class="mb-4">
+                <h4 class="text-sm font-medium text-gray-600 dark:text-gray-400 mb-1 flex items-center">
+                  <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"></path>
+                  </svg>
+                  Interactive Elements
+                </h4>
+                <p class="text-sm text-gray-700 dark:text-gray-300">{metadata.interactiveElements}</p>
+              </div>
+              
+              <!-- Autogradable -->
+              <div class="mb-4">
+                <h4 class="text-sm font-medium text-gray-600 dark:text-gray-400 mb-1 flex items-center">
+                  <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                  </svg>
+                  Autogradable
+                </h4>
+                <span class={`inline-flex px-2 py-1 text-xs font-medium rounded-full ${
+                  metadata.autogradable ? 'bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200' : 'bg-gray-100 text-gray-800 dark:bg-gray-900 dark:text-gray-200'
+                }`}>
+                  {metadata.autogradable ? '✓ Yes' : '✗ No'}
+                </span>
+              </div>
+              
+              <!-- Autograder -->
+              <div class="mb-4">
+                <h4 class="text-sm font-medium text-gray-600 dark:text-gray-400 mb-1 flex items-center">
+                  <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"></path>
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                  </svg>
+                  Autograder
+                </h4>
+                <p class="text-sm text-gray-700 dark:text-gray-300">{metadata.autograder}</p>
+              </div>
+              
+              <!-- Classroom Use -->
+              <div class="mb-4">
+                <h4 class="text-sm font-medium text-gray-600 dark:text-gray-400 mb-1 flex items-center">
+                  <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"></path>
+                  </svg>
+                  Classroom Use
+                </h4>
+                <span class={`inline-flex px-2 py-1 text-xs font-medium rounded-full ${
+                  metadata.classroomUse ? 'bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200' : 'bg-gray-100 text-gray-800 dark:bg-gray-900 dark:text-gray-200'
+                }`}>
+                  {metadata.classroomUse ? '✓ Yes' : '✗ No'}
+                </span>
+              </div>
+              
+              <!-- Source -->
+              <div class="mb-4">
+                <h4 class="text-sm font-medium text-gray-600 dark:text-gray-400 mb-1 flex items-center">
+                  <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path>
+                  </svg>
+                  Source
+                </h4>
+                <p class="text-sm text-gray-700 dark:text-gray-300">{metadata.source}</p>
+              </div>
+              
+              <!-- Remarks -->
+              <div class="mb-4">
+                <h4 class="text-sm font-medium text-gray-600 dark:text-gray-400 mb-1 flex items-center">
+                  <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 8h10M7 12h4m1 8l-4-4H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-3l-4 4z"></path>
+                  </svg>
+                  Remarks
+                </h4>
+                <p class="text-sm text-gray-700 dark:text-gray-300">{metadata.remarks}</p>
+              </div>
+            </Card>
+          </div>
+        </aside>
+        
+        <!-- Main Content -->
+        <main class="lg:w-2/3 order-1 lg:order-2">
+          <div class="mb-6">
+            <h1 class="text-3xl font-bold mb-2 text-gray-900 dark:text-gray-100">{title}</h1>
+            <a href="/assessments" class="text-blue-600 hover:underline text-sm">&larr; Back to Assessments</a>
+          </div>
+          
+          <!-- Accordion Sections -->
+          <Card classes="divide-y divide-neutral-100 dark:divide-neutral-800">
+            <Accordion 
+              title="Problem Statement" 
+              text={problemStatement} 
+              open={false} 
+            />
+            <Accordion 
+              title="Grading Rubric" 
+              text={gradingRubric} 
+              open={false} 
+            />
+            <Accordion 
+              title="Model Solution" 
+              text={modelSolutions} 
+              open={false} 
+            />
+            <Accordion 
+              title="Instructor Notes" 
+              text={instructorNotes} 
+              open={false} 
+            />
+            <Accordion 
+              title="Student Notes" 
+              text={studentNotes} 
+              open={false} 
+            />
+          </Card>
+        </main>
+      </div>
+    )}
+  </div>
+</Layout>

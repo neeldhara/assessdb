@@ -1,0 +1,59 @@
+---
+// Basic Ratings Section
+// ------------
+// Description: A section with a list of ratings with icons and descriptions in a 3 column layout.
+// Properties:
+// - title: The title of the section
+// - text: The text of the section
+
+// Component
+// - Layout
+import Section from '../../ui/Section.astro'
+import Row from '../../ui/Row.astro'
+import Col from '../../ui/Col.astro'
+// - UI
+import Rating from '../../ui/Rating.astro'
+import Card from '../../ui/cards/partials/Card.astro'
+
+// Content
+// Props
+type Props = {
+	title: string
+	text: string
+	data: Array<{
+		image: {
+			src: string
+		}
+		helperText: string
+		value: number
+		text: string
+	}>
+}
+const { title, text, data } = Astro.props
+---
+
+<Section>
+	<Row>
+		<Col span="12" align="center" classes="mb-12 max-w-3xl mx-auto">
+			<h2 class="text-pretty" set:html={title} />
+			<p class="pb-0 text-lg" set:html={text} />
+		</Col>
+	</Row>
+	<Row>
+		{
+			data.map((rating: any) => (
+				<Col span="3">
+					<Card>
+						<Rating
+							image={rating.image}
+							rating={rating.value}
+							helperText={rating.helperText}
+							text={rating.text}
+							classes="p-6"
+						/>
+					</Card>
+				</Col>
+			))
+		}
+	</Row>
+</Section>

@@ -1,0 +1,17 @@
+[
+	{
+		"image": "/cards/featureblock-01.svg",
+		"title": "Análisis en Tiempo Real",
+		"text": "Obtén información valiosa al instante con los análisis en tiempo real de Foxi. Realiza un seguimiento de métricas de rendimiento, comportamiento de usuarios y efectividad de campañas sin esfuerzo."
+	},
+	{
+		"image": "/cards/featureblock-02.svg",
+		"title": "Tableros Personalizables",
+		"text": "Adapta tu espacio de trabajo con tableros personalizados que se ajusten a tu flujo de trabajo. Mantente organizado y enfocado en lo que más importa."
+	},
+	{
+		"image": "/cards/featureblock-03.svg",
+		"title": "Informes Avanzados",
+		"text": "Genera informes detallados con características avanzadas de análisis. Personaliza los informes para realizar un seguimiento de los indicadores clave de rendimiento."
+	}
+]

@@ -1,0 +1,46 @@
+[
+	{
+		"title": "Visibilidad Completa del <strong>Proyecto</strong>",
+		"text": "Obtén visibilidad completa de tus proyectos y tareas con nuestro panel integral. Realiza un seguimiento fácil del progreso, las fechas límite y el rendimiento del equipo de un vistazo. Nuestro panel ofrece seguimiento de proyectos en tiempo real.",
+		"image": {
+			"src": "/highlights/highlight-01.svg",
+			"width": 560,
+			"height": 652
+		},
+		"mobileImage": "/highlights/highlight-01-mobile.svg",
+		"imagePosition": "right"
+	},
+	{
+		"title": "Herramientas de <strong>Automatización</strong> Avanzadas",
+		"text": "Automatiza tareas repetitivas y optimiza tu flujo de trabajo con nuestras herramientas de automatización avanzadas. Ahorra tiempo y reduce errores aprovechando las asignaciones de tareas automatizadas, las plantillas de flujo de trabajo y la integración sin problemas con aplicaciones y servicios populares.",
+		"image": {
+			"src": "/highlights/highlight-02.svg",
+			"width": 560,
+			"height": 652
+		},
+		"mobileImage": "/highlights/highlight-02-mobile.svg",
+		"imagePosition": "left"
+	},
+	{
+		"title": "Colaboración en Equipo <strong>Efetiva</strong>",
+		"text": "Mejora la comunicación y colaboración del equipo con nuestras herramientas sin interrupciones. Mantén a todos en la misma página y asegúrate de una ejecución eficiente del proyecto a través de mensajería en tiempo real, edición de documentos compartidos y comentarios sobre tareas.",
+		"image": {
+			"src": "/highlights/highlight-03.svg",
+			"width": 560,
+			"height": 652
+		},
+		"mobileImage": "/highlights/highlight-03-mobile.svg",
+		"imagePosition": "right"
+	},
+	{
+		"title": "Seguridad de Datos <strong>Robusta</strong>",
+		"text": "Protege tus datos con nuestras características de seguridad robustas. Priorizamos tu privacidad y seguridad para garantizar que tu información esté siempre a salvo. Con cifrado de extremo a extremo, control de acceso basado en roles y auditorías de seguridad regulares.",
+		"image": {
+			"src": "/highlights/highlight-04.svg",
+			"width": 560,
+			"height": 652
+		},
+		"mobileImage": "/highlights/highlight-04-mobile.svg",
+		"imagePosition": "left"
+	}
+]

@@ -1,0 +1,59 @@
+---
+// Feature Section with sticky sidebar
+// ------------
+// Description: A section with the header as a sticky sidebar and features with icons and descriptions in a 3 column layout.
+// Properties:
+// - title: The title of the section
+// - text: The text of the section
+// - data: The data of the section
+// - classes: Additional classes to be added to the section
+
+// Components
+// - Layout
+import Row from '../../ui/Row.astro'
+import Col from '../../ui/Col.astro'
+import StickySidebar from '../basic/StickySidebar.astro'
+// - UI
+import Feature from '../../ui/Feature.astro'
+import Card from '../../ui/cards/partials/Card.astro'
+import CardBody from '../../ui/cards/partials/CardBody.astro'
+
+// Props
+type FeatureData = {
+	title: string
+	icon?: string
+	image?: string
+	description: string
+}
+type Props = {
+	title: string
+	text?: string
+	data: FeatureData[]
+	classes?: string
+}
+const { title, text, data, classes } = Astro.props
+---
+
+<StickySidebar classes={classes}>
+	<header slot="sidebar">
+		{title && <h2 class="text-3xl">{title}</h2>}
+		{text && <p class="text-lg leading-relaxed">{text}</p>}
+	</header>
+
+	<Row>
+		{
+			// Map through the filtered features and render them
+			data.map((feature: FeatureData) => (
+				<Col span="4">
+					<Card classes="h-full">
+						<CardBody>
+							<Feature title={feature.title} icon={feature.icon} image={feature.image} align="left">
+								{feature.description}
+							</Feature>
+						</CardBody>
+					</Card>
+				</Col>
+			))
+		}
+	</Row>
+</StickySidebar>

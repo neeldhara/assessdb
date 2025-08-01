@@ -1,0 +1,73 @@
+---
+// Components
+// - Layout
+import Layout from '../../layouts/Layout.astro'
+// - UI
+import Hero from '../../components/blocks/hero/PageHeader.astro'
+import PriceCompare from '../../components/blocks/pricing/PricingColumnsCompare.astro'
+import SocialProof from '../../components/blocks/socialproof/Basic.astro'
+import Feature from '../../components/blocks/features/FeatureList.astro'
+import CTA from '../../components/blocks/CTA/BasicLight.astro'
+import TextImage from '../../components/blocks/basic/TextImage.astro'
+
+// Content
+import faqImage1 from '../../assets/faq/faq-01.png'
+// - SEO
+const SEO = {
+	title: 'Foxi | Precios sencillos',
+	description:
+		'Descubre el plan de precios SaaS perfecto para tu negocio. Desde startups hasta grandes empresas, nuestras soluciones escalables ofrecen características inigualables y soporte 24/7.'
+}
+// - Page Header
+const header = {
+	title: 'Encuentra el plan adecuado para <strong>tus propias</strong> necesidades',
+	text: 'Todos los planes vienen con una garantía de devolución de dinero de 30 días.'
+}
+// - Price Comparison Data
+import pricingTablesData from '../../data/json-files/es/pricingTablesdata.json'
+const billingData = {
+	option1: 'Mensual',
+	option2: 'Anual'
+}
+// - Feature Data
+import featureData from '../../data/json-files/es/featuresData.json'
+// - SocialProof Data
+const SocialProofData = {
+	title: 'Confiado por <strong>50,000+</strong> empresas'
+}
+// - CTA Data
+const ctaData = {
+	title: '¡Únete a la Revolución de Foxi!',
+	text: 'Descubre por qué miles de profesionales confían en nuestra plataforma para optimizar su flujo de trabajo y mejorar la productividad. ¡Empieza hoy y comprueba la diferencia por ti mismo!',
+	rating: {
+		value: 5,
+		text: '30K calificaciones de clientes'
+	},
+	button: {
+		size: 'lg',
+		style: 'primary',
+		text: 'Empieza Ahora'
+	}
+}
+---
+
+<Layout title={SEO.title} description={SEO.description} lang="es">
+	<Hero title={header.title} text={header.text} />
+	<PriceCompare billing={billingData} pricingTableData={pricingTablesData} />
+	<TextImage
+		title="Por qué los Planes de Precios de Foxi Ofrecen un Gran Valor"
+		text="En Foxi, creemos en ofrecer un valor excepcional en cada rango de precios. Nuestros planes de precios están diseñados para satisfacer una variedad de necesidades, desde individuos y pequeños equipos hasta grandes empresas. Cada plan incluye acceso a nuestras potentes características, integraciones sin problemas y un soporte al cliente de primera categoría."
+		image={faqImage1}
+		mobileImage={faqImage1}
+		imagePosition="left"
+		offsetImage
+		classes="bg-neutral-50 dark:bg-neutral-900 lg:!py-64"
+	/>
+	<Feature
+		title=`Lo que incluye <strong>todos</strong> los planes de Foxi`
+		text=`Explora la suite de herramientas diseñadas para optimizar tu flujo de trabajo, mejorar la productividad y fomentar el crecimiento. Cada producto está diseñado con precisión para satisfacer tus necesidades y superar tus expectativas.`
+		features={featureData}
+	/>
+	<SocialProof data={SocialProofData} />
+	<CTA data={ctaData} classes="!pt-0" />
+</Layout>

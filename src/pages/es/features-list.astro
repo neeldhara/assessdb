@@ -1,0 +1,73 @@
+---
+// Components
+// - Layout
+import Layout from '../../layouts/Layout.astro'
+// - UI
+import Hero from '../../components/blocks/hero/PageHeader.astro'
+import CTA from '../../components/blocks/CTA/BasicDark.astro'
+import Feature from '../../components/blocks/features/FeatureList.astro'
+import Testimonial from '../../components/blocks/testimonials/BasicDark.astro'
+
+// Content
+// - SEO
+const SEO = {
+	title: 'Foxi | Funciones para Impulsar la Productividad y la Seguridad',
+	description:
+		'Explora las potentes funciones de Foxi diseñadas para mejorar la productividad, garantizar una seguridad de primer nivel e integrarse sin problemas con tus herramientas favoritas. ¡Únete a miles de usuarios satisfechos y transforma tu flujo de trabajo con Foxi hoy mismo!'
+}
+// - Page Header
+const header = {
+	title: 'Desbloquea el <strong>Poder</strong> de Foxi',
+	text: 'Experimenta los beneficios de las potentes funciones de Foxi, diseñadas para simplificar tus tareas y mejorar tus resultados.'
+}
+// - Feature Data
+import featureData from '../../data/json-files/es/featuresData.json'
+// - Testimonial data
+import testimonialBackground from '../../assets/testimonial-bg-03.webp'
+const testimonialData = {
+	blockquote:
+		'Foxi no es solo una aplicación—es como tener un compañero travieso pero brillante para tu negocio. Simplifica tareas y también hace bromas para mantener el buen ánimo.',
+	figcaption: 'Max Widgetson',
+	cite: 'CEO, Widgetify Ltd'
+}
+// - CTA Data
+const ctaData = {
+	title: '¡Únete a más de 30,000 usuarios satisfechos!',
+	text: 'Descubre por qué miles de profesionales confían en nuestra plataforma para optimizar su flujo de trabajo y mejorar la productividad. ¡Empieza hoy y comprueba la diferencia por ti mismo!',
+	chipNotification: {
+		text: 'Producto del Año #1',
+		highlight: 'Product Hunt'
+	},
+	button: {
+		size: 'lg',
+		style: 'primary',
+		text: '¡Empieza ahora!'
+	}
+}
+---
+
+<Layout title={SEO.title} description={SEO.description} lang="es">
+	<Hero title={header.title} text={header.text} />
+	<Feature
+		title="Funciones <strong>Esenciales</strong> en Todos los Planes de Foxi"
+		text="Descubre las herramientas esenciales que vienen con cada plan de Foxi, diseñadas para mejorar tu productividad y optimizar tu flujo de trabajo."
+		sliceStart={0}
+		sliceEnd={8}
+		features={featureData}
+	/>
+	<Testimonial
+		bg={testimonialBackground}
+		bgPosition="left"
+		blockquote={testimonialData.blockquote}
+		figcaption={testimonialData.figcaption}
+		cite={testimonialData.cite}
+	/>
+	<Feature
+		title="Funciones Avanzadas para Llevar tu <strong>Flujo de Trabajo</strong> Más Allá"
+		text="Explora las capacidades adicionales disponibles en nuestros planes avanzados. Estas funciones están diseñadas para usuarios que buscan conocimientos más profundos y herramientas más poderosas para optimizar sus operaciones."
+		sliceStart={9}
+		sliceEnd={16}
+		features={featureData}
+	/>
+	<CTA data={ctaData} />
+</Layout>

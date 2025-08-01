@@ -1,0 +1,134 @@
+[
+	{
+		"title": "Análisis en Tiempo Real",
+		"icon": "chart-pie",
+		"description": "Obtén valiosos conocimientos al instante con los análisis en tiempo real de Foxi. Rastrea métricas de rendimiento, comportamiento de los usuarios y efectividad de campañas sin esfuerzo.",
+		"category": "Analítica"
+	},
+	{
+		"title": "Tableros Personalizables",
+		"icon": "squares-plus",
+		"description": "Adapta tu espacio de trabajo con tableros personalizados que se ajusten a tu flujo de trabajo. Mantente organizado y enfocado en lo que más importa para tu negocio.",
+		"category": "Analítica"
+	},
+	{
+		"title": "Informes Avanzados",
+		"icon": "clipboard-document-list",
+		"description": "Genera informes detallados con funciones avanzadas de análisis. Personaliza los informes para rastrear indicadores clave de rendimiento y obtener conocimientos más profundos.",
+		"category": "Analítica"
+	},
+	{
+		"title": "Temas Personalizados",
+		"icon": "paint-brush",
+		"description": "Personaliza el aspecto y la sensación de tu espacio de trabajo con temas personalizados. Elige entre varias opciones de diseño que se adapten al estilo de tu marca.",
+		"category": "Analítica"
+	},
+	{
+		"title": "Visualización de Datos",
+		"icon": "eye",
+		"description": "Visualiza tus datos con herramientas avanzadas de gráficos y tablas. Crea representaciones visuales perspicaces para comprender mejor tus métricas.",
+		"category": "Analítica"
+	},
+	{
+		"title": "Widgets Personalizados",
+		"icon": "squares-plus",
+		"description": "Mejora tu tablero con widgets personalizados. Agrega y configura widgets para mostrar la información más relevante para tus necesidades.",
+		"category": "Analítica"
+	},
+	{
+		"title": "Gestión de Tareas",
+		"icon": "clipboard-document-check",
+		"description": "Gestiona tareas y proyectos de manera eficiente con las herramientas intuitivas de gestión de tareas de Foxi. Asigna, sigue el progreso y colabora sin problemas.",
+		"category": "Productividad"
+	},
+	{
+		"title": "Aplicaciones de Terceros",
+		"icon": "rocket",
+		"description": "Conecta Foxi con tus herramientas y aplicaciones favoritas sin esfuerzo. Optimiza los flujos de trabajo y mejora la productividad con integraciones perfectas.",
+		"category": "Productividad"
+	},
+	{
+		"title": "Herramientas de Colaboración en Equipo",
+		"icon": "user-group",
+		"description": "Mejora la colaboración en equipo con herramientas diseñadas para una comunicación y gestión de proyectos efectivas. Comparte actualizaciones, archivos y comentarios sin problemas.",
+		"category": "Productividad"
+	},
+	{
+		"title": "Espacios de Trabajo Personalizables",
+		"icon": "cursor-arrow-ripple",
+		"description": "Personaliza el diseño de tu espacio de trabajo para ajustarlo a tus necesidades. Ajusta y configura tu espacio para lograr la máxima eficiencia y comodidad.",
+		"category": "Productividad"
+	},
+	{
+		"title": "Automatización de Tareas",
+		"icon": "rectangle-stack",
+		"description": "Automatiza tareas rutinarias para mejorar la eficiencia y reducir el trabajo manual. Configura procesos automatizados para optimizar tu flujo de trabajo.",
+		"category": "Productividad"
+	},
+	{
+		"title": "Seguimiento Avanzado de Errores",
+		"icon": "bug-ant",
+		"description": "Rastrea tareas y proyectos con funciones avanzadas de seguimiento. Supervisa el progreso, establece hitos y gestiona tus proyectos de manera más efectiva.",
+		"category": "Productividad"
+	},
+	{
+		"title": "Verificación de Identidad de Usuario",
+		"icon": "identification",
+		"description": "Analiza métricas de productividad para optimizar el rendimiento. Obtén información sobre la productividad del equipo e individual para impulsar mejoras.",
+		"category": "Productividad"
+	},
+	{
+		"title": "Accesibilidad Móvil",
+		"icon": "device-phone-mobile",
+		"description": "Mantente productivo sobre la marcha con la aplicación móvil de Foxi. Accede a funciones clave, colabora con tu equipo y gestiona tareas en cualquier momento y lugar.",
+		"category": "Soporte"
+	},
+	{
+		"title": "Soporte al Cliente Dedicado",
+		"icon": "trophy",
+		"description": "Recibe un soporte al cliente excepcional cuando lo necesites. Nuestro equipo dedicado está disponible 24/7 para asistirte con cualquier pregunta o problema.",
+		"category": "Soporte"
+	},
+	{
+		"title": "Notificaciones en Tiempo Real",
+		"icon": "bell-alert",
+		"description": "Mantente al tanto con notificaciones en tiempo real para eventos importantes y actualizaciones. No te pierdas información crítica con alertas instantáneas.",
+		"category": "Seguridad"
+	},
+	{
+		"title": "Seguridad de Datos Robusta",
+		"icon": "shield-check",
+		"description": "Ten la tranquilidad de que tus datos están seguros con las medidas de seguridad robustas de Foxi. Empleamos protocolos estándar de la industria para proteger tu información.",
+		"category": "Seguridad"
+	},
+	{
+		"title": "Gestión de Roles de Usuario",
+		"icon": "user",
+		"description": "Gestiona roles y permisos de usuario con facilidad. Controla los niveles de acceso y asegúrate de que las personas adecuadas tengan los permisos correctos para tu proyecto.",
+		"category": "Seguridad"
+	},
+	{
+		"title": "Copia de Seguridad de Datos",
+		"icon": "circle-stack",
+		"description": "Protege tus datos con copias de seguridad regulares. Asegúrate de que tu información esté segura y sea recuperable en caso de problemas inesperados o pérdida de datos.",
+		"category": "Seguridad"
+	},
+	{
+		"title": "Integraciones API",
+		"icon": "arrow-path-rounded-square",
+		"description": "Integra con otros sistemas y servicios usando nuestra API flexible. Expande la funcionalidad y conéctate con herramientas externas sin esfuerzo.",
+		"category": "Integraciones"
+	},
+	{
+		"title": "Mensajería In-App",
+		"icon": "chat-bubble-left-right",
+		"description": "Comunícate directamente dentro de la aplicación usando la mensajería in-app. Mantén las conversaciones organizadas y accesibles sin cambiar entre herramientas.",
+		"category": "Integraciones"
+	},
+	{
+		"title": "Marketplace de Integraciones",
+		"icon": "shopping-cart",
+		"description": "Explora nuestro marketplace para integraciones adicionales y plugins. Amplía la funcionalidad de tu plataforma con soluciones de terceros.",
+		"category": "Integraciones"
+	}
+]

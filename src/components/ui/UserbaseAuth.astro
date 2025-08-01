@@ -1,0 +1,268 @@
+---
+// UserbaseAuth Component
+// Handles login/logout functionality with Userbase
+---
+
+<div id="userbase-auth" class="flex items-center space-x-4">
+  <!-- Login/Signup Form (hidden when logged in) -->
+  <div id="auth-forms" class="flex items-center space-x-4">
+    <!-- Login Form -->
+    <div class="flex items-center space-x-2">
+      <input 
+        id="login-username" 
+        type="text" 
+        placeholder="Username" 
+        class="px-3 py-1 text-sm border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:text-white"
+      />
+      <input 
+        id="login-password" 
+        type="password" 
+        placeholder="Password" 
+        class="px-3 py-1 text-sm border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:text-white"
+      />
+      <button 
+        id="login-btn" 
+        class="px-4 py-1 text-sm font-medium text-white bg-blue-600 rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
+      >
+        Login
+      </button>
+      <button 
+        id="signup-btn" 
+        class="px-4 py-1 text-sm font-medium text-gray-700 bg-gray-200 rounded-md hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-gray-500 dark:bg-gray-600 dark:text-gray-200 dark:hover:bg-gray-500"
+      >
+        Sign Up
+      </button>
+    </div>
+    <div id="auth-error" class="text-sm text-red-600 dark:text-red-400"></div>
+  </div>
+
+  <!-- User Info (hidden when logged out) -->
+  <div id="user-info" class="flex items-center space-x-3" style="display: none;">
+    <span id="username-display" class="text-sm font-medium text-gray-700 dark:text-gray-300"></span>
+    <button 
+      id="logout-btn" 
+      class="px-3 py-1 text-sm font-medium text-gray-600 bg-gray-100 rounded-md hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-gray-500 dark:bg-gray-700 dark:text-gray-300 dark:hover:bg-gray-600"
+    >
+      Logout
+    </button>
+  </div>
+
+  <!-- Loading indicator -->
+  <div id="auth-loading" class="text-sm text-gray-500" style="display: none;">
+    Loading...
+  </div>
+</div>
+
+<script>
+  // Userbase authentication functionality
+  class UserbaseAuth {
+    constructor() {
+      this.currentUser = null;
+      this.isInitialized = false;
+      this.initializeUserbase();
+      this.bindEvents();
+    }
+
+    async initializeUserbase() {
+      try {
+        // Initialize Userbase with your app ID
+        await userbase.init({ 
+          appId: 'b4087b4c-d990-4ab0-8bb7-3c0e6acef0ff' 
+        });
+        this.isInitialized = true;
+        
+        // Check if user is already logged in
+        const session = await userbase.getSession();
+        if (session.user) {
+          this.handleLoginSuccess(session.user);
+        }
+      } catch (error) {
+        console.error('Failed to initialize Userbase:', error);
+        this.showError('Failed to initialize authentication system');
+      }
+    }
+
+    bindEvents() {
+      const loginBtn = document.getElementById('login-btn');
+      const signupBtn = document.getElementById('signup-btn');
+      const logoutBtn = document.getElementById('logout-btn');
+      const usernameInput = document.getElementById('login-username');
+      const passwordInput = document.getElementById('login-password');
+
+      loginBtn?.addEventListener('click', () => this.handleLogin());
+      signupBtn?.addEventListener('click', () => this.handleSignup());
+      logoutBtn?.addEventListener('click', () => this.handleLogout());
+
+      // Allow Enter key to trigger login
+      usernameInput?.addEventListener('keypress', (e) => {
+        if (e.key === 'Enter') this.handleLogin();
+      });
+      passwordInput?.addEventListener('keypress', (e) => {
+        if (e.key === 'Enter') this.handleLogin();
+      });
+    }
+
+    async handleLogin() {
+      const username = document.getElementById('login-username').value.trim();
+      const password = document.getElementById('login-password').value;
+
+      if (!username || !password) {
+        this.showError('Please enter both username and password');
+        return;
+      }
+
+      this.showLoading(true);
+      this.clearError();
+
+      try {
+        const user = await userbase.signIn({ 
+          username, 
+          password, 
+          rememberMe: 'local' 
+        });
+        this.handleLoginSuccess(user);
+      } catch (error) {
+        this.showError(error.message || 'Login failed');
+      } finally {
+        this.showLoading(false);
+      }
+    }
+
+    async handleSignup() {
+      const username = document.getElementById('login-username').value.trim();
+      const password = document.getElementById('login-password').value;
+
+      if (!username || !password) {
+        this.showError('Please enter both username and password');
+        return;
+      }
+
+      if (password.length < 6) {
+        this.showError('Password must be at least 6 characters long');
+        return;
+      }
+
+      this.showLoading(true);
+      this.clearError();
+
+      try {
+        const user = await userbase.signUp({ 
+          username, 
+          password, 
+          rememberMe: 'local' 
+        });
+        this.handleLoginSuccess(user);
+      } catch (error) {
+        this.showError(error.message || 'Signup failed');
+      } finally {
+        this.showLoading(false);
+      }
+    }
+
+    async handleLogout() {
+      this.showLoading(true);
+      
+      try {
+        await userbase.signOut();
+        this.handleLogoutSuccess();
+      } catch (error) {
+        console.error('Logout error:', error);
+        this.showError('Logout failed');
+      } finally {
+        this.showLoading(false);
+      }
+    }
+
+    handleLoginSuccess(user) {
+      this.currentUser = user;
+      
+      // Update UI
+      document.getElementById('auth-forms').style.display = 'none';
+      document.getElementById('user-info').style.display = 'flex';
+      document.getElementById('username-display').textContent = user.username;
+      
+      // Clear form
+      document.getElementById('login-username').value = '';
+      document.getElementById('login-password').value = '';
+      
+      this.clearError();
+      
+      // Dispatch custom event for other components to listen to
+      window.dispatchEvent(new CustomEvent('userbase-login', { 
+        detail: { user } 
+      }));
+    }
+
+    handleLogoutSuccess() {
+      this.currentUser = null;
+      
+      // Update UI
+      document.getElementById('auth-forms').style.display = 'flex';
+      document.getElementById('user-info').style.display = 'none';
+      
+      // Dispatch custom event
+      window.dispatchEvent(new CustomEvent('userbase-logout'));
+    }
+
+    showError(message) {
+      const errorElement = document.getElementById('auth-error');
+      if (errorElement) {
+        errorElement.textContent = message;
+      }
+    }
+
+    clearError() {
+      const errorElement = document.getElementById('auth-error');
+      if (errorElement) {
+        errorElement.textContent = '';
+      }
+    }
+
+    showLoading(show) {
+      const loadingElement = document.getElementById('auth-loading');
+      const formsElement = document.getElementById('auth-forms');
+      const userInfoElement = document.getElementById('user-info');
+      
+      if (show) {
+        loadingElement.style.display = 'block';
+        formsElement.style.display = 'none';
+        userInfoElement.style.display = 'none';
+      } else {
+        loadingElement.style.display = 'none';
+        if (this.currentUser) {
+          userInfoElement.style.display = 'flex';
+        } else {
+          formsElement.style.display = 'flex';
+        }
+      }
+    }
+
+    getCurrentUser() {
+      return this.currentUser;
+    }
+
+    isLoggedIn() {
+      return !!this.currentUser;
+    }
+  }
+
+  // Initialize auth when DOM is ready
+  let authInstance = null;
+  
+  function initializeAuth() {
+    if (typeof userbase !== 'undefined' && !authInstance) {
+      authInstance = new UserbaseAuth();
+      window.userbaseAuth = authInstance; // Make it globally accessible
+    }
+  }
+
+  // Try to initialize immediately if userbase is already loaded
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initializeAuth);
+  } else {
+    initializeAuth();
+  }
+
+  // Also try after a short delay in case userbase loads asynchronously
+  setTimeout(initializeAuth, 100);
+</script>

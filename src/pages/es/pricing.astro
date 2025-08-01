@@ -1,0 +1,88 @@
+---
+// Components
+// - Layout
+import Layout from '../../layouts/Layout.astro'
+// - UI
+import Hero from '../../components/blocks/hero/PageHeader.astro'
+import Price from '../../components/blocks/pricing/PricingColumns.astro'
+import SocialProof from '../../components/blocks/socialproof/Basic.astro'
+import FAQ from '../../components/blocks/FAQ/Basic.astro'
+import Testimonial from '../../components/blocks/testimonials/BasicDark.astro'
+import Feature from '../../components/blocks/features/FeatureList.astro'
+import CTA from '../../components/blocks/CTA/BasicDark.astro'
+
+// Content
+// - SEO
+const SEO = {
+	title: 'Foxi | Pricing made simple',
+	description:
+		'Discover the perfect SaaS pricing plan for your business. From startups to enterprises, our scalable solutions offer unparalleled features and 24/7 support.'
+}
+// - Page Header
+const header = {
+	title: 'Elige el plan que se adapte a <strong>tus</strong> necesidades',
+	text: 'Todos los planes incluyen una garantía de devolución de dinero de 30 días.'
+}
+
+// - Pricing Data
+import pricingTablesData from '../../data/json-files/es/pricingTablesdata.json'
+const billingData = {
+	option1: 'Mensual',
+	option2: 'Anual'
+}
+// - FAQ Data
+import faqData from '../../data/json-files/es/pricingFaqData.json'
+// - SocialProof Data
+const SocialProofData = {
+	title: 'Confiado por <strong>50,000+</strong> empresas'
+}
+// - Feature Data
+import featureData from '../../data/json-files/es/featuresData.json'
+// - Testimonial data
+import testimonialBackground from '../../assets/testimonial-bg-02.webp'
+const testimonialData = {
+	blockquote:
+		'Foxi no es solo una aplicación: es como tener un compañero travieso pero brillante para tu negocio. Simplifica tareas y además cuenta chistes para mantener el ánimo en alto',
+	figcaption: 'Max Widgetson',
+	cite: 'CEO, Widgetify Ltd'
+}
+// - CTA Data
+const ctaData = {
+	title: '¡Únete a más de 30,000 usuarios satisfechos!',
+	text: 'Descubre por qué miles de profesionales confían en nuestra plataforma para optimizar su flujo de trabajo y mejorar la productividad. ¡Empieza hoy y comprueba la diferencia por ti mismo!',
+	chipNotification: {
+		text: 'Producto del Año #1',
+		highlight: 'Product Hunt'
+	},
+	button: {
+		size: 'lg',
+		style: 'primary',
+		text: '¡Empieza ahora!'
+	}
+}
+---
+
+<Layout title={SEO.title} description={SEO.description} lang="es">
+	<Hero title={header.title} text={header.text} />
+	<Price billing={billingData} pricingTableData={pricingTablesData} />
+	<SocialProof data={SocialProofData} />
+	<Feature
+		title="Herramientas innovadoras para <strong>transformar</strong> tu flujo de trabajo"
+		text="Explora la suite de herramientas diseñadas para optimizar tu flujo de trabajo, mejorar la productividad y fomentar el crecimiento. Cada producto está elaborado con precisión para satisfacer tus necesidades y superar tus expectativas."
+		features={featureData}
+	/>
+	<Testimonial
+		bg={testimonialBackground}
+		bgPosition="left"
+		blockquote={testimonialData.blockquote}
+		figcaption={testimonialData.figcaption}
+		cite={testimonialData.cite}
+	/>
+	<FAQ
+		title="Desmitificando <strong>precios,</strong> respuestas a preguntas comunes"
+		text="¿Tienes curiosidad por nuestros planes de precios? Estamos aquí para ayudarte. A continuación, algunas de las preguntas más frecuentes sobre nuestras opciones de precios."
+		data={faqData}
+		classes="bg-slate-50 dark:bg-neutral-900/40"
+	/>
+	<CTA data={ctaData} />
+</Layout>

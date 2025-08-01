@@ -1,0 +1,58 @@
+---
+// Social Proof Section
+// ------------
+// Description: A section with logos of social media platforms to enchance the trust of the users.
+// Properties:
+// - classes: Additional classes to be added to the section
+
+// Components
+// - UI
+import { Image } from 'astro:assets'
+
+// Content
+// - Images
+import airtable from '../../../assets/logos/airtable-logo.svg'
+import asana from '../../../assets/logos/asana-logo.svg'
+import basecamp from '../../../assets/logos/basecamp-logo.svg'
+import evernote from '../../../assets/logos/evernote-logo.svg'
+import notion from '../../../assets/logos/notion-logo.svg'
+import slack from '../../../assets/logos/slack-logo.svg'
+
+// Data
+const images = [
+	{
+		image: airtable,
+		alt: 'Airtable logo'
+	},
+	{
+		image: asana,
+		alt: 'Asana logo'
+	},
+	{
+		image: basecamp,
+		alt: 'Basecamp logo'
+	},
+	{
+		image: evernote,
+		alt: 'Evernote logo'
+	},
+	{
+		image: notion,
+		alt: 'Notion logo'
+	},
+	{
+		image: slack,
+		alt: 'Slack logo'
+	}
+]
+
+// Props
+type Props = {
+	classes?: string
+}
+const { classes } = Astro.props
+---
+
+<div class={`"flex w-full flex-wrap justify-center gap-4 ${classes}`}>
+	{images.map((item) => <Image src={item.image} alt={item.alt} />)}
+</div>

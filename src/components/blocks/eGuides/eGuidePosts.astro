@@ -1,0 +1,88 @@
+---
+// Blog Posts grid Section
+// ------------
+// Description: A grid of blog posts sorted by date in a 3 column layout.
+// Properties:
+// - data: An array of blog posts
+// - pagination: The pagination object
+
+// Components
+// - Layout
+import Section from '../../ui/Section.astro'
+import Row from '../../ui/Row.astro'
+import Col from '../../ui/Col.astro'
+// - UI
+import BadgeNavigation from '../../ui/collection-navigation/BadgeNavigation.astro'
+import Pagination from '../../ui/Pagination.astro'
+import GuideCard from '../../ui/cards/GuideCard.astro'
+
+// Props
+type Props = {
+	data: any
+	pagination?: {
+		first: string
+		prev: string
+		next: string
+		last: string
+		current: string
+		length: number
+		size: number
+		total: number
+	}
+	lang?: 'en' | 'es'
+}
+const { data: allPosts, pagination, lang = 'en' } = Astro.props
+
+// Sort posts and update slug by removing the language prefix
+const sortedPosts = allPosts.map((post: any) => {
+	post.id = post.id.replace(new RegExp(`^${lang}/`), '') // Remove language prefix from slug
+	return { ...post, lang } // Attach lang to the post object
+})
+---
+
+<Section>
+	<Row>
+		<Col span="12">
+			<BadgeNavigation collection="eguides" lang={lang} />
+		</Col>
+	</Row>
+	<Row>
+		{
+			sortedPosts.map((post: any, index: number) => (
+				<Col span={index === 0 ? '12' : '4'}>
+					<GuideCard
+						link={`${lang === 'en' ? '' : '/es'}/eguides/${post.id}`}
+						title={post.data.title}
+						image={post.data.image}
+						readTime={post.data.readingTime}
+						badges={post.data.badges}
+						type={index === 0 ? 'featured' : ''}
+						lang={lang}
+					>
+						<div>{post.data.description}</div>
+					</GuideCard>
+				</Col>
+			))
+		}
+	</Row>
+	{
+		pagination && (
+			<Row classes="pt-16">
+				<Col span="12">
+					<Pagination
+						first={pagination.first}
+						prev={pagination.prev}
+						next={pagination.next}
+						last={pagination.last}
+						current={pagination.current}
+						length={pagination.length}
+						size={pagination.size}
+						total={pagination.total}
+						collection="eguides"
+						lang={lang}
+					/>
+				</Col>
+			</Row>
+		)
+	}
+</Section>

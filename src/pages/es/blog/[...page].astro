@@ -1,0 +1,59 @@
+---
+// Blog Page
+// ------------
+// Description: The blog page is a page that displays all the blog posts.
+
+// Components
+// - Layout
+import Layout from '../../../layouts/Layout.astro'
+// - UI
+import Hero from '../../../components/blocks/hero/PageHeader.astro'
+import BlogPosts from '../../../components/blocks/blog/BlogPosts.astro'
+import { getCollection } from 'astro:content'
+
+export async function getStaticPaths({ paginate }: any) {
+	const allPosts = await getCollection('blog', ({ id }) => {
+		return id.startsWith('es/')
+	})
+
+	// Generate pages from our array of blog, with 6 to a page
+	return paginate(allPosts, { pageSize: 6 })
+}
+// All paginated data is passed on the "page" prop
+const { page } = Astro.props as any
+
+// Content
+// - SEO
+const SEO = {
+	title: 'Foxi | Últimas noticias y actualizaciones de Foxi',
+	description:
+		'Explora las últimas noticias de Foxi diseñadas para mejorar la productividad, garantizar una seguridad de primer nivel e integrarse sin problemas con tus herramientas favoritas. ¡Únete a miles de usuarios satisfechos y transforma tu flujo de trabajo con Foxi hoy!'
+}
+// - Page Header
+const header = {
+	title: 'El <strong>Blog</strong> de Foxi. Consejos, Actualizaciones e Historias',
+	text: 'Mantente informado, mantente productivo. Todas las novedades del mundo de Foxi.'
+}
+---
+
+<Layout title={SEO.title} description={SEO.description} lang="es">
+	<Hero title={header.title} text={header.text} />
+	<BlogPosts
+		data={page.data}
+		lang="es"
+		{...page.lastPage === 1
+			? {}
+			: {
+					pagination: {
+						first: page.url.first,
+						current: page.url.current,
+						length: page.lastPage,
+						prev: page.url.prev,
+						next: page.url.next,
+						last: page.url.last,
+						size: page.size,
+						total: page.total
+					}
+				}}
+	/>
+</Layout>

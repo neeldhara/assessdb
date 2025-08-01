@@ -1,0 +1,80 @@
+[
+	{
+		"title": "Slack",
+		"image": "/integrations/slack-integration.svg",
+		"description": "Integra Foxi con Slack para recibir notificaciones y gestionar llamadas directamente desde tus canales de Slack.",
+		"category": "Comunicación"
+	},
+	{
+		"title": "Microsoft Teams",
+		"image": "/integrations/microsoft-teams-integration.svg",
+		"description": "Conecta Foxi con Microsoft Teams para gestionar tus llamadas y comunicaciones directamente dentro de Teams.",
+		"category": "Comunicación"
+	},
+	{
+		"title": "Zoom",
+		"image": "/integrations/zoom-integration.svg",
+		"description": "Sincroniza Foxi con Zoom para una integración fluida de llamadas y reuniones por video.",
+		"category": "Comunicación"
+	},
+	{
+		"title": "Google Meet",
+		"image": "/integrations/google-meet-integration.svg",
+		"description": "Vincula Foxi con Google Meet para mejorar tus reuniones virtuales con funcionalidades de llamadas integradas.",
+		"category": "Comunicación"
+	},
+	{
+		"title": "Cisco Webex",
+		"image": "/integrations/webex-integration.svg",
+		"description": "Integra Foxi con Cisco Webex para optimizar tus comunicaciones y gestionar llamadas de manera eficiente.",
+		"category": "Comunicación"
+	},
+	{
+		"title": "Asana",
+		"image": "/integrations/asana-integration.svg",
+		"description": "Sincroniza Foxi con Asana para organizar tareas y proyectos de manera más eficiente.",
+		"category": "Productividad"
+	},
+	{
+		"title": "Monday.com",
+		"image": "/integrations/monday-integration.svg",
+		"description": "Integra Foxi con Monday.com para agilizar la gestión de tareas y flujos de trabajo de proyectos.",
+		"category": "Productividad"
+	},
+	{
+		"title": "ClickUp",
+		"image": "/integrations/clickup-integration.svg",
+		"description": "Combina Foxi con ClickUp para mejorar tu productividad gestionando tareas y proyectos en un solo lugar.",
+		"category": "Productividad"
+	},
+	{
+		"title": "Notion",
+		"image": "/integrations/notion-integration.svg",
+		"description": "Integra Foxi con Notion para gestionar proyectos, tareas y notas de manera eficiente.",
+		"category": "Productividad"
+	},
+	{
+		"title": "Zendesk",
+		"image": "/integrations/zendesk-integration.svg",
+		"description": "Vincula Foxi con Zendesk para mejorar el soporte al cliente con la gestión de llamadas integrada.",
+		"category": "Soporte al Cliente"
+	},
+	{
+		"title": "Intercom",
+		"image": "/integrations/intercom-integration.svg",
+		"description": "Conecta Foxi con Intercom para mejorar las interacciones con los clientes y el soporte con llamadas integradas.",
+		"category": "Soporte al Cliente"
+	},
+	{
+		"title": "Help Scout",
+		"image": "/integrations/helpscout-integration.svg",
+		"description": "Sincroniza Foxi con Help Scout para gestionar eficientemente los tickets de soporte y las llamadas.",
+		"category": "Soporte al Cliente"
+	},
+	{
+		"title": "Olark",
+		"image": "/integrations/olark-integration.svg",
+		"description": "Combina Foxi con Olark para mejorar el soporte de chat en vivo con funciones de llamadas integradas.",
+		"category": "Soporte al Cliente"
+	}
+]

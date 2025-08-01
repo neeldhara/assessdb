@@ -1,0 +1,57 @@
+---
+// Blog Author Page
+// ------------
+// Description: The blog author page is a page that displays all the blog posts written by a specific author.
+
+// Components
+// - Layout
+import Layout from '../../../layouts/Layout.astro'
+// - UI
+import Hero from '../../../components/blocks/hero/PageHeader.astro'
+import BlogPosts from '../../../components/blocks/blog/BlogPosts.astro'
+import Badge from '../../../components/ui/Badge.astro'
+
+// Data
+import { getCollection } from 'astro:content'
+export async function getStaticPaths() {
+	const allAuthors = await getCollection('blog', ({ id }) => id.startsWith('en/'))
+	const uniqueAuthors = [...new Set(allAuthors.map((blogAuthor) => blogAuthor.data.author).flat())]
+
+	return uniqueAuthors.map((author) => {
+		const filteredGuides = allAuthors.filter((blogAuthor) =>
+			blogAuthor.data.author.includes(author)
+		)
+		return {
+			params: { author },
+			props: { authors: filteredGuides }
+		}
+	})
+}
+const { author } = Astro.params
+const { authors } = Astro.props
+
+// Format and hold the formatted author name in one statement
+const formattedAuthorName = author
+	.split('-')
+	.map((part) => part.charAt(0).toUpperCase() + part.slice(1))
+	.join(' ')
+
+// Content
+// - SEO
+const SEO = {
+	title: `Foxi | Author ` + formattedAuthorName,
+	description:
+		"Explore Foxi's latest news designed to enhance productivity, ensure top-notch security, and integrate seamlessly with your favorite tools. Join thousands of satisfied users and transform your workflow with Foxi today!"
+}
+
+// - Page Header
+const header = {
+	title: `Blog posts writter by <br><strong>` + formattedAuthorName + `</strong>`,
+	text: `View all the latest Foxi posts from ` + formattedAuthorName + `.`
+}
+---
+
+<Layout title={SEO.title} description={SEO.description} noindex>
+	<Hero title={header.title} text={header.text} />
+	<BlogPosts data={authors} type="authors" lang="en" />
+</Layout>

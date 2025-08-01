@@ -1,0 +1,66 @@
+---
+// Components
+// - Layout
+import Layout from '../layouts/Layout.astro'
+// - UI
+import Hero from '../components/blocks/hero/HomeCTASlider.astro'
+import Features from '../components/blocks/features/FeatureList.astro'
+import Testimonial from '../components/blocks/testimonials/BasicLight.astro'
+import HighlightBlocks from '../components/blocks/highlights/HightlightRows.astro'
+import CTA from '../components/blocks/CTA/BasicPrimary.astro'
+import YoutubePopup from '../components/blocks/modal/VideoPopup.astro'
+
+// Content
+// - Backgrounds
+import testimonialBackground from '../assets/testimonial-bg-04.webp'
+// - SEO
+const SEO = {
+	title: 'Foxi | Your Productivity Toolkit',
+	description:
+		'Foxi is a powerful productivity toolkit designed to enhance your workflow and boost your productivity. With features like analytics, security, and integrations, Foxi is the perfect solution for your business.'
+}
+// - Hero Data
+const heroData = {
+	title: 'Optimize Team <strong>Collaboration</strong> with Hassle-Free Integration.',
+	text: 'Work smarter, not harder, with our innovative platform. Explore the suite of tools designed to streamline your workflow.',
+	actions: {
+		primary: 'Get started for free'
+	}
+}
+// - Feature Data
+import featureData from '../data/json-files/en/featuresData.json'
+// - Highlights Data
+import highlightData from '../data/json-files/en/highlightData.json'
+// - CTA Data
+const ctaData = {
+	title: 'Join the Foxi Revolution!',
+	text: 'Discover why thousands of professionals trust our platform to streamline their workflow and enhance productivity. Get started today and see the difference for yourself!',
+	rating: {
+		value: 5,
+		text: '30K customer ratings'
+	},
+	button: {
+		size: 'lg',
+		style: 'white',
+		text: 'Get Started Now'
+	}
+}
+---
+
+<Layout title={SEO.title} description={SEO.description}>
+	<Hero data={heroData} />
+	<Features
+		title=`Innovative tools to <strong>transform</strong> your workflow`
+		features={featureData}
+	/>
+	<Testimonial
+		blockquote="The Foxi theme is a breath of fresh air in the world of web development. Its speed and customization options are incredible. "
+		figcaption="Satya Nadella"
+		cite="CEO, Microsoft"
+		bg={testimonialBackground}
+		bgPosition="right"
+	/>
+	<HighlightBlocks data={highlightData} />
+	<CTA data={ctaData} />
+	<YoutubePopup lang="en" />
+</Layout>

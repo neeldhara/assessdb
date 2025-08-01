@@ -1,0 +1,63 @@
+---
+// Signup Form
+// ------------
+// Description: The component for the signup form
+// Properties:
+// - title: The title of the form
+// - text: The text of the form
+// - classes: Additional classes to be added to the form
+
+// Components
+// - UI
+import Form from '../../ui/forms/Form.astro'
+import FormField from '../../ui/forms/partials/FormField.astro'
+import InputField from '../../ui/forms/form-elements/InputField.astro'
+import Button from '../../ui/Button.astro'
+
+// Content
+// - Props
+type Props = {
+	data: {
+		title?: string
+		text?: string
+		formFields?: any
+	}
+
+	classes?: string
+}
+const { data, classes } = Astro.props
+---
+
+<Form class:list={[{ [`${classes}`]: classes }]}>
+	{data.title && <h1 class="text-center text-5xl">{data.title}</h1>}
+	{data.text && <p class="text-center">{data.text}</p>}
+	<FormField>
+		<InputField
+			type="email"
+			id="email"
+			label={data.formFields.email.label}
+			required
+			value={data.formFields.email.value}
+			inputClasses="dark:autofill:!bg-neutral-950 dark:!bg-neutral-950"
+			labelClasses="dark:before:!bg-neutral-950"
+		/>
+	</FormField>
+	<FormField classes="lg:!flex-col !items-end !gap-3">
+		<InputField
+			type="password"
+			id="password"
+			label={data.formFields.password.label}
+			required
+			value={data.formFields.password.value}
+			inputClasses="dark:autofill:!bg-neutral-950 dark:!bg-neutral-950"
+			labelClasses="dark:before:!bg-neutral-950"
+		/>
+		<a href="#" class="text-right text-sm">
+			{data.formFields.forgotPassword}
+		</a>
+	</FormField>
+
+	<Button style="primary" type="submit" classes="w-full">
+		{data.formFields.button}
+	</Button>
+</Form>

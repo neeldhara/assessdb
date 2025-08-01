@@ -1,0 +1,26 @@
+[
+	{
+		"title": "Advanced Reporting",
+		"image": "/cards/feature-04.svg",
+		"description": "Generate detailed reports with advanced analytics features. Customize reports to track key performance indicators and gain deeper insights.",
+		"column": "one"
+	},
+	{
+		"title": "Advanced Bug Tracking",
+		"image": "/cards/feature-05.svg",
+		"description": "Track tasks and projects with advanced tracking features. Monitor progress, set milestones, and manage your projects more effectively.",
+		"column": "two"
+	},
+	{
+		"title": "Customizable Themes",
+		"image": "/cards/feature-03.svg",
+		"description": "Customize the look and feel of your workspace with custom themes. Choose from various design options to match your brand's style.",
+		"column": "one"
+	},
+	{
+		"title": "Task Automation",
+		"image": "/cards/feature-04.svg",
+		"description": "Automate routine tasks to improve efficiency and reduce manual work. Set up automated processes to streamline your workflow.",
+		"column": "two"
+	}
+]

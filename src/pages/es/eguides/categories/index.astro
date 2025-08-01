@@ -1,0 +1,23 @@
+---
+// Eguides Categories Page
+// ------------
+// Description: The EGuides categories page is a page that displays all the EGuides tagged with all the categories.
+
+// Components
+// - Layout
+import Layout from '../../../../layouts/Layout.astro'
+// - UI
+import Hero from '../../../../components/blocks/hero/PageHeader.astro'
+import EGuidePosts from '../../../../components/blocks/eGuides/eGuidePosts.astro'
+
+// Data
+import { getCollection } from 'astro:content'
+const allEguides = await getCollection('eguides', ({ id }) => {
+	return id.startsWith('es/')
+})
+---
+
+<Layout noindex lang="es">
+	<Hero title="Categories" />
+	<EGuidePosts data={allEguides} />
+</Layout>

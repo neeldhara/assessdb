@@ -1,0 +1,177 @@
+---
+// Components
+// - Layout
+import Layout from '../../layouts/Layout.astro'
+// - UI
+import SidebarContent from '../../components/blocks/basic/StickySidebar.astro'
+import Hero from '../../components/blocks/hero/PageHeader.astro'
+
+// Content
+// - SEO
+const SEO = {
+	title: 'Foxi | Términos de Servicio',
+	description:
+		'Los términos de servicio de Foxi describen las reglas y regulaciones que rigen el uso de nuestros servicios. Por favor, léalos detenidamente para comprender sus derechos y responsabilidades.'
+}
+// - Page Header
+const header = {
+	title: 'Términos y Condiciones: ¡Lee, Relájate y <strong>Disfruta!</strong>',
+	text: 'Por favor, léalos detenidamente para comprender sus derechos y responsabilidades.'
+}
+---
+
+<Layout title={SEO.title} description={SEO.description} lang="es">
+	<Hero title={header.title} text={header.text} />
+	<SidebarContent>
+		<div slot="sidebar">
+			<h3>Introducción</h3>
+			<p>
+				Por favor, tómese un momento para leer estos términos y comprender sus derechos y
+				responsabilidades al utilizar nuestros servicios.
+			</p>
+		</div>
+		<div class="basic-text">
+			<h4>Bienvenido a Foxi</h4>
+			<p>
+				¡Bienvenido a Foxi! Estamos encantados de tenerte a bordo. Nuestros servicios están
+				diseñados para ayudarte a mantenerte organizado, comunicarte eficazmente y aumentar tu
+				productividad. Al usar Foxi, aceptas estos términos y condiciones, así que léelos
+				detenidamente.
+			</p>
+			<p>
+				Tu satisfacción es importante para nosotros. Si tienes alguna pregunta o inquietud sobre
+				estos términos, no dudes en contactarnos. Nuestro equipo está aquí para asistirte y
+				asegurarse de que tengas una gran experiencia con Foxi.
+			</p>
+
+			<h4>Aceptación de Términos</h4>
+			<p>
+				Al acceder o usar nuestros servicios, aceptas cumplir y estar sujeto a estos Términos de
+				Servicio y a nuestra Política de Privacidad. Si no estás de acuerdo con alguna parte de
+				estos términos, no debes utilizar nuestros servicios. Tu uso continuo de Foxi significa que
+				aceptas estos términos.
+			</p>
+			<p>
+				Nos reservamos el derecho de modificar estos términos en cualquier momento. Te notificaremos
+				de cualquier cambio publicando los nuevos términos en nuestro sitio web. Es tu
+				responsabilidad revisar estos términos periódicamente. El uso continuo del servicio después
+				de cualquier cambio significa que aceptas los nuevos términos.
+			</p>
+
+			<h4>Nuestro Compromiso Contigo</h4>
+			<p>
+				En Foxi, estamos comprometidos a ofrecerte servicios confiables y de alta calidad. Nuestro
+				objetivo es ayudarte a alcanzar tus objetivos de productividad y organización con facilidad.
+				Trabajamos continuamente para mejorar nuestros servicios y brindarte la mejor experiencia
+				posible.
+			</p>
+			<p>
+				Valoramos tus comentarios y sugerencias. No dudes en comunicarte con nosotros con cualquier
+				comentario o idea sobre cómo podemos servirte mejor. Tu opinión nos ayuda a mejorar Foxi y
+				cumplir con tus necesidades.
+			</p>
+		</div>
+	</SidebarContent>
+	<SidebarContent classes="bg-neutral-50 dark:bg-neutral-900">
+		<div slot="sidebar">
+			<h3>Cuentas de Usuario</h3>
+			<p>
+				Esta sección explica los requisitos y responsabilidades asociados con la creación y
+				mantenimiento de una cuenta de usuario en Foxi. Asegúrate de entender y cumplir con estas
+				pautas para utilizar nuestros servicios de manera efectiva.
+			</p>
+		</div>
+		<div class="basic-text">
+			<h4>Registro</h4>
+			<p>
+				Para acceder a ciertas características de Foxi, debes crear una cuenta de usuario. Durante
+				el registro, aceptas proporcionar información precisa y completa. Esta información nos ayuda
+				a servirte mejor y garantiza la seguridad y funcionalidad de tu cuenta.
+			</p>
+			<p>
+				Al registrarte, también aceptas mantener tu información actualizada. La información inexacta
+				o desactualizada puede llevar a problemas con tu cuenta y puede afectar tu capacidad para
+				utilizar ciertas funciones de Foxi.
+			</p>
+
+			<h4>Seguridad de la Cuenta</h4>
+			<p>
+				Mantener la seguridad de tu cuenta es tu responsabilidad. Aceptas mantener tu contraseña
+				confidencial y no compartirla con nadie. Si sospechas de algún uso no autorizado de tu
+				cuenta, debes notificarnos de inmediato.
+			</p>
+			<p>
+				Recomendamos usar una contraseña fuerte y única para tu cuenta de Foxi. Actualizar
+				regularmente tu contraseña y usar la autenticación de dos factores, si está disponible,
+				puede mejorar aún más la seguridad de tu cuenta.
+			</p>
+
+			<h4>Uso de la Cuenta</h4>
+			<p>
+				Como titular de la cuenta, eres responsable de todas las actividades que ocurran bajo tu
+				cuenta. Esto incluye cualquier acción realizada por otros que puedan tener acceso a tu
+				cuenta. Asegúrate de monitorear y gestionar el uso de tu cuenta de manera adecuada.
+			</p>
+			<p>
+				Si detectamos actividades sospechosas o no autorizadas, podemos tomar medidas para proteger
+				tu cuenta, incluyendo la suspensión temporal del acceso o la exigencia de pasos adicionales
+				de verificación. Nuestro objetivo es salvaguardar tu cuenta y tu información personal.
+			</p>
+		</div>
+	</SidebarContent>
+	<SidebarContent>
+		<div slot="sidebar">
+			<h3>Limitación de Responsabilidad</h3>
+			<p>
+				Esta sección describe las limitaciones de nuestra responsabilidad con respecto al uso de los
+				servicios de Foxi. Comprender estas limitaciones te ayuda a conocer el alcance de nuestras
+				responsabilidades y tus derechos.
+			</p>
+		</div>
+		<div class="basic-text">
+			<h4>Limitaciones Generales</h4>
+			<p>
+				Foxi se proporciona "tal cual" y "según disponibilidad". No garantizamos que el servicio sea
+				ininterrumpido, libre de errores o completamente seguro. Renunciamos a todas las garantías,
+				ya sean expresas o implícitas, incluidas, entre otras, las garantías implícitas de
+				comerciabilidad, adecuación para un propósito particular y no infracción.
+			</p>
+			<p>
+				No somos responsables de ningún daño resultante del uso o la imposibilidad de usar nuestros
+				servicios, incluidos, entre otros, daños directos, indirectos, incidentales, especiales,
+				consecuentes o punitivos. Esto incluye daños por pérdida de beneficios, datos u otros
+				intangibles.
+			</p>
+
+			<h4>Servicios de Terceros</h4>
+			<p>
+				Foxi puede incluir enlaces a sitios web o servicios de terceros que no son propiedad ni
+				están controlados por nosotros. No respaldamos ni asumimos ninguna responsabilidad por
+				dichos sitios de terceros, información, materiales, productos o servicios. El acceso y uso
+				de estos servicios de terceros es bajo tu propio riesgo.
+			</p>
+			<p>
+				No somos responsables de ninguna pérdida o daño incurrido como resultado de cualquier trato
+				con sitios web o servicios de terceros, incluido el intercambio de tu información con dichos
+				terceros. Es tu responsabilidad revisar los términos y condiciones y las políticas de
+				privacidad de cualquier sitio web o servicio de terceros que utilices.
+			</p>
+
+			<h4>Máxima Responsabilidad</h4>
+			<p>
+				En ningún caso nuestra responsabilidad total ante ti por todas las reclamaciones que surjan
+				de o estén relacionadas con el uso o la imposibilidad de usar el servicio excederá el monto
+				pagado por ti, si lo hubiera, por acceder a Foxi durante los doce (12) meses inmediatamente
+				anteriores a la fecha de la reclamación. Esta limitación se aplica independientemente de la
+				forma o fuente de la reclamación o pérdida, ya sea que dicha responsabilidad surja de
+				cualquier reclamación basada en contrato, garantía, agravio o de otro modo.
+			</p>
+			<p>
+				Algunas jurisdicciones no permiten la exclusión o limitación de responsabilidad por daños
+				consecuentes o incidentales, por lo que la limitación anterior puede no aplicarse a ti. En
+				tales casos, nuestra responsabilidad se limitará en la máxima medida permitida por la ley
+				aplicable.
+			</p>
+		</div>
+	</SidebarContent>
+</Layout>

@@ -1,0 +1,17 @@
+[
+	{
+		"image": "/cards/featureblock-01.svg",
+		"title": "Real-Time Analytics",
+		"text": "Gain valuable insights instantly with Foxi's real-time analytics. Track performance metrics, user behavior, and campaign effectiveness effortlessly."
+	},
+	{
+		"image": "/cards/featureblock-02.svg",
+		"title": "Customizable Dashboards",
+		"text": "Tailor your workspace with personalized dashboards that suit your workflow. Stay organized and focused on what matters most."
+	},
+	{
+		"image": "/cards/featureblock-03.svg",
+		"title": "Advanced Reporting",
+		"text": "Generate detailed reports with advanced analytics features. Customize reports to track key performance indicators."
+	}
+]

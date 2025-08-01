@@ -1,0 +1,41 @@
+---
+// Home page CTA Section
+// ------------
+// Description: A centered call to action section that contains: a title, text, a user review snippet, a button and a image.
+
+// Components
+// - Layout
+import Section from '../../ui/Section.astro'
+import Row from '../../ui/Row.astro'
+import Col from '../../ui/Col.astro'
+// - UI
+import NumberedSlider from '../../ui/slider/TextNumberedSlider.astro'
+
+// Content
+
+// - Props
+type Props = {
+	data: Array<any>
+}
+const { data } = Astro.props
+---
+
+<Section
+	id="introSlider"
+	padding="none"
+	fullWidth
+	classes="bg-neutral-50 dark:bg-neutral-900 [&_.container]:!p-0"
+>
+	<Row>
+		<Col span="12">
+			<NumberedSlider
+				itemList={data}
+				slidesPerView={1}
+				id="s02"
+				delay={6000}
+				showNavigation={false}
+				navClasses="p-6 gap-6 [&_.nav-item]:md:!items-start "
+			/>
+		</Col>
+	</Row>
+</Section>

@@ -1,0 +1,76 @@
+---
+// Components
+// - Layout
+import Layout from '../../layouts/Layout.astro'
+// - UI
+import Feature from '../../components/blocks/features/FeatureSticky.astro'
+import Hero from '../../components/blocks/hero/PageHeader.astro'
+import CTA from '../../components/blocks/CTA/BasicDark.astro'
+
+// Content
+// - SEO
+const SEO = {
+	title: 'Foxi | Funciones para Impulsar la Productividad y la Seguridad',
+	description:
+		'Explora las potentes funciones de Foxi diseñadas para mejorar la productividad, garantizar una seguridad de primer nivel e integrarse sin problemas con tus herramientas favoritas. ¡Únete a miles de usuarios satisfechos y transforma tu flujo de trabajo con Foxi hoy mismo!'
+}
+// - Page Header
+const header = {
+	title: 'Por qué tú y tu equipo <strong>amarán</strong> a Foxi.',
+	text: '¡Simplifica tus tareas, protege tus datos y disfruta trabajando con nuestras herramientas!'
+}
+// - Feature Data
+import featuresData from '../../data/json-files/es/featuresData.json'
+// -- Feature Categories
+const featuresAnalytics = featuresData.filter((feature) => feature.category === 'Analítica')
+const featuresProductivity = featuresData.filter((feature) => feature.category === 'Productividad')
+const featuresSecurity = featuresData.filter((feature) => feature.category === 'Seguridad')
+const featuresIntegrations = featuresData.filter((feature) => feature.category === 'Integraciones')
+const featuresSupport = featuresData.filter((feature) => feature.category === 'Soporte')
+// - CTA Data
+const ctaData = {
+	title: '¡Únete a más de 30,000 usuarios satisfechos!',
+	text: 'Descubre por qué miles de profesionales confían en nuestra plataforma para optimizar su flujo de trabajo y mejorar la productividad. ¡Empieza hoy y comprueba la diferencia por ti mismo!',
+	chipNotification: {
+		text: 'Producto del Año #1',
+		highlight: 'Product Hunt'
+	},
+	button: {
+		size: 'lg',
+		style: 'primary',
+		text: '¡Empieza ahora!'
+	}
+}
+---
+
+<Layout title={SEO.title} description={SEO.description} lang="es">
+	<Hero title={header.title} text={header.text} />
+	<Feature
+		title="Analítica Perspicaz"
+		text="Profundiza en tus datos con precisión y descubre información procesable."
+		data={featuresAnalytics}
+	/>
+	<Feature
+		title="Eficiencia Desatada"
+		text="Simplifica tareas y concéntrate en lo que importa con herramientas diseñadas para aumentar tu productividad."
+		data={featuresSecurity}
+		classes="bg-neutral-50 dark:bg-neutral-900"
+	/>
+	<Feature
+		title="Protección de Datos Definitiva"
+		text="Mantén tus datos seguros con medidas de seguridad de primer nivel y detección de amenazas en tiempo real."
+		data={featuresProductivity}
+	/>
+	<Feature
+		title="Conectividad Perfecta"
+		text="Conecta sin esfuerzo tus aplicaciones favoritas y automatiza flujos de trabajo para un día laboral más fluido."
+		data={featuresIntegrations}
+		classes="bg-neutral-50 dark:bg-neutral-900"
+	/>
+	<Feature
+		title="Ayuda Experta 24/7"
+		text="Nuestro amigable equipo de soporte está siempre aquí para asistirte con cualquier pregunta o problema."
+		data={featuresSupport}
+	/>
+	<CTA data={ctaData} />
+</Layout>

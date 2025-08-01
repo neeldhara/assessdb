@@ -1,0 +1,69 @@
+---
+// Components
+// - Layout
+import Layout from '../layouts/Layout.astro'
+// - UI
+import Hero from '../components/blocks/hero/HomeCTA.astro'
+import Features from '../components/blocks/features/FeatureCards.astro'
+import Testimonial from '../components/blocks/testimonials/BasicDark.astro'
+import HighlightBlocks from '../components/blocks/highlights/HightlightRows.astro'
+import CTA from '../components/blocks/CTA/BasicDark.astro'
+
+// Content
+// - Testimonial background
+import testimonialBackground from '../assets/testimonial-bg-01.webp'
+// - SEO
+const SEO = {
+	title: 'Foxi | Your Productivity Toolkit',
+	description:
+		'Foxi is a powerful productivity toolkit designed to enhance your workflow and boost your productivity. With features like analytics, security, and integrations, Foxi is the perfect solution for your business.'
+}
+// - Hero Data
+const heroData = {
+	title: 'Enhance team <strong>performance</strong> with seamless integration',
+	text: 'Work smarter, not harder, with our innovative platform.',
+	actions: {
+		primary: 'Get started for free'
+	},
+	chipNotification: {
+		highlight: '30K+',
+		text: 'satisfied customers'
+	}
+}
+// - Feature Data
+import featureCardData from '../data/json-files/en/featureCardsData.json'
+const featureData = {
+	title: `Innovative tools to <strong>transform</strong> your workflow`,
+	text: 'Explore the suite of tools designed to streamline your workflow, enhance productivity, and drive growth. Each product is crafted with precision to meet your needs and exceed your expectations.'
+}
+// - CTA Data
+const ctaData = {
+	title: 'Join Over 30,000 Satisfied Users!',
+	text: 'Discover why thousands of professionals trust our platform to streamline their workflow and enhance productivity. Get started today and see the difference for yourself!',
+	chipNotification: {
+		text: '#1 Product of the Year',
+		highlight: 'Product Hunt'
+	},
+	button: {
+		size: 'lg',
+		style: 'primary',
+		text: 'Get started now!'
+	}
+}
+// - Highlights Data
+import highlightData from '../data/json-files/en/highlightData.json'
+---
+
+<Layout title={SEO.title} description={SEO.description}>
+	<Hero data={heroData} />
+	<Features data={featureData} features={featureCardData} />
+	<Testimonial
+		blockquote="Foxi is like a rocket boost for our productivity! Its sleek design and out-of-this-world features make managing projects and team communication a breeze."
+		figcaption="Sheryl Sandberg"
+		cite="CEO, Facebook"
+		bg={testimonialBackground}
+		bgPosition="right"
+	/>
+	<HighlightBlocks data={highlightData} />
+	<CTA data={ctaData} />
+</Layout>

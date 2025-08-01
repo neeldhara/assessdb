@@ -1,0 +1,40 @@
+---
+// Basic Light Call To Action section
+// ------------
+// Description: A centered call to action section that contains: a title, text, a rating and a button.
+// Properties:
+// - classes: Additional classes to be added to the Section
+
+// Components
+// - Layout
+import Section from '../../ui/Section.astro'
+import Row from '../../ui/Row.astro'
+import Col from '../../ui/Col.astro'
+// - UI
+import CTA from '../../ui/CTA.astro'
+import Button from '../../ui/Button.astro'
+import Ratings from '../../ui/Rating.astro'
+
+// Content
+// - Props
+const { data, classes } = Astro.props
+---
+
+<Section classes={classes}>
+	<Row>
+		<Col span="1" />
+		<Col span="10">
+			<CTA
+				title={data.title}
+				text={data.text}
+				classes="!bg-primary-500 dark !border-primary-600 !shadow-primary-500/20"
+			>
+				<Ratings rating={data.rating.value} text={data.rating.text} classes="mb-4" />
+				<Button size={data.button.size} style={data.button.style}>
+					{data.button.text}
+				</Button>
+			</CTA>
+		</Col>
+		<Col span="1" />
+	</Row>
+</Section>

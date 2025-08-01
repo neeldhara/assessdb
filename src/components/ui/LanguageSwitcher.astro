@@ -1,0 +1,134 @@
+---
+// Language Switcher
+// ------------
+// Description: The language switcher component is a ui element that allows users to switch between english and spanish.
+import { Icon } from 'astro-icon/components'
+---
+
+<div id="languageSwitcher" class="language-switcher">
+	<button
+		id="langButton"
+		type="button"
+		class="language-switcher__button"
+		aria-label="Language switcher"
+	>
+		<span class="language-switcher__icon">
+			<Icon name="globe-alt" class="size-5" />
+		</span>
+		<span class="language-switcher__chevron">
+			<svg
+				xmlns="http://www.w3.org/2000/svg"
+				viewBox="0 0 16 16"
+				fill="currentColor"
+				class="size-4"
+			>
+				<path
+					fill-rule="evenodd"
+					d="M4.22 6.22a.75.75 0 0 1 1.06 0L8 8.94l2.72-2.72a.75.75 0 1 1 1.06 1.06l-3.25 3.25a.75.75 0 0 1-1.06 0L4.22 7.28a.75.75 0 0 1 0-1.06Z"
+					clip-rule="evenodd"></path>
+			</svg>
+		</span>
+	</button>
+
+	<div id="dropdown" class="language-switcher__dropdown hidden">
+		<button id="englishBtn" class="language-switcher__option"> English </button>
+		<button id="spanishBtn" class="language-switcher__option"> Español </button>
+	</div>
+</div>
+
+<script>
+	// Function to switch language
+	function switchLanguage(lang: any) {
+		const path = window.location.pathname
+		let newPath = path
+
+		// Check if URL contains '/eguides/categories/' or '/blog/tags/' and redirect to main page
+		if (path.includes('/eguides/categories/')) {
+			newPath = lang === 'en' ? '/eguides/' : '/es/eguides/'
+		} else if (path.includes('/blog/tags/')) {
+			newPath = lang === 'en' ? '/blog/' : '/es/blog/'
+		} else {
+			// Default language switching behavior for paths without categories/tags
+			if (lang === 'en') {
+				newPath = path.replace(/^\/es/, '') || '/'
+			} else {
+				newPath = `/es${path.replace(/^\/es/, '')}`
+			}
+		}
+		// Redirect to the new language URL
+		window.location.href = newPath
+	}
+
+	// Function to initialize the language switcher with event listeners
+	function initializeLanguageSwitcher() {
+		const langButton = document.querySelector('#langButton')
+		const dropdown = document.querySelector('#dropdown')
+		const englishBtn = document.querySelector('#englishBtn')
+		const spanishBtn = document.querySelector('#spanishBtn')
+
+		if (langButton && dropdown) {
+			// Toggle the dropdown visibility and active class on button click
+			langButton.addEventListener('click', (event) => {
+				event.preventDefault()
+				dropdown.classList.toggle('hidden')
+				langButton.classList.toggle('language-switcher__button--active')
+			})
+
+			// Close dropdown if clicking outside
+			document.addEventListener('click', (event) => {
+				if (
+					event.target instanceof Node && // Type check for Node
+					!langButton.contains(event.target) &&
+					!dropdown.contains(event.target)
+				) {
+					dropdown.classList.add('hidden')
+					langButton.classList.remove('language-switcher__button--active')
+				}
+			})
+		}
+
+		// Attach event listeners for language selection buttons
+		if (englishBtn) {
+			englishBtn.addEventListener('click', () => switchLanguage('en'))
+		}
+		if (spanishBtn) {
+			spanishBtn.addEventListener('click', () => switchLanguage('es'))
+		}
+	}
+
+	// Initialize language switcher on page load
+	document.addEventListener('astro:page-load', initializeLanguageSwitcher)
+
+	// Reinitialize language switcher on history state change
+	;(function () {
+		const originalPushState = history.pushState
+		history.pushState = function (...args) {
+			originalPushState.apply(history, args)
+			initializeLanguageSwitcher()
+		}
+
+		// Listen for back/forward navigation events
+		window.addEventListener('popstate', initializeLanguageSwitcher)
+	})()
+</script>
+
+<style>
+	.language-switcher {
+		@apply relative flex h-full items-center;
+	}
+	.language-switcher__button {
+		@apply relative flex items-center gap-1 py-4 transition-colors duration-300 hover:text-primary-500 focus:text-primary-600 focus:outline-none focus-visible:outline-none [&.active]:text-primary-500;
+	}
+	.language-switcher__icon {
+		@apply size-5;
+	}
+	.language-switcher__chevron {
+		@apply size-4 transition-transform [.language-switcher\_\_button--active_&]:rotate-180;
+	}
+	.language-switcher__dropdown {
+		@apply absolute left-0 top-full animate-dropdown rounded rounded-t-none bg-white/90 py-2 shadow-lg shadow-neutral-700/5 backdrop-blur-sm dark:bg-neutral-900/90 dark:shadow-neutral-950/50;
+	}
+	.language-switcher__option {
+		@apply relative flex items-center gap-1 px-6 py-4 text-neutral-500 transition-colors duration-300 hover:text-primary-500 focus:text-primary-600 focus:outline-none focus-visible:outline-none dark:text-neutral-300 [&.active]:text-primary-500;
+	}
+</style>

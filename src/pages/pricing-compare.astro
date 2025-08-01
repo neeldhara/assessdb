@@ -1,0 +1,73 @@
+---
+// Components
+// - Layout
+import Layout from '../layouts/Layout.astro'
+// - UI
+import Hero from '../components/blocks/hero/PageHeader.astro'
+import PriceCompare from '../components/blocks/pricing/PricingColumnsCompare.astro'
+import SocialProof from '../components/blocks/socialproof/Basic.astro'
+import Feature from '../components/blocks/features/FeatureList.astro'
+import CTA from '../components/blocks/CTA/BasicLight.astro'
+import TextImage from '../components/blocks/basic/TextImage.astro'
+
+// Content
+import faqImage1 from '../assets/faq/faq-01.png'
+// - SEO
+const SEO = {
+	title: 'Foxi | Pricing made simple',
+	description:
+		'Discover the perfect SaaS pricing plan for your business. From startups to enterprises, our scalable solutions offer unparalleled features and 24/7 support.'
+}
+// - Page Header
+const header = {
+	title: 'Find the right plan for <strong>your own</strong> needs',
+	text: 'All plans come with a 30-day money-back guarantee.'
+}
+// - Price Comparison Data
+import pricingTablesData from '../data/json-files/en/pricingTablesdata.json'
+const billingData = {
+	option1: 'Monthly',
+	option2: 'Annually'
+}
+// - SocialProof Data
+const SocialProofData = {
+	title: 'Trusted by <strong>50,000+</strong> businesses'
+}
+// - Feature Data
+import featureData from '../data/json-files/en/featuresData.json'
+// - CTA Data
+const ctaData = {
+	title: 'Join the Foxi Revolution!',
+	text: 'Discover why thousands of professionals trust our platform to streamline their workflow and enhance productivity. Get started today and see the difference for yourself!',
+	rating: {
+		value: 5,
+		text: '30K customer ratings'
+	},
+	button: {
+		size: 'lg',
+		style: 'primary',
+		text: 'Get Started Now'
+	}
+}
+---
+
+<Layout title={SEO.title} description={SEO.description}>
+	<Hero title={header.title} text={header.text} />
+	<PriceCompare billing={billingData} pricingTableData={pricingTablesData} />
+	<TextImage
+		title="Why Foxi’s Pricing Plans Offer Great Value"
+		text="At Foxi, we believe in providing exceptional value at every price point. Our pricing plans are designed to cater to a variety of needs, from individuals and small teams to large enterprises. Each plan includes access to our powerful features, seamless integrations, and top-notch customer support. "
+		image={faqImage1}
+		mobileImage={faqImage1}
+		imagePosition="left"
+		offsetImage
+		classes="bg-neutral-50 dark:bg-neutral-900 lg:!py-64"
+	/>
+	<Feature
+		title=`Whats included on <strong>all</strong> foxi plans`
+		text=`Explore the suite of tools designed to streamline your workflow, enhance productivity, and drive growth. Each product is crafted with precision to meet your needs and exceed your expectations.`
+		features={featureData}
+	/>
+	<SocialProof data={SocialProofData} />
+	<CTA data={ctaData} classes="!pt-0" />
+</Layout>

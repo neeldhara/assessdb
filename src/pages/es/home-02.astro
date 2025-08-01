@@ -1,0 +1,87 @@
+---
+// Components
+// - Layout
+import Layout from '../../layouts/Layout.astro'
+// - UI
+import Hero from '../../components/blocks/hero/HomeCTALottie.astro'
+import Features from '../../components/blocks/features/FeatureList.astro'
+import CTA from '../../components/blocks/CTA/BasicDark.astro'
+import TextImage from '../../components/blocks/basic/TextImage.astro'
+import BasicRatings from '../../components/blocks/ratings/BasicRatings.astro'
+import SocialProof from '../../components/blocks/socialproof/Basic.astro'
+
+// Content
+// - Images
+import mobileMockups from '../../assets/mobile-mockups.webp'
+
+// - SEO
+const SEO = {
+	title: 'Foxi | Tu Kit de Herramientas de Productividad',
+	description:
+		'Foxi es un potente kit de herramientas de productividad diseñado para mejorar tu flujo de trabajo y aumentar tu productividad. Con funciones como analíticas, seguridad e integraciones, Foxi es la solución perfecta para tu negocio.'
+}
+// - Hero Data
+const heroData = {
+	title: 'Soluciones Innovadoras, <strong>Adaptadas</strong> a tus Necesidades',
+	text: 'Software personalizado que transforma las necesidades empresariales en soluciones potentes y escalables, convirtiendo la visión en realidad.',
+	actions: {
+		primary: 'Comienza gratis',
+		neutral: 'Contáctanos'
+	}
+}
+// - SocialProof Data
+const SocialProofData = {
+	title: 'Confiado por <strong>50,000+</strong> empresas'
+}
+// - Feature Data
+import featureData from '../../data/json-files/es/featuresData.json'
+// - Ratings Data
+import ratingData from '../../data/json-files/es/ratingsData.json'
+// - CTA Data
+const ctaData = {
+	title: '¡Únete a más de 30,000 usuarios satisfechos!',
+	text: 'Descubre por qué miles de profesionales confían en nuestra plataforma para optimizar su flujo de trabajo y mejorar la productividad. ¡Empieza hoy y comprueba la diferencia por ti mismo!',
+	chipNotification: {
+		text: 'Producto del Año #1',
+		highlight: 'Product Hunt'
+	},
+	button: {
+		size: 'lg',
+		style: 'primary',
+		text: '¡Empieza ahora!'
+	}
+}
+---
+
+<Layout title={SEO.title} description={SEO.description} lang="es">
+	<Hero data={heroData} />
+	<SocialProof data={SocialProofData} classes="dark:bg-neutral-950/80" />
+	<TextImage
+		title="Por qué más de <strong>50,000+</strong> empresas confían en Foxi"
+		text="Estas soluciones de software ofrecen un valor excepcional en diferentes industrias. Diseñadas para satisfacer las necesidades de individuos, pequeños equipos y grandes empresas, cada plan ofrece acceso a funciones potentes, integraciones fluidas y soporte al cliente confiable. Este compromiso con la excelencia convierte a estas soluciones en la elección de miles de negocios en todo el mundo."
+		image={mobileMockups}
+		mobileImage={mobileMockups}
+		imagePosition="right"
+		offsetImage
+		classes="lg:!py-64 border-y border=neutral-100 dark:border-neutral-600"
+	/>
+	<Features
+		title="Herramientas innovadoras para <strong>transformar</strong> tu flujo de trabajo"
+		features={featureData}
+	/>
+	<TextImage
+		title="Impulsando el crecimiento con soluciones <strong>flexibles</strong> y escalables"
+		text="Diseñadas pensando en la flexibilidad, estas soluciones están hechas para escalar a medida que los negocios crecen. Con herramientas robustas, funciones personalizables e interfaces fáciles de usar, las organizaciones pueden optimizar procesos, mejorar la eficiencia y lograr el éxito a largo plazo. Ya sea una pequeña startup o una empresa en crecimiento, estas soluciones están equipadas para manejarlo todo."
+		image={mobileMockups}
+		mobileImage={mobileMockups}
+		imagePosition="left"
+		offsetImage
+		classes="lg:!py-64 border-y border=neutral-100 dark:border-neutral-600"
+	/>
+	<BasicRatings
+		title="Opiniones de los <strong>Clientes</strong>"
+		text="No solo confíes en nuestra palabra: explora las opiniones reales de clientes que han experimentado los beneficios de Foxi Pro."
+		data={ratingData}
+	/>
+	<CTA data={ctaData} />
+</Layout>

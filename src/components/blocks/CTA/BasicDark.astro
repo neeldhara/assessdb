@@ -1,0 +1,47 @@
+---
+// Basic Dark Call To Action section
+// ------------
+// Description: A centered call to action section that contains: a title, text, background image, notification and a button.
+// Properties:
+// - classes: Additional classes to be added to the Section
+
+// Components
+// - Layout
+import Section from '../../ui/Section.astro'
+import Row from '../../ui/Row.astro'
+import Col from '../../ui/Col.astro'
+// - UI
+import CTA from '../../ui/CTA.astro'
+import Button from '../../ui/Button.astro'
+import ChipNotification from '../../ui/ChipNotification.astro'
+import { Image } from 'astro:assets'
+import Highlight from '../../ui/Highlight.astro'
+
+// Content
+import ctaImage from '../../../assets/cta-dark-bg.webp'
+import badge from '../../../assets/badge.svg'
+
+// - Props
+const { data, classes } = Astro.props
+---
+
+<Section classes={classes}>
+	<Row>
+		<Col span="1" />
+		<Col span="10">
+			<CTA title={data.title} text={data.text} mode="dark" bg={ctaImage}>
+				<ChipNotification radius="rounded-full" classes="mb-6 box">
+					<Image src={badge} alt="Product of the Year" class="h-12 w-12" slot="button" />
+					<span class="hidden md:block">{data.chipNotification.text}</span>
+					<Highlight classes="md:ml-2">
+						{data.chipNotification.highlight}
+					</Highlight>
+				</ChipNotification>
+				<Button size={data.button.size} style={data.button.style}>
+					{data.button.text}
+				</Button>
+			</CTA>
+		</Col>
+		<Col span="1" />
+	</Row>
+</Section>

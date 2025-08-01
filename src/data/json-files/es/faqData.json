@@ -1,0 +1,104 @@
+[
+	{
+		"question": "Cuál es el costo del plan básico?",
+		"reply": "El plan básico cuesta $9.99 al mes, e incluye acceso a las funciones principales e integraciones limitadas. Este plan es perfecto para individuos o pequeños equipos que desean mejorar su productividad sin una gran inversión.",
+		"category": "precios",
+		"open": true
+	},
+	{
+		"question": "Hay descuentos para suscripciones anuales?",
+		"reply": "Sí, ofrecemos un descuento del 20% en suscripciones anuales para todos nuestros planes. Al elegir una suscripción anual, puedes ahorrar dinero y asegurarte acceso ininterrumpido a todas las funciones de Foxi durante todo el año.",
+		"category": "precios",
+		"open": false
+	},
+	{
+		"question": "Puedo cambiar mi plan de suscripción en cualquier momento?",
+		"reply": "Sí, puedes actualizar o degradar tu plan de suscripción en cualquier momento desde la configuración de tu cuenta. Esta flexibilidad te permite ajustar tu plan según tus necesidades y uso.",
+		"category": "precios",
+		"open": false
+	},
+	{
+		"question": "Hay una prueba gratuita disponible?",
+		"reply": "Sí, ofrecemos una prueba gratuita de 14 días para todos los nuevos usuarios. Durante la prueba, podrás explorar todas las funciones de Foxi sin ningún compromiso, lo que te permitirá ver cómo se adapta a tu flujo de trabajo.",
+		"category": "precios",
+		"open": false
+	},
+	{
+		"question": "Ofrecen reembolsos?",
+		"reply": "Ofrecemos una garantía de devolución de dinero de 30 días si no estás satisfecho con nuestro servicio. Simplemente contacta a nuestro equipo de soporte dentro de los 30 días posteriores a tu compra, y procesaremos tu reembolso.",
+		"category": "precios",
+		"open": false
+	},
+	{
+		"question": "Cómo cancelo mi suscripción?",
+		"reply": "Puedes cancelar tu suscripción desde la configuración de tu cuenta en cualquier momento. Después de la cancelación, seguirás teniendo acceso a tu cuenta hasta el final del ciclo de facturación.",
+		"category": "precios",
+		"open": false
+	},
+	{
+		"question": "Puedo usar Foxi con Google Calendar?",
+		"reply": "Sí, Foxi se integra perfectamente con Google Calendar para facilitar la programación y la gestión de tareas. Esta integración te ayuda a mantener tus eventos y tareas en un solo lugar.",
+		"category": "integraciones",
+		"open": true
+	},
+	{
+		"question": "Foxi funciona con Slack?",
+		"reply": "Sí, puedes integrar Foxi con Slack para recibir notificaciones y actualizaciones directamente en tus canales. Esto te permite estar informado sobre tus proyectos sin salir de Slack.",
+		"category": "integraciones",
+		"open": false
+	},
+	{
+		"question": "Cómo conecto Foxi con Trello?",
+		"reply": "Para conectar Foxi con Trello, ve a la página de integraciones en tu configuración y sigue las instrucciones para vincular tus cuentas. Esta integración te ayuda a gestionar tus tableros de Trello y proyectos de Foxi juntos.",
+		"category": "integraciones",
+		"open": false
+	},
+	{
+		"question": "Hay una API para integraciones personalizadas?",
+		"reply": "Sí, proporcionamos una API que te permite crear integraciones personalizadas con Foxi. Nuestra documentación de API ofrece instrucciones detalladas y ejemplos para ayudarte a comenzar.",
+		"category": "integraciones",
+		"open": false
+	},
+	{
+		"question": "Puedo sincronizar Foxi con mi correo electrónico?",
+		"reply": "Actualmente, no ofrecemos integración con el correo electrónico, pero esta función está en nuestra hoja de ruta para futuras versiones. Mantente atento a las actualizaciones mientras seguimos mejorando las capacidades de Foxi.",
+		"category": "integraciones",
+		"open": false
+	},
+	{
+		"question": "Foxi es compatible con Zapier?",
+		"reply": "Sí, Foxi se integra con Zapier, lo que te permite conectar con más de 2,000 aplicaciones y automatizar tus flujos de trabajo. Esta integración te ayuda a optimizar tus procesos y mejorar la eficiencia.",
+		"category": "integraciones",
+		"open": false
+	},
+	{
+		"question": "Cuáles son las principales funciones de Foxi?",
+		"reply": "Foxi incluye mensajería dentro de la aplicación, gestión de proyectos, seguimiento de tiempo, paneles personalizables y más. Estas funciones están diseñadas para ayudarte a mantenerte organizado, comunicarte de manera efectiva y gestionar tu tiempo de manera eficiente.",
+		"category": "características",
+		"open": true
+	},
+	{
+		"question": "Cómo uso la función de mensajería dentro de la aplicación?",
+		"reply": "La mensajería dentro de la aplicación te permite comunicarte con tu equipo directamente dentro de Foxi. Simplemente navega a la pestaña de mensajería para iniciar una conversación. Puedes enviar mensajes, compartir archivos y crear chats grupales.",
+		"category": "características",
+		"open": false
+	},
+	{
+		"question": "Puedo personalizar mi panel de control?",
+		"reply": "Sí, puedes personalizar tu panel de control añadiendo, eliminando y reorganizando widgets para adaptarlo a tu flujo de trabajo. Esta personalización te ayuda a mantener la información importante al alcance de la mano.",
+		"category": "características",
+		"open": false
+	},
+	{
+		"question": "Cómo funciona la función de seguimiento de tiempo?",
+		"reply": "El seguimiento de tiempo te permite registrar el tiempo dedicado a tareas y proyectos. Inicia el temporizador cuando comiences una tarea y deténlo cuando termines. También puedes registrar el tiempo manualmente si es necesario.",
+		"category": "características",
+		"open": false
+	},
+	{
+		"question": "Hay una aplicación móvil para Foxi?",
+		"reply": "Sí, Foxi está disponible tanto en iOS como en Android, lo que te permite gestionar tus tareas y proyectos mientras te desplazas. Descarga la app desde la App Store o Google Play para mantenerte productivo en cualquier lugar.",
+		"category": "características",
+		"open": false
+	}
+]

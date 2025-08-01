@@ -1,0 +1,59 @@
+---
+// Home page CTA Section
+// ------------
+// Description: A centered call to action section that contains: a title, text, a user review snippet, a button and a image.
+
+// Components
+// - Layout
+import Section from '../../ui/Section.astro'
+import Row from '../../ui/Row.astro'
+import Col from '../../ui/Col.astro'
+// - UI
+import Slider from '../../ui/slider/ImageSlider.astro'
+import Button from '../../ui/Button.astro'
+
+// Content
+// - Slider Images
+import slide01 from '../../../assets/slider/slide-01.jpg'
+import slide02 from '../../../assets/slider/slide-02.jpg'
+import slide03 from '../../../assets/slider/slide-03.jpg'
+import slide04 from '../../../assets/slider/slide-04.jpg'
+import slide05 from '../../../assets/slider/slide-05.jpg'
+
+const imageList = [slide01, slide02, slide03, slide04, slide05]
+
+// - Props
+type Props = {
+	data: {
+		title: string
+		text: string
+		actions: {
+			primary: string
+		}
+	}
+}
+const { data } = Astro.props
+---
+
+<Section id="intro" classes="bg-neutral-50 dark:bg-neutral-900">
+	<Row>
+		<Col span="7" classes="flex flex-col justify-center items-start">
+			<h1 class="text-balance" set:html={data.title} />
+			<p class="max-w-xl pb-0 text-lg" set:html={data.text} />
+			<Button size="lg" link="/" elevated> {data.actions.primary} </Button>
+		</Col>
+		<Col span="5">
+			<Slider
+				imageList={imageList}
+				slidesPerView={1}
+				id="s01"
+				delay={3000}
+				effect="cube"
+				showNavigation={false}
+				centeredSlides={true}
+				initialSlide={2}
+				slideClasses="bg-neutral-50 dark:bg-neutral-950 rounded-lg [&.swiper-slide-active]:shadow-2xl [&.swiper-slide-active]:shadow-neutral-900/10 rounded-lg overflow-hidden aspect-square"
+			/>
+		</Col>
+	</Row>
+</Section>

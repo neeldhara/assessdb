@@ -1,0 +1,74 @@
+{
+	"logo": {
+		"src": "/logo.svg",
+		"alt": "El tema astro de tailwind",
+		"text": "Foxi."
+	},
+	"navItems": [
+		{
+			"name": "Inicio",
+			"link": "#",
+			"submenu": [
+				{
+					"links": [
+						{ "name": "Video Emergente", "link": "/es/home-01", "badge": "¡nuevo!" },
+						{ "name": "Héroe Animado", "link": "/es/home-02" },
+						{ "name": "Deslizador", "link": "/es/home-03" },
+						{ "name": "Imagen Dividida", "link": "/es/home-04", "badge": "¡nuevo!" },
+						{ "name": "Imagen de App", "link": "/es/home-05" },
+						{ "name": "Deslizador Completo", "link": "/es/home-06", "badge": "¡nuevo!" }
+					]
+				}
+			]
+		},
+		{
+			"name": "Precios",
+			"link": "/es/pricing-compare"
+		},
+		{
+			"name": "Características",
+			"link": "/es/features"
+		},
+		{
+			"name": "Páginas",
+			"link": "#",
+			"align": "center",
+			"submenu": [
+				{
+					"name": "Servicios",
+					"links": [
+						{ "name": "Características", "link": "/es/features" },
+						{
+							"name": "Características - Tarjetas",
+							"link": "/es/features-cards",
+							"badge": "¡nuevo!"
+						},
+						{ "name": "Características - Lista", "link": "/es/features-list" },
+						{ "name": "Integraciones", "link": "/es/integrations" },
+						{ "name": "Comparación de Precios", "link": "/es/pricing-compare", "badge": "¡nuevo!" },
+						{ "name": "Precios clásicos", "link": "/es/pricing" }
+					]
+				},
+				{
+					"name": "Recursos",
+					"links": [
+						{ "name": "Blog", "link": "/es/blog" },
+						{ "name": "eGuías", "link": "/es/eguides", "badge": "¡nuevo!" },
+						{ "name": "Registro de Cambios", "link": "/es/changelog" },
+						{ "name": "Hoja de Ruta", "link": "/es/roadmap", "badge": "¡nuevo!" },
+						{ "name": "Preguntas Frecuentes", "link": "/es/faq" }
+					]
+				},
+				{
+					"name": "Misceláneo",
+					"links": [
+						{ "name": "Registrarse", "link": "/es/signup" },
+						{ "name": "Términos", "link": "/es/terms" }
+					]
+				}
+			]
+		},
+		{ "name": "Contacto", "link": "/es/contact" }
+	],
+	"navActions": [{ "name": "Pruébalo ahora", "style": "primary", "size": "lg", "modal": "signup" }]
+}

@@ -1,0 +1,34 @@
+[
+	{
+		"image": {
+			"src": "/logo/logo-01.svg"
+		},
+		"helperText": "basado en 43 valoraciones de usuarios",
+		"value": 5,
+		"text": "4.9/5"
+	},
+	{
+		"image": {
+			"src": "/logo/logo-02.svg"
+		},
+		"helperText": "basado en 52 valoraciones de usuarios",
+		"value": 5,
+		"text": "4.8/5"
+	},
+	{
+		"image": {
+			"src": "/logo/logo-03.svg"
+		},
+		"helperText": "basado en 67 valoraciones de usuarios",
+		"value": 5,
+		"text": "4.9/5"
+	},
+	{
+		"image": {
+			"src": "/logo/logo-04.svg"
+		},
+		"helperText": "basado en 38 valoraciones de usuarios",
+		"value": 4,
+		"text": "4.7/5"
+	}
+]

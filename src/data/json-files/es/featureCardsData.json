@@ -1,0 +1,32 @@
+[
+	{
+		"title": "Todos tus datos en un solo lugar",
+		"subtitle": "Mantente al tanto de tus tareas y plazos con nuestra intuitiva herramienta de gestión de proyectos. Visualiza el progreso, asigna tareas y colabora sin problemas.",
+		"image": "/cards/feature-01.svg",
+		"link": "/features"
+	},
+	{
+		"title": "Organiza y gestiona tus proyectos",
+		"subtitle": "Mantente al tanto de tus tareas y plazos con nuestra intuitiva herramienta de gestión de proyectos.",
+		"image": "/cards/feature-02.svg",
+		"link": "/features"
+	},
+	{
+		"title": "Mantén a tu equipo conectado",
+		"subtitle": "Con nuestra plataforma de chat integrada, comparte actualizaciones, archivos y mensajes en un entorno seguro y fácil de usar.",
+		"image": "/cards/feature-03.svg",
+		"link": "/features"
+	},
+	{
+		"title": "Gestiona a tus clientes",
+		"subtitle": "Construye y nutre relaciones con los clientes con nuestro potente sistema CRM.",
+		"image": "/cards/feature-04.svg",
+		"link": "/features"
+	},
+	{
+		"title": "Simplifica tus operaciones financieras",
+		"subtitle": "Optimiza tu proceso de facturación con nuestra herramienta de facturación fácil de usar. Crea, envía y rastrea facturas sin esfuerzo.",
+		"image": "/cards/feature-05.svg",
+		"link": "/features"
+	}
+]

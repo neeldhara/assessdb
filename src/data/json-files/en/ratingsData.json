@@ -1,0 +1,34 @@
+[
+	{
+		"image": {
+			"src": "/logo/logo-01.svg"
+		},
+		"helperText": "based on 43 user ratings",
+		"value": 5,
+		"text": "4.9/5"
+	},
+	{
+		"image": {
+			"src": "/logo/logo-02.svg"
+		},
+		"helperText": "based on 52 user ratings",
+		"value": 5,
+		"text": "4.8/5"
+	},
+	{
+		"image": {
+			"src": "/logo/logo-03.svg"
+		},
+		"helperText": "based on 67 user ratings",
+		"value": 5,
+		"text": "4.9/5"
+	},
+	{
+		"image": {
+			"src": "/logo/logo-04.svg"
+		},
+		"helperText": "based on 38 user ratings",
+		"value": 4,
+		"text": "4.7/5"
+	}
+]

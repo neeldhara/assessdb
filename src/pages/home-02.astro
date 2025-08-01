@@ -1,0 +1,30 @@
+---
+// Components
+// - Layout
+import Layout from '../layouts/Layout.astro'
+// - UI
+import Hero from '../components/blocks/hero/HomeCTALottie.astro'
+import Features from '../components/blocks/features/FeatureList.astro'
+
+// - SEO
+const SEO = {
+	title: 'Foxi | Your Productivity Toolkit',
+	description:
+		'Foxi is a powerful productivity toolkit designed to enhance your workflow and boost your productivity. With features like analytics, security, and integrations, Foxi is the perfect solution for your business.'
+}
+// - Hero Data
+const heroData = {
+	title: 'Assessments for Undergraduate Courses',
+	text: 'Find here a curated collection of assessments and activities for your classroom, covering a variety of needs. Use these to generate practice problem sets, quizzes, exams, classroom activities, and more.'
+}
+// - Feature Data
+import featureData from '../data/json-files/en/featuresData.json'
+---
+
+<Layout title={SEO.title} description={SEO.description}>
+	<Hero data={heroData} />
+	<Features
+		title={`Discover Assessments`}
+		features={featureData}
+	/>
+</Layout>

@@ -1,0 +1,75 @@
+{
+	"footerAbout": {
+		"title": "Foxi.",
+		"aboutText": "Componentes accesibles, responsivos y elaborados con experticia en React y HTML listos para ser utilizados en tu sitio web o aplicación. Simplemente cópialos y pégalos en tu proyecto de Tailwind CSS.",
+		"logo": {
+			"src": "/logo.svg",
+			"alt": "El tema de tailwind astro",
+			"text": "Foxi."
+		}
+	},
+	"footerColumns": [
+		{
+			"category": "Producto",
+			"subCategories": [
+				{
+					"subCategory": "Características",
+					"subCategoryLink": "/features"
+				},
+				{
+					"subCategory": "Preguntas frecuentes",
+					"subCategoryLink": "/faq"
+				},
+				{
+					"subCategory": "Precios",
+					"subCategoryLink": "/pricing"
+				},
+				{
+					"subCategory": "Registro de cambios",
+					"subCategoryLink": "/changelog"
+				},
+				{
+					"subCategory": "Términos",
+					"subCategoryLink": "/terms"
+				}
+			]
+		},
+		{
+			"category": "Acerca de nosotros",
+			"subCategories": [
+				{
+					"subCategory": "Acerca de nosotros",
+					"subCategoryLink": "/"
+				},
+				{
+					"subCategory": "Noticias",
+					"subCategoryLink": "/blog"
+				},
+				{
+					"subCategory": "Carreras",
+					"subCategoryLink": "/blog"
+				}
+			]
+		},
+		{
+			"category": "Ponte en contacto",
+			"subCategories": [
+				{
+					"subCategory": "Contacto",
+					"subCategoryLink": "/contact"
+				},
+				{
+					"subCategory": "Soporte",
+					"subCategoryLink": "/contact"
+				},
+				{
+					"subCategory": "Únete a nosotros",
+					"subCategoryLink": "/contact"
+				}
+			]
+		}
+	],
+	"subFooter": {
+		"copywriteText": "© Foxi 2024."
+	}
+}

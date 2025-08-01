@@ -1,0 +1,105 @@
+---
+// Components
+// - Layout
+import Layout from '../layouts/Layout.astro'
+// - UI
+import Hero from '../components/blocks/hero/HomeCTAFullWidthSlider.astro'
+import Features from '../components/blocks/features/FeatureImageBlocks.astro'
+import Testimonial from '../components/blocks/testimonials/BasicDark.astro'
+import FeatureList from '../components/blocks/features/FeatureList.astro'
+import CTA from '../components/blocks/CTA/BasicDark.astro'
+
+// Content
+// - Testimonial background
+import testimonialBackground from '../assets/testimonial-bg-01.webp'
+// - SEO
+const SEO = {
+	title: 'Foxi | Your Productivity Toolkit',
+	description:
+		'Foxi is a powerful productivity toolkit designed to enhance your workflow and boost your productivity. With features like analytics, security, and integrations, Foxi is the perfect solution for your business.'
+}
+// - Hero Data
+const heroData = [
+	{
+		title: 'Build <strong>Smarter</strong>, Launch Faster',
+		description:
+			'Streamline your SaaS product launch with Foxi Pro’s sleek, conversion-focused design—optimized for performance, clarity, and growth.',
+		media: {
+			type: 'video',
+			source: '/videos/video-01.mp4'
+		}
+	},
+	{
+		title: 'Modern UI That Speaks <strong>Success</strong>',
+		description:
+			'Impress your users from first click with pixel-perfect layouts, seamless interactions, and a design system built for scale.',
+		media: {
+			type: 'image',
+			source: '/slider/slide-08.jpg'
+		}
+	},
+	{
+		title: 'Turn <strong>Ideas</strong> Into Interfaces',
+		description:
+			'Foxi Pro transforms your vision into stunning user experiences—so you can focus on what matters: building your product.',
+		media: {
+			type: 'image',
+			source: '/slider/slide-09.jpg'
+		}
+	},
+	{
+		title: 'Design Meets <strong>Functionality</strong>',
+		description:
+			'Packed with reusable components and crafted for developers, Foxi Pro blends aesthetics with practicality for rapid development.',
+		media: {
+			type: 'image',
+			source: '/slider/slide-10.jpg'
+		}
+	},
+	{
+		title: 'Start <strong>Strong</strong> with Foxi Pro',
+		description:
+			"Whether you're a startup or a scaling SaaS, launch with confidence using a design that’s as powerful as your product.",
+		media: {
+			type: 'image',
+			source: '/slider/slide-11.jpg'
+		}
+	}
+]
+// - Features Data
+import featureData from '../data/json-files/en/featureImageBlocks.json'
+
+// - Feature List Data
+import featureListData from '../data/json-files/en/featuresData.json'
+// - CTA Data
+const ctaData = {
+	title: 'Join Over 30,000 Satisfied Users!',
+	text: 'Discover why thousands of professionals trust our platform to streamline their workflow and enhance productivity. Get started today and see the difference for yourself!',
+	chipNotification: {
+		text: '#1 Product of the Year',
+		highlight: 'Product Hunt'
+	},
+	button: {
+		size: 'lg',
+		style: 'primary',
+		text: 'Get started now!'
+	}
+}
+---
+
+<Layout title={SEO.title} description={SEO.description}>
+	<Hero data={heroData} />
+	<Features data={featureData} />
+	<Testimonial
+		blockquote="Foxi is like a rocket boost for our productivity! Its sleek design and out-of-this-world features make managing projects and team communication a breeze."
+		figcaption="Sheryl Sandberg"
+		cite="CEO, Facebook"
+		bg={testimonialBackground}
+		bgPosition="right"
+	/>
+	<FeatureList
+		title=`Innovative tools to <strong>transform</strong> your workflow`
+		features={featureListData}
+	/>
+	<CTA data={ctaData} />
+</Layout>

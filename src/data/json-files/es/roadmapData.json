@@ -1,0 +1,81 @@
+{
+	"data": [
+		{
+			"title": "Inicio del Proyecto",
+			"date": "2024-01-15",
+			"icon": "light-bulb",
+			"progress": "completed",
+			"description": "La reunión inicial para delinear los objetivos, entregables y cronograma del proyecto. Se presentarán los principales interesados y miembros del equipo, y se discutirá una visión general del plan del proyecto. Esta reunión establece las bases para todo el proyecto."
+		},
+		{
+			"title": "Recolección de Requisitos",
+			"date": "2024-01-22",
+			"icon": "clipboard-document-list",
+			"progress": "completed",
+			"description": "Recolección de requisitos detallados de los interesados para asegurar que se cumplan todas las necesidades. Esta fase incluye entrevistas, encuestas y revisión de documentación existente para recopilar requisitos completos. Requisitos claros y concisos son críticos para el éxito del proyecto."
+		},
+		{
+			"title": "Revisión Inicial",
+			"date": "2024-01-30",
+			"icon": "document-text",
+			"progress": "rejected",
+			"description": "Primera ronda de revisión para evaluar los entregables iniciales y la alineación del proyecto. Se recopilarán comentarios para identificar discrepancias o áreas de mejora. Este paso ayuda a asegurar que el proyecto esté en el camino correcto antes de avanzar."
+		},
+		{
+			"title": "Revisión Final",
+			"date": "2024-01-30",
+			"icon": "clipboard-document-check",
+			"progress": "completed",
+			"description": "Revisión exhaustiva de todos los requisitos recopilados y los diseños iniciales. Esta revisión garantiza que se aborden todas las necesidades de los interesados y que el proyecto esté listo para avanzar a la fase de diseño. Se harán los ajustes necesarios en función de los comentarios recibidos."
+		},
+		{
+			"title": "Fase de Diseño",
+			"date": "2024-02-05",
+			"icon": "paint-brush",
+			"progress": "ongoing",
+			"description": "Creación de maquetas y prototipos de diseño basados en los requisitos recopilados. Esta fase incluye wireframing, diseño UI/UX y creación de activos visuales. El diseño se iterará en función de los comentarios para asegurar que cumpla con todos los requisitos del proyecto y las expectativas del usuario."
+		},
+		{
+			"title": "Sprint de Desarrollo",
+			"date": "2024-02-19",
+			"icon": "cube-transparent",
+			"progress": "ongoing",
+			"description": "Sprint de desarrollo inicial para comenzar a construir las características principales del proyecto. Esto implica la configuración del entorno de desarrollo, escritura de código e implementación de funcionalidades. Se realizarán controles regulares y revisiones de código para mantener la calidad y el progreso."
+		},
+		{
+			"title": "Fase de Pruebas 1",
+			"date": "2024-03-18",
+			"icon": "cursor-arrow-ripple",
+			"progress": "upcoming",
+			"description": "Primera ronda de pruebas para identificar y corregir errores y problemas en las características desarrolladas. Esta fase incluye pruebas unitarias, pruebas de integración y pruebas de aceptación de usuarios. Las pruebas tempranas ayudan a detectar problemas antes de que se vuelvan más complejos y costosos de resolver."
+		},
+		{
+			"title": "Corrección de Errores y Mejoras",
+			"date": "2024-04-01",
+			"icon": "bug-ant",
+			"progress": "upcoming",
+			"description": "Abordar errores reportados y realizar las mejoras necesarias en función de los comentarios. Esta fase asegura que el producto sea estable y funcione bien en diversas condiciones. La mejora continua es clave para entregar un producto de alta calidad."
+		},
+		{
+			"title": "Fase de Pruebas 2",
+			"date": "2024-05-01",
+			"icon": "cursor-arrow-ripple",
+			"progress": "upcoming",
+			"description": "Segunda ronda de pruebas para asegurar la estabilidad y rendimiento de la aplicación. Esto incluye pruebas de esfuerzo extensivas, pruebas de carga y pruebas finales de aceptación de usuarios. El objetivo principal de esta fase es asegurar que el producto esté listo para su lanzamiento."
+		},
+		{
+			"title": "Mejoras de Características",
+			"date": "2024-06-01",
+			"icon": "chart-pie",
+			"progress": "upcoming",
+			"description": "Implementación de características adicionales y mejoras para mejorar la experiencia del usuario. Basado en los comentarios de los usuarios y las tendencias del mercado, se añadirán nuevas características para mantener el producto competitivo. Las mejoras se centran en la usabilidad, funcionalidad y satisfacción general."
+		},
+		{
+			"title": "Lanzamiento del Producto",
+			"date": "2024-08-01",
+			"icon": "rocket",
+			"progress": "upcoming",
+			"description": "Lanzamiento oficial del producto al mercado, haciéndolo disponible para los usuarios finales. Las actividades de marketing y promoción acompañarán el lanzamiento para maximizar el alcance e impacto. Esto marca la culminación de todos los esfuerzos y el inicio del ciclo de vida del producto en el mercado."
+		}
+	]
+}

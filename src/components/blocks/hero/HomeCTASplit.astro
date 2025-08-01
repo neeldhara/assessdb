@@ -1,0 +1,67 @@
+---
+// Home page CTA Section
+// ------------
+// Description: A centered call to action section that contains: a title, text, a user review snippet, a button and a image.
+
+// Components
+// - Layout
+import Section from '../../ui/Section.astro'
+import Row from '../../ui/Row.astro'
+import Col from '../../ui/Col.astro'
+// - UI
+import { Image } from 'astro:assets'
+import Button from '../../ui/Button.astro'
+import ChipNotification from '../../ui/ChipNotification.astro'
+import AvatarGroup from '../../ui/AvatarGroup.astro'
+
+// Content
+// - Bg image
+import bgImage from '../../../assets/bg-02.jpg'
+import bgImageDark from '../../../assets/bg-03.jpg'
+import user1 from '../../../assets/avatars/avatar-01.webp'
+import user2 from '../../../assets/avatars/avatar-02.webp'
+import user3 from '../../../assets/avatars/avatar-03.webp'
+const avatars = [
+	{ image: { src: user1.src, alt: 'user name' }, link: '/' },
+	{ image: { src: user2.src, alt: 'user name' }, link: '/' },
+	{ image: { src: user3.src, alt: 'user name' }, link: '/' }
+]
+
+const { data } = Astro.props
+---
+
+<Section id="intro" padding="none" classes="">
+	<Row classes="lg:min-h-[calc(100vh)]">
+		<Col span="6" classes="flex flex-col justify-center items-start py-12 h-full">
+			<ChipNotification radius="rounded-full" classes="mb-6">
+				<strong>{data.chipNotification.highlight}</strong>
+				{data.chipNotification.text}
+				<AvatarGroup avatars={avatars} radius="rounded-full" slot="button" />
+			</ChipNotification>
+			<h1 set:html={data.title} />
+			<p class="max-w-xl pb-0 text-lg" set:html={data.text} />
+			<Button size="lg" link="/" elevated>
+				{data.actions.primary}
+			</Button>
+		</Col>
+
+		<Col span="6" classes="relative">
+			<Image
+				src={bgImage}
+				alt="bg"
+				class="lg:absolute lg:bottom-0 lg:left-0 lg:top-0 lg:max-w-none lg:object-cover dark:hidden"
+				format="webp"
+				width={1000}
+				height={1000}
+			/>
+			<Image
+				src={bgImageDark}
+				alt="bg"
+				class="hidden lg:absolute lg:bottom-0 lg:left-0 lg:top-0 lg:max-w-none lg:object-cover dark:block"
+				format="webp"
+				width={1000}
+				height={1000}
+			/>
+		</Col>
+	</Row>
+</Section>

@@ -1,0 +1,36 @@
+[
+	{
+		"title": "v1.0.6: Funciones de Seguridad Mejoradas",
+		"date": "2024-07-01",
+		"text": "<p>Hemos implementado nuevos protocolos de seguridad para proteger tus datos. Disfruta de la tranquilidad con una mejor encriptación y autenticación multifactor.</p> <ul><li>2FA habilitada por defecto</li><li>Integración con HubSpot</li><li>Integración con Zoho CRM</li></ul>",
+		"image": "/feeds/feed-01.png"
+	},
+	{
+		"title": "v1.0.5: Mejoras en la Interfaz de Usuario",
+		"date": "2024-06-15",
+		"text": "<p>Nuestra última actualización trae una interfaz de usuario renovada para una experiencia más intuitiva y visualmente atractiva. La navegación y la usabilidad se han mejorado significativamente.</p><ul><li>Diseño actualizado del panel de control</li><li>Mejoras en las funciones de accesibilidad</li><li>Menús de navegación simplificados</li></ul>",
+		"image": "/feeds/feed-02.png"
+	},
+	{
+		"title": "v1.0.4: Nuevo Mensajería Dentro de la Aplicación",
+		"date": "2024-05-20",
+		"text": "<p>¡Presentamos la mensajería dentro de la aplicación! Comunícate directamente dentro de la app para mantener las conversaciones organizadas y accesibles sin cambiar entre herramientas.</p>"
+	},
+	{
+		"title": "v1.0.3: Mejoras en el Rendimiento",
+		"date": "2024-04-10",
+		"text": "<p>Hemos optimizado la aplicación para que funcione más rápido y de manera más fluida. Experimenta tiempos de carga mejorados y un mejor rendimiento en general.</p>",
+		"image": "/feeds/feed-03.png"
+	},
+	{
+		"title": "v1.0.2: Integración CRM",
+		"date": "2024-03-25",
+		"text": "<p>Conecta tu aplicación con los sistemas CRM más populares para optimizar la gestión de clientes. Sincroniza datos y mejora los procesos de relación con el cliente.</p><ul><li>Integración con Salesforce</li><li>Integración con HubSpot</li><li>Integración con Zoho CRM</li></ul>"
+	},
+	{
+		"title": "v1.0.1: Soporte para API de Terceros",
+		"date": "2024-02-15",
+		"text": "<p>Integra sin problemas con APIs de terceros para ampliar la funcionalidad de tu aplicación. Disfruta de un intercambio de datos fluido y un mejor rendimiento.</p>",
+		"image": "/feeds/feed-04.png"
+	}
+]

@@ -1,0 +1,52 @@
+---
+// Home page CTA Section
+// ------------
+// Description: A centered call to action section that contains: a title, text, a user review snippet, a button and a image.
+
+// Components
+// - Layout
+import Section from '../../ui/Section.astro'
+import Row from '../../ui/Row.astro'
+import Col from '../../ui/Col.astro'
+// - UI
+import { Icon } from 'astro-icon/components'
+import Button from '../../ui/Button.astro'
+import LogoMarquee from '../socialproof/Marquee.astro'
+
+// Content
+// - Background Image
+import Background from '../../../assets/bg-02.png'
+
+// - Props
+type Props = {
+	data: any
+}
+const { data } = Astro.props
+---
+
+<Section
+	id="intro"
+	classes="dark:border-b dark:border-neutral-900 "
+	vAlign="center"
+	bg={Background}
+	fullWidth
+>
+	<Row>
+		<Col span="12" align="center" classes="max-w-4xl mx-auto w-full">
+			<h1 set:html={data.title} />
+			<p class="mx-auto max-w-2xl pb-0 text-lg" set:html={data.text} />
+			<div class="mb-16 flex flex-col justify-center gap-4 md:flex-row">
+				<Button size="lg" size="lg" classes="md:w-44" style="neutral">
+					{data.actions.neutral.text}
+				</Button>
+				<Button size="lg" modal="video" size="lg" elevated classes="md:w-44">
+					{data.actions.primary.text}
+					<Icon name="play-circle" class="size-6" />
+				</Button>
+			</div>
+		</Col>
+		<Col span="12">
+			<LogoMarquee />
+		</Col>
+	</Row>
+</Section>

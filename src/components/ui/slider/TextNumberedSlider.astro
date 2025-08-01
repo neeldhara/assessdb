@@ -1,0 +1,213 @@
+---
+// Slider
+// ------------
+// Description: the slider component is a ui element that allows users to browse through a series of images or content.
+// Properties:
+// - itemList: An array of items
+// - delay: The delay of the slider
+// - slidesPerView: The number of slides per view
+// - showNavigation: Whether to show the navigation
+// - centeredSlides: Whether to center the slides
+// - spaceBetween: The space between the slides
+// - initialSlide: The initial slide
+// - id: The id of the slider
+// - classes: Additional classes to be added to the slider
+// - slideClasses: Additional classes to be added to the slide
+// - navClasses: Additional classes to be added to the navigation
+// Reference: https://swiperjs.com/swiper-api
+
+// Components
+// - UI
+import '../../../styles/swiper.css'
+import Image from 'astro/components/Image.astro'
+
+// Content
+// - Props
+type Props = {
+	itemList: Array<any>
+	delay?: number
+	slidesPerView?: number
+	showNavigation?: boolean
+	centeredSlides?: boolean
+	spaceBetween?: number
+	initialSlide?: number
+	id?: string
+	classes?: string
+	slideClasses?: string
+	navClasses?: string
+}
+const {
+	itemList,
+	delay = 5000,
+	slidesPerView = 1,
+	showNavigation = true,
+	centeredSlides = false,
+	spaceBetween = 16,
+	initialSlide = 0,
+	id = 'customSlider',
+	classes = '',
+	slideClasses = '',
+	navClasses = ''
+} = Astro.props
+---
+
+<!-- Swiper -->
+<div class:list={['swiper', { [`swiper-${id}`]: id }, classes]}>
+	<div class="swiper-wrapper">
+		{
+			itemList.map((item) => (
+				<div class:list={['swiper-slide', slideClasses]}>
+					<div class="absolute bottom-0 left-0 right-0 top-0 h-full w-full object-cover after:pointer-events-none after:absolute after:inset-0 after:bg-gradient-to-t after:from-neutral-900/10 after:to-transparent after:content-['']">
+						{item.media.type === 'image' ? (
+							<Image
+								src={item.media.source}
+								width={1920}
+								height={1080}
+								alt="Slider image"
+								class="h-full w-full object-cover"
+							/>
+						) : (
+							<video autoplay loop muted class="h-full w-full object-cover">
+								<source src={item.media.source} type="video/mp4" />
+							</video>
+						)}
+					</div>
+					<div class="container relative flex h-full min-h-[32rem] flex-col items-start justify-center text-left lg:min-h-[44rem]">
+						<div class="max-w-2xl p-6 md:p-0">
+							<h1 set:html={item.title} class="text-balance dark:!text-neutral-700" />
+							<p class="max-w-3xl pb-0 text-lg text-neutral-600">{item.description}</p>
+						</div>
+					</div>
+				</div>
+			))
+		}
+	</div>
+	{
+		showNavigation && (
+			<>
+				<div class="swiper-button-prev" />
+				<div class="swiper-button-next" />
+			</>
+		)
+	}
+	<!-- Numbered pagination -->
+	<div class:list={['custom-number-nav', navClasses]}>
+		{
+			itemList.map((_, i) => (
+				<div class:list={['nav-item', { active: i === 0 }]} data-index={i}>
+					<span class="nav-item__number">{String(i + 1).padStart(2, '0')}</span>
+					<div class="nav-item__underline">
+						<div class="nav-item__underline-fill" />
+					</div>
+				</div>
+			))
+		}
+	</div>
+</div>
+
+<!-- Styles -->
+<style>
+	.container {
+		@apply relative z-[1] mx-auto px-6 [.section--fullwidth_&]:max-w-full [.section--fullwidth_&]:md:px-0;
+	}
+	.custom-number-nav {
+		@apply absolute bottom-0 left-0 z-10 mx-auto mt-6 flex w-full items-center justify-between font-headings text-neutral-500;
+	}
+
+	.nav-item {
+		@apply flex w-full cursor-pointer flex-col items-center;
+	}
+
+	.nav-item .nav-item__number {
+		@apply mb-2 text-sm tracking-[2px];
+	}
+
+	.nav-item.active .nav-item__number {
+		@apply text-primary-500 transition-colors duration-300;
+	}
+
+	.nav-item__underline {
+		@apply relative h-[2px] w-full overflow-hidden bg-neutral-900/10;
+	}
+
+	.nav-item__underline .nav-item__underline-fill {
+		@apply absolute left-0 top-0 h-full w-0 bg-primary-500 transition-[width] duration-[400ms] ease-in-out;
+	}
+
+	.nav-item.active .nav-item__underline .nav-item__underline-fill {
+		@apply w-full;
+	}
+</style>
+
+<!-- Script -->
+<script
+	is:inline
+	define:vars={{ id, delay, slidesPerView, spaceBetween, centeredSlides, initialSlide }}
+>
+	document.addEventListener('astro:page-load', () => {
+		const swiperScript = document.createElement('script')
+		swiperScript.src = 'https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.js'
+		document.head.appendChild(swiperScript)
+
+		swiperScript.onload = () => {
+			const swiper = new Swiper(`.swiper-${id}`, {
+				loop: true,
+				effect: 'fade',
+				slidesPerView,
+				centeredSlides,
+				initialSlide,
+				spaceBetween,
+				navigation: {
+					nextEl: `.swiper-${id} .swiper-button-next`,
+					prevEl: `.swiper-${id} .swiper-button-prev`
+				},
+				autoplay: delay
+					? {
+							delay,
+							disableOnInteraction: false
+						}
+					: false,
+				on: {
+					slideChange(swiper) {
+						const index = swiper.realIndex
+						const items = document.querySelectorAll('.nav-item')
+
+						items.forEach((item, i) => {
+							item.classList.toggle('active', i === index)
+							const fill = item.querySelector('.nav-item__underline-fill')
+							if (fill) {
+								fill.style.transition = 'none'
+								fill.style.width = '0%'
+								// force reflow to restart animation smoothly
+								void fill.offsetWidth
+								if (i === index) {
+									fill.style.transition = `width ${delay}ms linear`
+									fill.style.width = '100%'
+								}
+							}
+						})
+					},
+					autoplayTimeLeft(swiper, time, progress) {
+						const index = swiper.realIndex
+						const activeItem = document.querySelector(`.nav-item[data-index="${index}"] .fill`)
+						if (activeItem) {
+							activeItem.style.transition = 'none'
+							activeItem.style.width = `${progress * 100}%`
+						}
+					}
+				}
+			})
+
+			// Click nav items to jump to slide
+			document.querySelectorAll('.nav-item').forEach((item) => {
+				item.addEventListener('click', () => {
+					const index = parseInt(item.getAttribute('data-index'))
+					swiper.slideToLoop(index)
+				})
+			})
+
+			// Trigger first fill
+			setTimeout(() => swiper.emit('slideChange'), 50)
+		}
+	})
+</script>

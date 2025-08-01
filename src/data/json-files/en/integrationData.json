@@ -1,0 +1,80 @@
+[
+	{
+		"title": "Slack",
+		"image": "/integrations/slack-integration.svg",
+		"description": "Integrate Foxi with Slack to get notifications and manage calls directly from your Slack channels.",
+		"category": "Communication"
+	},
+	{
+		"title": "Microsoft Teams",
+		"image": "/integrations/microsoft-teams-integration.svg",
+		"description": "Connect Foxi with Microsoft Teams to manage your calls and communications directly within Teams.",
+		"category": "Communication"
+	},
+	{
+		"title": "Zoom",
+		"image": "/integrations/zoom-integration.svg",
+		"description": "Sync Foxi with Zoom for seamless integration of calls and video meetings.",
+		"category": "Communication"
+	},
+	{
+		"title": "Google Meet",
+		"image": "/integrations/google-meet-integration.svg",
+		"description": "Link Foxi with Google Meet to enhance your virtual meetings with integrated call functionalities.",
+		"category": "Communication"
+	},
+	{
+		"title": "Cisco Webex",
+		"image": "/integrations/webex-integration.svg",
+		"description": "Integrate Foxi with Cisco Webex to streamline your communications and manage calls efficiently.",
+		"category": "Communication"
+	},
+	{
+		"title": "Asana",
+		"image": "/integrations/asana-integration.svg",
+		"description": "Sync Foxi with Asana to organize tasks and projects more efficiently.",
+		"category": "Productivity"
+	},
+	{
+		"title": "Monday.com",
+		"image": "/integrations/monday-integration.svg",
+		"description": "Integrate Foxi with Monday.com to streamline task management and project workflows.",
+		"category": "Productivity"
+	},
+	{
+		"title": "ClickUp",
+		"image": "/integrations/clickup-integration.svg",
+		"description": "Combine Foxi with ClickUp to enhance your productivity by managing tasks and projects in one place.",
+		"category": "Productivity"
+	},
+	{
+		"title": "Notion",
+		"image": "/integrations/notion-integration.svg",
+		"description": "Integrate Foxi with Notion to manage projects, tasks, and notes efficiently.",
+		"category": "Productivity"
+	},
+	{
+		"title": "Zendesk",
+		"image": "/integrations/zendesk-integration.svg",
+		"description": "Link Foxi with Zendesk to improve customer support with integrated call management.",
+		"category": "Customer Support"
+	},
+	{
+		"title": "Intercom",
+		"image": "/integrations/intercom-integration.svg",
+		"description": "Connect Foxi with Intercom to improve customer interactions and support with integrated calls.",
+		"category": "Customer Support"
+	},
+	{
+		"title": "Help Scout",
+		"image": "/integrations/helpscout-integration.svg",
+		"description": "Sync Foxi with Help Scout to manage support tickets and calls efficiently.",
+		"category": "Customer Support"
+	},
+	{
+		"title": "Olark",
+		"image": "/integrations/olark-integration.svg",
+		"description": "Combine Foxi with Olark to enhance live chat support with integrated call features.",
+		"category": "Customer Support"
+	}
+]

@@ -1,0 +1,72 @@
+---
+// Components
+// - Layout
+import Layout from '../../layouts/Layout.astro'
+// - UI
+import Hero from '../../components/blocks/hero/HomeCTALottieAndVideoPopUp.astro'
+import Features from '../../components/blocks/features/FeatureCards.astro'
+import Testimonial from '../../components/blocks/testimonials/BasicDark.astro'
+import HighlightBlocks from '../../components/blocks/highlights/HightlightRows.astro'
+import CTA from '../../components/blocks/CTA/BasicDark.astro'
+import YoutubePopup from '../../components/blocks/modal/VideoPopup.astro'
+
+// Content
+// - Testimonial background
+import testimonialBackground from '../../assets/testimonial-bg-01.webp'
+// - SEO
+const SEO = {
+	title: 'Foxi | Tu Kit de Herramientas de Productividad',
+	description:
+		'Foxi es un potente kit de herramientas de productividad diseñado para mejorar tu flujo de trabajo y aumentar tu productividad. Con funciones como análisis, seguridad e integraciones, Foxi es la solución perfecta para tu negocio.'
+}
+// - Hero Data
+const heroData = {
+	title: 'Mejora el <strong>rendimiento</strong> del equipo con integración perfecta',
+	text: 'Trabaja de manera más inteligente, no más difícil, con nuestra plataforma innovadora.',
+	actions: {
+		primary: 'Comienza gratis',
+		white: 'Ver video'
+	},
+	chipNotification: {
+		highlight: '30K+',
+		text: 'clientes satisfechos'
+	}
+}
+// - Feature Data
+import featureCardData from '../../data/json-files/es/featureCardsData.json'
+const featureData = {
+	title: `Herramientas innovadoras para <strong>transformar</strong> tu flujo de trabajo`,
+	text: 'Explora el conjunto de herramientas diseñadas para optimizar tu flujo de trabajo, mejorar la productividad y fomentar el crecimiento. Cada producto está elaborado con precisión para satisfacer tus necesidades y superar tus expectativas.'
+}
+// - Highlights Data
+import highlightData from '../../data/json-files/es/highlightData.json'
+// - CTA Data
+const ctaData = {
+	title: '¡Únete a más de 30,000 usuarios satisfechos!',
+	text: 'Descubre por qué miles de profesionales confían en nuestra plataforma para optimizar su flujo de trabajo y mejorar la productividad. ¡Empieza hoy y comprueba la diferencia por ti mismo!',
+	chipNotification: {
+		text: 'Producto del Año #1',
+		highlight: 'Product Hunt'
+	},
+	button: {
+		size: 'lg',
+		style: 'primary',
+		text: '¡Empieza ahora!'
+	}
+}
+---
+
+<Layout title={SEO.title} description={SEO.description} lang="es">
+	<Hero data={heroData} />
+	<Features data={featureData} features={featureCardData} />
+	<Testimonial
+		blockquote="¡Foxi es como un impulso de cohete para nuestra productividad! Su diseño elegante y sus características extraordinarias hacen que gestionar proyectos y la comunicación del equipo sea muy sencillo."
+		figcaption="Sheryl Sandberg"
+		cite="CEO, Facebook"
+		bg={testimonialBackground}
+		bgPosition="right"
+	/>
+	<HighlightBlocks data={highlightData} />
+	<CTA data={ctaData} />
+	<YoutubePopup lang="es" />
+</Layout>

@@ -1,0 +1,26 @@
+[
+	{
+		"title": "Soporte al Cliente",
+		"subtitle": "¿Necesitas ayuda con Foxi? Nuestro equipo de soporte está disponible 24/7 para asistirte con cualquier problema o pregunta que tengas.",
+		"icon": "rocket",
+		"link": "/contact"
+	},
+	{
+		"title": "Consultas de Ventas",
+		"subtitle": "¿Interesado en nuestros planes o en una solución personalizada? Ponte en contacto con nuestro equipo de ventas para encontrar la mejor opción.",
+		"icon": "document-text",
+		"link": "/contact"
+	},
+	{
+		"title": "Solicitudes de Funciones",
+		"subtitle": "¿Tienes una idea para mejorar Foxi? ¡Nos encantaría saber de ti! Comparte tus solicitudes de funciones y ayúdanos a mejorar.",
+		"icon": "bolt",
+		"link": "/contact"
+	},
+	{
+		"title": "Comentarios Generales",
+		"subtitle": "Tus comentarios son invaluables para nosotros. Háznos saber cómo lo estamos haciendo y cómo podemos mejorar.",
+		"icon": "chat-bubble-left-ellipsis",
+		"link": "/contact"
+	}
+]

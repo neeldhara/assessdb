@@ -1,0 +1,72 @@
+---
+// Components
+// - Layout
+import Layout from '../layouts/Layout.astro'
+// - UI
+import FormHero from '../components/blocks/hero/ContactHero.astro'
+import CTA from '../components/blocks/CTA/BasicDark.astro'
+import ContactCards from '../components/blocks/contact/ContactCards.astro'
+import SocialProof from '../components/blocks/socialproof/Basic.astro'
+
+// Content
+// - SEO
+const SEO = {
+	title: 'Foxi | Get in Touch with Us',
+	description:
+		'Have questions or need assistance? Contact us at GURUSETU today for support, inquiries, or feedback. Our team is here to help you make the most of your Foxi experience.'
+}
+// - Page Header
+const header = {
+	title: 'Get <strong>Answers</strong> to Your Questions.',
+	text: "Whether you have a question, need support, or just want to share your feedback, we're all ears. Reach out to us and we'll get back to you as soon as possible."
+}
+// - FormHero
+const formdata = {
+	title: 'Get in Touch',
+	field: {
+		firstName: 'First Name',
+		lastName: 'Last Name',
+		email: {
+			label: 'Email',
+			value: 'name@youremail.com'
+		},
+		phone: 'Phone Number',
+		message: 'Your Message',
+		button: 'Submit'
+	}
+}
+// - ContactCards Data
+import CardData from '../data/json-files/en/contactCardsData.json'
+const contactCardsData = {
+	title: 'Have a Special Request? We’re Here to <strong>Help!</strong>',
+	text: "Choose from one of the options below to get the specific help you need. Whether it's customer support, sales inquiries, feature requests, or general feedback, we're here to provide you with the best assistance possible."
+}
+// - SocialProof Data
+const SocialProofData = {
+	title: 'Trusted by <strong>50,000+</strong> businesses'
+}
+// - CTA Data
+const ctaData = {
+	title: 'Join Over 30,000 Satisfied Users!',
+	text: 'Discover why thousands of professionals trust our platform to streamline their workflow and enhance productivity. Get started today and see the difference for yourself!',
+	chipNotification: {
+		text: '#1 Product of the Year',
+		highlight: 'Product Hunt'
+	},
+	button: {
+		size: 'lg',
+		style: 'primary',
+		text: 'Get started now!'
+	}
+}
+---
+
+<Layout title={SEO.title} description={SEO.description}>
+	<FormHero
+		title={header.title}
+		text={header.text}
+		formData={formdata}
+		id="contact"
+		classes="bg-neutral-50 dark:bg-neutral-950/80"
+	/>
+</Layout>

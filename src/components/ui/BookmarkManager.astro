@@ -1,0 +1,190 @@
+---
+// BookmarkManager Component
+// Handles bookmarking functionality with Userbase database
+---
+
+<script>
+  // Bookmark management functionality
+  class BookmarkManager {
+    constructor() {
+      this.bookmarks = new Set();
+      this.isInitialized = false;
+      this.databaseName = 'bookmarks';
+      
+      // Listen for login/logout events
+      window.addEventListener('userbase-login', () => this.initializeDatabase());
+      window.addEventListener('userbase-logout', () => this.handleLogout());
+      
+      // Initialize if user is already logged in
+      this.checkInitialLogin();
+    }
+
+    async checkInitialLogin() {
+      // Wait a bit for userbase to initialize
+      setTimeout(async () => {
+        if (window.userbaseAuth && window.userbaseAuth.isLoggedIn()) {
+          await this.initializeDatabase();
+        }
+      }, 500);
+    }
+
+    async initializeDatabase() {
+      if (!window.userbaseAuth || !window.userbaseAuth.isLoggedIn()) {
+        return;
+      }
+
+      try {
+        // Open the bookmarks database
+        await userbase.openDatabase({
+          databaseName: this.databaseName,
+          changeHandler: (items) => this.handleBookmarksChange(items)
+        });
+        
+        this.isInitialized = true;
+        console.log('Bookmark database initialized');
+      } catch (error) {
+        console.error('Failed to initialize bookmark database:', error);
+      }
+    }
+
+    handleBookmarksChange(items) {
+      // Update local bookmarks set
+      this.bookmarks.clear();
+      items.forEach(item => {
+        if (item.item && item.item.problemId) {
+          this.bookmarks.add(item.item.problemId);
+        }
+      });
+
+      // Dispatch event to update UI
+      window.dispatchEvent(new CustomEvent('bookmarks-updated', {
+        detail: { bookmarks: Array.from(this.bookmarks) }
+      }));
+
+      console.log('Bookmarks updated:', Array.from(this.bookmarks));
+    }
+
+    handleLogout() {
+      this.bookmarks.clear();
+      this.isInitialized = false;
+      
+      // Dispatch event to update UI
+      window.dispatchEvent(new CustomEvent('bookmarks-updated', {
+        detail: { bookmarks: [] }
+      }));
+    }
+
+    async toggleBookmark(problemId, problemTitle = '') {
+      if (!this.isInitialized || !window.userbaseAuth || !window.userbaseAuth.isLoggedIn()) {
+        alert('Please log in to bookmark problems');
+        return false;
+      }
+
+      try {
+        if (this.bookmarks.has(problemId)) {
+          // Remove bookmark
+          await this.removeBookmark(problemId);
+          return false; // Not bookmarked anymore
+        } else {
+          // Add bookmark
+          await this.addBookmark(problemId, problemTitle);
+          return true; // Now bookmarked
+        }
+      } catch (error) {
+        console.error('Failed to toggle bookmark:', error);
+        alert('Failed to update bookmark. Please try again.');
+        return this.bookmarks.has(problemId);
+      }
+    }
+
+    async addBookmark(problemId, problemTitle = '') {
+      try {
+        await userbase.insertItem({
+          databaseName: this.databaseName,
+          item: {
+            problemId: problemId,
+            title: problemTitle,
+            bookmarkedAt: new Date().toISOString()
+          }
+        });
+        
+        console.log('Bookmark added:', problemId);
+      } catch (error) {
+        console.error('Failed to add bookmark:', error);
+        throw error;
+      }
+    }
+
+    async removeBookmark(problemId) {
+      try {
+        // Find the item to delete
+        const items = await this.getAllBookmarkItems();
+        const itemToDelete = items.find(item => 
+          item.item && item.item.problemId === problemId
+        );
+        
+        if (itemToDelete) {
+          await userbase.deleteItem({
+            databaseName: this.databaseName,
+            itemId: itemToDelete.itemId
+          });
+          
+          console.log('Bookmark removed:', problemId);
+        }
+      } catch (error) {
+        console.error('Failed to remove bookmark:', error);
+        throw error;
+      }
+    }
+
+    async getAllBookmarkItems() {
+      // This is a helper method to get all items from the database
+      return new Promise((resolve, reject) => {
+        let items = [];
+        
+        const changeHandler = (dbItems) => {
+          items = dbItems;
+        };
+        
+        userbase.openDatabase({
+          databaseName: this.databaseName,
+          changeHandler
+        }).then(() => {
+          resolve(items);
+        }).catch(reject);
+      });
+    }
+
+    isBookmarked(problemId) {
+      return this.bookmarks.has(problemId);
+    }
+
+    getBookmarks() {
+      return Array.from(this.bookmarks);
+    }
+
+    isLoggedIn() {
+      return window.userbaseAuth && window.userbaseAuth.isLoggedIn();
+    }
+  }
+
+  // Initialize bookmark manager
+  let bookmarkManager = null;
+  
+  function initializeBookmarkManager() {
+    if (!bookmarkManager) {
+      bookmarkManager = new BookmarkManager();
+      window.bookmarkManager = bookmarkManager; // Make it globally accessible
+    }
+  }
+
+  // Initialize when DOM is ready
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initializeBookmarkManager);
+  } else {
+    initializeBookmarkManager();
+  }
+
+  // Also try after a short delay
+  setTimeout(initializeBookmarkManager, 100);
+</script>

@@ -1,0 +1,172 @@
+---
+// Layout
+// ------------
+// Description: The layout for the page with header and footer
+// Properties:
+// - title: The title of the page
+// - description: The description of the page
+// - ogImage: The image for the Open Graph
+// - noindex: Whether to add the noindex meta tag
+// - navigation: The navigation bar type. Default is sticky , other options are none, transparent (fixed), and none
+
+// Components
+import NavigationBar from '../components/ui/NavigationBar.astro'
+import Main from '../components/ui/Main.astro'
+import Footer from '../components/ui/Footer.astro'
+import Modal from '../components/blocks/modal/SignUp.astro'
+import LoginModal from '../components/ui/LoginModal.astro'
+import Header from '../components/blocks/head/Header.astro'
+// import Toast from '../components/ui/Toast.astro' // Disabled promotional popup
+// Scripts
+import Scriprs from '../components/scripts/ThemeScripts.astro'
+import GoogleTagManager from '../components/scripts/googleTagManagerBody.astro'
+// Styles
+import '../styles/global.css'
+// Fonts
+import '@fontsource-variable/inter'
+import '@fontsource-variable/outfit'
+// Data
+import { configData } from '../config/config'
+
+// Props
+type Props = {
+	title?: string
+	description?: string
+	ogImage?: string
+	noindex?: boolean
+	navigation?: 'none' | 'transparent' | 'sticky'
+	footer?: 'none' | 'basic'
+	lang?: 'en' | 'es'
+}
+// Page Metadata
+const {
+	title,
+	description,
+	ogImage,
+	noindex,
+	navigation = 'sticky',
+	footer = 'none',
+	lang = 'en'
+} = Astro.props
+---
+
+<!doctype html>
+<html lang={lang} class="scroll-animation mode-auto">
+	<Header title={title} description={description} ogImage={ogImage} noindex={noindex} />
+	<body
+		class:list={[
+			{ ['mode-' + `${configData.mode}`]: configData.mode },
+			{ ['scroll-animation']: configData.scrollAnimations }
+		]}
+	>
+		<GoogleTagManager />
+		{navigation !== 'none' && <NavigationBar type={navigation} lang={lang} />}
+		<Main>
+			<slot />
+		</Main>
+		{footer !== 'none' && <Footer lang={lang} />}
+		<Modal lang={lang} />
+		<LoginModal />
+		{/* <Toast lang={lang} /> */} {/* Disabled promotional popup */}
+		<!-- Load Userbase SDK with fallback to mock -->
+		<script>
+			// Create a working mock userbase object for development
+			function createMockUserbase() {
+				return {
+					init: async (config) => {
+						console.log('Mock Userbase initialized with config:', config);
+						return Promise.resolve();
+					},
+					signIn: async ({ username, password, rememberMe }) => {
+						console.log('Mock sign in:', { username, rememberMe });
+						// Simulate successful login
+						return Promise.resolve({ 
+							username, 
+							userId: 'mock-user-id-' + Date.now(),
+							creationDate: new Date().toISOString()
+						});
+					},
+					signUp: async ({ username, password, rememberMe }) => {
+						console.log('Mock sign up:', { username, rememberMe });
+						// Simulate successful signup
+						return Promise.resolve({ 
+							username, 
+							userId: 'mock-user-id-' + Date.now(),
+							creationDate: new Date().toISOString()
+						});
+					},
+					signOut: async () => {
+						console.log('Mock sign out');
+						return Promise.resolve();
+					},
+					getSession: async () => {
+						// Return null user for now (not logged in)
+						return Promise.resolve({ user: null });
+					},
+					openDatabase: async ({ databaseName, changeHandler }) => {
+						console.log('Mock open database:', databaseName);
+						// Simulate empty database
+						if (changeHandler) {
+							setTimeout(() => changeHandler([]), 100);
+						}
+						return Promise.resolve();
+					},
+					insertItem: async ({ databaseName, item }) => {
+						console.log('Mock insert item:', { databaseName, item });
+						return Promise.resolve();
+					},
+					deleteItem: async ({ databaseName, itemId }) => {
+						console.log('Mock delete item:', { databaseName, itemId });
+						return Promise.resolve();
+					}
+				};
+			}
+			
+			// Use mock Userbase for now to get the UI working
+			window.userbase = createMockUserbase();
+			console.log('Using mock Userbase object for development');
+			document.dispatchEvent(new CustomEvent('userbaseReady'));
+		</script>
+		
+		<!-- Connect navbar login link to modal -->
+		<script>
+				document.addEventListener('DOMContentLoaded', function() {
+					// Find the login link in the navbar and connect it to the modal
+					function connectNavbarLogin() {
+						// Find by href patterns and text content
+						const loginLinks = document.querySelectorAll('a[href*="login"], a[href="/login"]');
+						
+						// Also try to find by text content
+						const allLinks = document.querySelectorAll('a, button');
+						allLinks.forEach(link => {
+							if (link.textContent && link.textContent.trim().toLowerCase().includes('login')) {
+								link.addEventListener('click', function(e) {
+									e.preventDefault();
+									console.log('Login link clicked, triggering modal');
+									document.dispatchEvent(new CustomEvent('showLoginModal'));
+								});
+								console.log('Connected login link:', link.textContent.trim());
+							}
+						});
+						
+						// Handle the specific login links found by href
+						loginLinks.forEach(link => {
+							link.addEventListener('click', function(e) {
+								e.preventDefault();
+								console.log('Login href link clicked, triggering modal');
+								document.dispatchEvent(new CustomEvent('showLoginModal'));
+							});
+							console.log('Connected login href link:', link.href);
+						});
+					}
+					
+					// Try to connect immediately
+					connectNavbarLogin();
+					
+					// Also try after a short delay in case navbar loads later
+					setTimeout(connectNavbarLogin, 1000);
+				});
+		</script>
+		<Scriprs />
+	</body>
+</html>

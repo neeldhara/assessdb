@@ -1,0 +1,45 @@
+---
+// Components
+// - Layout
+import Layout from '../layouts/Layout.astro'
+// - UI
+import Hero from '../components/blocks/hero/PageHeader.astro'
+import BasicActivityFeed from '../components/blocks/feeds/BasicActivityFeed.astro'
+import CTA from '../components/blocks/CTA/BasicLight.astro'
+
+// Data
+import roadmapData from '../data/json-files/en/roadmapData.json'
+
+// Content
+// - SEO
+const SEO = {
+	title: 'Foxi | Version Updates and Improvements',
+	description:
+		"Explore Foxi's powerful features designed to enhance productivity, ensure top-notch security, and integrate seamlessly with your favorite tools. Join thousands of satisfied users and transform your workflow with Foxi today!"
+}
+// - Page Header
+const header = {
+	title: 'Upcoming <strong>Features</strong>  & Key Updates',
+	text: "Discover the future of Foxi with our roadmap. Here, you'll find detailed insights into our upcoming features, improvements, and milestones."
+}
+// - CTA Data
+const ctaData = {
+	title: 'Join the Foxi Revolution!',
+	text: 'Discover why thousands of professionals trust our platform to streamline their workflow and enhance productivity. Get started today and see the difference for yourself!',
+	rating: {
+		value: 5,
+		text: '30K customer ratings'
+	},
+	button: {
+		size: 'lg',
+		style: 'primary',
+		text: 'Get Started Now'
+	}
+}
+---
+
+<Layout title={SEO.title} description={SEO.description}>
+	<Hero title={header.title} text={header.text} />
+	<BasicActivityFeed data={roadmapData.data} />
+	<CTA data={ctaData} />
+</Layout>

@@ -1,0 +1,371 @@
+---
+// Modal Login Component for Userbase Authentication
+---
+
+<!-- Login Modal -->
+<div id="loginModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 hidden">
+  <div class="bg-white dark:bg-gray-800 rounded-lg shadow-xl max-w-md w-full mx-4 max-h-[90vh] overflow-y-auto">
+    <div class="p-6">
+      <!-- Modal Header -->
+      <div class="flex justify-between items-center mb-6">
+        <h2 class="text-2xl font-bold text-gray-900 dark:text-white">Welcome</h2>
+        <button id="closeModal" class="text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 text-2xl">
+          ×
+        </button>
+      </div>
+
+      <!-- Loading State -->
+      <div id="modalLoading" class="text-center py-8 hidden">
+        <div class="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600 mx-auto"></div>
+        <p class="mt-2 text-gray-600 dark:text-gray-400">Loading...</p>
+      </div>
+
+      <!-- User Info (when logged in) -->
+      <div id="modalUserInfo" class="hidden">
+        <div class="text-center py-4">
+          <div class="w-16 h-16 bg-blue-100 dark:bg-blue-900 rounded-full flex items-center justify-center mx-auto mb-4">
+            <span class="text-2xl">👤</span>
+          </div>
+          <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-2">
+            Welcome back, <span id="modalUsername"></span>!
+          </h3>
+          <p class="text-gray-600 dark:text-gray-400 mb-6">You're successfully logged in.</p>
+          <button id="modalLogoutBtn" class="w-full bg-red-600 hover:bg-red-700 text-white font-medium py-2 px-4 rounded-lg transition-colors">
+            Logout
+          </button>
+        </div>
+      </div>
+
+      <!-- Auth Forms (when not logged in) -->
+      <div id="modalAuthForms">
+        <!-- Tab Navigation -->
+        <div class="flex mb-6 bg-gray-100 dark:bg-gray-700 rounded-lg p-1">
+          <button id="loginTab" class="flex-1 py-2 px-4 text-sm font-medium rounded-md transition-colors bg-white dark:bg-gray-600 text-blue-600 dark:text-blue-400 shadow-sm">
+            Login
+          </button>
+          <button id="signupTab" class="flex-1 py-2 px-4 text-sm font-medium rounded-md transition-colors text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300">
+            Sign Up
+          </button>
+        </div>
+
+        <!-- Login Form -->
+        <form id="modalLoginForm" class="space-y-4">
+          <div id="modalLoginError" class="hidden bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 text-red-700 dark:text-red-400 px-4 py-3 rounded-lg text-sm"></div>
+          
+          <div>
+            <label for="modalLoginUsername" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Username</label>
+            <input type="text" id="modalLoginUsername" required 
+                   class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent dark:bg-gray-700 dark:text-white">
+          </div>
+          
+          <div>
+            <label for="modalLoginPassword" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Password</label>
+            <input type="password" id="modalLoginPassword" required 
+                   class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent dark:bg-gray-700 dark:text-white">
+          </div>
+          
+          <button type="submit" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded-lg transition-colors">
+            Login
+          </button>
+        </form>
+
+        <!-- Signup Form -->
+        <form id="modalSignupForm" class="space-y-4 hidden">
+          <div id="modalSignupError" class="hidden bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 text-red-700 dark:text-red-400 px-4 py-3 rounded-lg text-sm"></div>
+          
+          <div>
+            <label for="modalSignupUsername" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Username</label>
+            <input type="text" id="modalSignupUsername" required 
+                   class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent dark:bg-gray-700 dark:text-white">
+          </div>
+          
+          <div>
+            <label for="modalSignupPassword" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Password</label>
+            <input type="password" id="modalSignupPassword" required 
+                   class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent dark:bg-gray-700 dark:text-white">
+          </div>
+          
+          <button type="submit" class="w-full bg-green-600 hover:bg-green-700 text-white font-medium py-2 px-4 rounded-lg transition-colors">
+            Sign Up
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  class LoginModal {
+    constructor() {
+      this.modal = null;
+      this.isInitialized = false;
+      this.currentUser = null;
+      this.init();
+    }
+
+    init() {
+      if (this.isInitialized) return;
+      
+      console.log('LoginModal: Initializing...');
+      this.modal = document.getElementById('loginModal');
+      if (!this.modal) {
+        console.error('LoginModal: Modal element not found!');
+        return;
+      }
+      console.log('LoginModal: Modal element found:', this.modal);
+
+      this.setupEventListeners();
+      this.setupUserbase();
+      this.isInitialized = true;
+      
+      // Make globally available
+      window.loginModal = this;
+      console.log('LoginModal: Initialization complete');
+      
+      // Test modal functionality after a short delay
+      setTimeout(() => {
+        console.log('Testing modal show functionality...');
+        console.log('Modal element classes:', this.modal.className);
+        console.log('Modal is hidden:', this.modal.classList.contains('hidden'));
+      }, 1000);
+    }
+
+    setupEventListeners() {
+      // Modal controls
+      document.getElementById('closeModal')?.addEventListener('click', () => this.hide());
+      this.modal?.addEventListener('click', (e) => {
+        if (e.target === this.modal) this.hide();
+      });
+
+      // Tab switching
+      document.getElementById('loginTab')?.addEventListener('click', () => this.showLoginForm());
+      document.getElementById('signupTab')?.addEventListener('click', () => this.showSignupForm());
+
+      // Form submissions
+      document.getElementById('modalLoginForm')?.addEventListener('submit', (e) => this.handleLogin(e));
+      document.getElementById('modalSignupForm')?.addEventListener('submit', (e) => this.handleSignup(e));
+      
+      // Logout
+      document.getElementById('modalLogoutBtn')?.addEventListener('click', () => this.handleLogout());
+
+      // Listen for show modal events
+      document.addEventListener('showLoginModal', () => {
+        console.log('showLoginModal event received, opening modal');
+        this.show();
+      });
+      
+      // Escape key to close
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && !this.modal?.classList.contains('hidden')) {
+          this.hide();
+        }
+      });
+    }
+
+    async setupUserbase() {
+      // Wait for Userbase SDK to be loaded
+      if (typeof userbase === 'undefined') {
+        console.log('Waiting for Userbase SDK to load...');
+        document.addEventListener('userbaseReady', () => {
+          this.initializeUserbase();
+        });
+        return;
+      }
+      
+      this.initializeUserbase();
+    }
+    
+    async initializeUserbase() {
+      if (typeof userbase === 'undefined') {
+        console.error('Userbase SDK still not available');
+        return;
+      }
+
+      try {
+        await userbase.init({ appId: 'b4087b4c-d990-4ab0-8bb7-3c0e6acef0ff' });
+        console.log('Userbase initialized successfully');
+        
+        // Check if user is already logged in
+        const session = await userbase.getSession();
+        if (session.user) {
+          this.handleLoginSuccess(session.user);
+        }
+      } catch (error) {
+        console.error('Failed to initialize Userbase:', error);
+      }
+    }
+
+    show() {
+      console.log('LoginModal.show() called');
+      if (this.modal) {
+        console.log('Modal element found, showing modal');
+        this.modal.classList.remove('hidden');
+        this.modal.classList.add('flex');
+      } else {
+        console.error('Modal element not found!');
+      }
+      // Focus first input
+      const firstInput = this.modal.querySelector('input');
+      if (firstInput) {
+        setTimeout(() => firstInput.focus(), 100);
+      }
+    }
+
+    hide() {
+      if (!this.modal) return;
+      this.modal.classList.add('hidden');
+      document.body.style.overflow = '';
+      this.clearErrors();
+    }
+
+    showLoginForm() {
+      document.getElementById('loginTab')?.classList.add('bg-white', 'dark:bg-gray-600', 'text-blue-600', 'dark:text-blue-400', 'shadow-sm');
+      document.getElementById('loginTab')?.classList.remove('text-gray-500', 'dark:text-gray-400');
+      
+      document.getElementById('signupTab')?.classList.remove('bg-white', 'dark:bg-gray-600', 'text-blue-600', 'dark:text-blue-400', 'shadow-sm');
+      document.getElementById('signupTab')?.classList.add('text-gray-500', 'dark:text-gray-400');
+      
+      document.getElementById('modalLoginForm')?.classList.remove('hidden');
+      document.getElementById('modalSignupForm')?.classList.add('hidden');
+    }
+
+    showSignupForm() {
+      document.getElementById('signupTab')?.classList.add('bg-white', 'dark:bg-gray-600', 'text-blue-600', 'dark:text-blue-400', 'shadow-sm');
+      document.getElementById('signupTab')?.classList.remove('text-gray-500', 'dark:text-gray-400');
+      
+      document.getElementById('loginTab')?.classList.remove('bg-white', 'dark:bg-gray-600', 'text-blue-600', 'dark:text-blue-400', 'shadow-sm');
+      document.getElementById('loginTab')?.classList.add('text-gray-500', 'dark:text-gray-400');
+      
+      document.getElementById('modalSignupForm')?.classList.remove('hidden');
+      document.getElementById('modalLoginForm')?.classList.add('hidden');
+    }
+
+    async handleLogin(e) {
+      e.preventDefault();
+      
+      const username = (document.getElementById('modalLoginUsername') as HTMLInputElement)?.value?.trim();
+      const password = (document.getElementById('modalLoginPassword') as HTMLInputElement)?.value;
+      
+      if (!username || !password) return;
+
+      this.showLoading();
+      this.clearErrors();
+
+      try {
+        const user = await userbase.signIn({ username, password, rememberMe: 'local' });
+        this.handleLoginSuccess(user);
+      } catch (error) {
+        this.showError('modalLoginError', error.message || 'Login failed');
+      } finally {
+        this.hideLoading();
+      }
+    }
+
+    async handleSignup(e) {
+      e.preventDefault();
+      
+      const username = (document.getElementById('modalSignupUsername') as HTMLInputElement)?.value?.trim();
+      const password = (document.getElementById('modalSignupPassword') as HTMLInputElement)?.value;
+      
+      if (!username || !password) return;
+
+      this.showLoading();
+      this.clearErrors();
+
+      try {
+        const user = await userbase.signUp({ username, password, rememberMe: 'local' });
+        this.handleLoginSuccess(user);
+      } catch (error) {
+        this.showError('modalSignupError', error.message || 'Signup failed');
+      } finally {
+        this.hideLoading();
+      }
+    }
+
+    async handleLogout() {
+      try {
+        await userbase.signOut();
+        this.handleLogoutSuccess();
+      } catch (error) {
+        console.error('Logout failed:', error);
+      }
+    }
+
+    handleLoginSuccess(user) {
+      this.currentUser = user;
+      
+      // Update UI
+      const usernameEl = document.getElementById('modalUsername');
+      if (usernameEl) usernameEl.textContent = user.username;
+      
+      document.getElementById('modalAuthForms')?.classList.add('hidden');
+      document.getElementById('modalUserInfo')?.classList.remove('hidden');
+      
+      // Dispatch login event
+      document.dispatchEvent(new CustomEvent('userbaseLogin', { detail: user }));
+      
+      // Auto-close modal after success
+      setTimeout(() => this.hide(), 1500);
+    }
+
+    handleLogoutSuccess() {
+      this.currentUser = null;
+      
+      // Update UI
+      document.getElementById('modalUserInfo')?.classList.add('hidden');
+      document.getElementById('modalAuthForms')?.classList.remove('hidden');
+      
+      // Reset forms
+      (document.getElementById('modalLoginForm') as HTMLFormElement)?.reset();
+      (document.getElementById('modalSignupForm') as HTMLFormElement)?.reset();
+      
+      // Dispatch logout event
+      document.dispatchEvent(new CustomEvent('userbaseLogout'));
+      
+      this.hide();
+    }
+
+    showLoading() {
+      document.getElementById('modalLoading')?.classList.remove('hidden');
+      document.getElementById('modalAuthForms')?.classList.add('hidden');
+      document.getElementById('modalUserInfo')?.classList.add('hidden');
+    }
+
+    hideLoading() {
+      document.getElementById('modalLoading')?.classList.add('hidden');
+      if (this.currentUser) {
+        document.getElementById('modalUserInfo')?.classList.remove('hidden');
+      } else {
+        document.getElementById('modalAuthForms')?.classList.remove('hidden');
+      }
+    }
+
+    showError(elementId, message) {
+      const errorEl = document.getElementById(elementId);
+      if (errorEl) {
+        errorEl.textContent = message;
+        errorEl.classList.remove('hidden');
+      }
+    }
+
+    clearErrors() {
+      document.getElementById('modalLoginError')?.classList.add('hidden');
+      document.getElementById('modalSignupError')?.classList.add('hidden');
+    }
+
+    isLoggedIn() {
+      return !!this.currentUser;
+    }
+
+    getCurrentUser() {
+      return this.currentUser;
+    }
+  }
+
+  // Initialize when DOM is ready
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', () => new LoginModal());
+  } else {
+    new LoginModal();
+  }
+</script>

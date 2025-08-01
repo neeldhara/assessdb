@@ -1,0 +1,87 @@
+---
+// Components
+// - Layout
+import Layout from '../layouts/Layout.astro'
+// - UI
+import Hero from '../components/blocks/hero/HomeCTASplit.astro'
+import Features from '../components/blocks/features/FeatureCards.astro'
+import Testimonial from '../components/blocks/testimonials/BasicDark.astro'
+import HighlightBlocks from '../components/blocks/highlights/HightlightRows.astro'
+import CTA from '../components/blocks/CTA/BasicDark.astro'
+import YoutubePopup from '../components/blocks/modal/VideoPopup.astro'
+import TextImage from '../components/blocks/basic/TextImage.astro'
+
+// Content
+// - Backgrounds
+import testimonialBackground from '../assets/testimonial-bg-02.webp'
+import macbook from '../assets/faq/faq-01.png'
+// - SEO
+const SEO = {
+	title: 'Foxi | Your Productivity Toolkit',
+	description:
+		'Foxi is a powerful productivity toolkit designed to enhance your workflow and boost your productivity. With features like analytics, security, and integrations, Foxi is the perfect solution for your business.'
+}
+// - Hero Data
+const heroData = {
+	title: 'Organise your <strong>projects</strong> on time',
+	text: 'Work smarter, not harder, with our innovative platform. Explore the suite of tools designed to streamline your workflow.',
+	actions: {
+		primary: 'Get started for free'
+	},
+	chipNotification: {
+		highlight: '30K+',
+		text: 'satisfied customers'
+	}
+}
+// - Feature Data
+import featureCardData from '../data/json-files/en/featureCardsData.json'
+const featureData = {
+	title: `Innovative tools to <strong>transform</strong> your workflow`,
+	text: 'Explore the suite of tools designed to streamline your workflow, enhance productivity, and drive growth. Each product is crafted with precision to meet your needs and exceed your expectations.'
+}
+// - Highlights Data
+import highlightData from '../data/json-files/en/highlightData.json'
+const firstTwoHighlights = highlightData.slice(0, 2)
+// - CTA Data
+const ctaData = {
+	title: 'Join Over 30,000 Satisfied Users!',
+	text: 'Discover why thousands of professionals trust our platform to streamline their workflow and enhance productivity. Get started today and see the difference for yourself!',
+	chipNotification: {
+		text: '#1 Product of the Year',
+		highlight: 'Product Hunt'
+	},
+	button: {
+		size: 'lg',
+		style: 'primary',
+		text: 'Get started now!'
+	}
+}
+---
+
+<Layout title={SEO.title} description={SEO.description} navigation="transparent">
+	<Hero data={heroData} />
+	<Features
+		data={featureData}
+		features={featureCardData}
+		classes="bg-neutral-50/50 dark:bg-neutral-900"
+	/>
+	<Testimonial
+		blockquote="The Foxi theme is a breath of fresh air in the world of web development. Its speed and customization options are incredible. "
+		figcaption="Satya Nadella"
+		cite="CEO, Microsoft"
+		bg={testimonialBackground}
+		bgPosition="right"
+	/>
+	<HighlightBlocks data={firstTwoHighlights} />
+	<TextImage
+		title="Why Foxi’s is trusted by <strong>50,000+</strong> businesses"
+		text="At Foxi, we believe in providing exceptional value at every price point. Our pricing plans are designed to cater to a variety of needs, from individuals and small teams to large enterprises. Each plan includes access to our powerful features, seamless integrations, and top-notch customer support. "
+		image={macbook}
+		mobileImage={macbook}
+		imagePosition="left"
+		offsetImage
+		classes="bg-neutral-50 dark:bg-neutral-900 lg:!py-64"
+	/>
+	<CTA data={ctaData} classes="bg-neutral-50 dark:bg-neutral-900" />
+	<YoutubePopup lang="en" />
+</Layout>

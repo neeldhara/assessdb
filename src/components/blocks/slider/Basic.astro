@@ -1,0 +1,64 @@
+---
+// Basic Slider Section
+// ------------
+// Description: A section with an image slider.
+// Properties:
+// - imageList: An array of images
+// - delay: The delay of the slider
+// - effect: The effect of the slider
+// - slidesPerView: The number of slides per view
+// - showPagination: Whether to show the pagination
+// - showNavigation: Whether to show the navigation
+// - spaceBetween: The space between the slides
+// - id: The id of the slider
+
+// Components
+// - Layout
+import Section from '../../ui/Section.astro'
+import Row from '../../ui/Row.astro'
+import Col from '../../ui/Col.astro'
+// - UI
+import Slider from '../../ui/slider/ImageSlider.astro'
+
+// Content
+// - Props
+type Props = {
+	imageList: Array<any>
+	delay?: number
+	effect?: string
+	slidesPerView?: number
+	showPagination?: boolean
+	showNavigation?: boolean
+	spaceBetween?: number
+	id?: string
+}
+const {
+	imageList,
+	delay,
+	effect = 'slide',
+	slidesPerView = 1,
+	showPagination = true,
+	showNavigation = true,
+	spaceBetween = 16,
+	id
+} = Astro.props
+---
+
+<Section>
+	<Row>
+		<Col span="2" />
+		<Col span="8">
+			<Slider
+				imageList={imageList}
+				id={id}
+				delay={delay}
+				effect={effect}
+				slidesPerView={slidesPerView}
+				showPagination={showPagination}
+				showNavigation={showNavigation}
+				spaceBetween={spaceBetween}
+			/>
+		</Col>
+		<Col span="2" />
+	</Row>
+</Section>

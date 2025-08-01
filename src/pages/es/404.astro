@@ -1,0 +1,46 @@
+---
+// Components
+// - Layout
+import Layout from '../../layouts/Layout.astro'
+import Section from '../../components/ui/Section.astro'
+import Row from '../../components/ui/Row.astro'
+import Col from '../../components/ui/Col.astro'
+// - UI
+import ContactCards from '../../components/blocks/contact/ContactCards.astro'
+import LottieAnimation from 'astro-integration-lottie/Lottie.astro'
+
+// Content
+// - Data
+import CardData from '../../data/json-files/es/contactCardsData.json'
+const contactCardsData = {
+	title: '¿Tienes una solicitud especial? ¡Estamos aquí para <strong>ayudarte!</strong>',
+	text: 'Elija una de las opciones siguientes para obtener la ayuda específica que necesita. Ya se trate de atención al cliente, consultas sobre ventas, solicitudes de funciones o comentarios generales, estamos aquí para proporcionarle la mejor asistencia posible.'
+}
+// - SEO
+const SEO = {
+	title: 'Oops! Foxi Lost the Trail - Page Not Found',
+	description:
+		" Looks like we chased our tail and lost the page. Don't worry, let's get you back on the Foxi trail!"
+}
+// - ContactCards
+---
+
+<Layout title={SEO.title} description={SEO.description} lang="es">
+	<Section classes="bg-neutral-50 dark:bg-neutral-900">
+		<Row>
+			<Col span="2" />
+			<Col span="8" classes="text-center flex flex-col">
+				<h1>
+					¡Uy! Creo que me he perdido <span class="highlight"> <br /> Página no encontrada </span>
+				</h1>
+				<div class="mx-auto mb-12 h-48 w-48 lg:h-[26rem] lg:w-96">
+					<LottieAnimation src="/animations/404.json" autoplay="visible" />
+				</div>
+			</Col>
+			<Col span="2" />
+		</Row>
+	</Section>
+	<ContactCards title={contactCardsData.title} text={contactCardsData.text} cardData={CardData} />
+</Layout>
+
+<style></style>

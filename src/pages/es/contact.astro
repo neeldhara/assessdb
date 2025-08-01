@@ -1,0 +1,81 @@
+---
+// Components
+// - Layout
+import Layout from '../../layouts/Layout.astro'
+// - UI
+import FormHero from '../../components/blocks/hero/ContactHero.astro'
+import CTA from '../../components/blocks/CTA/BasicDark.astro'
+import ContactCards from '../../components/blocks/contact/ContactCards.astro'
+import SocialProof from '../../components/blocks/socialproof/Basic.astro'
+
+// Content
+// - SEO
+const SEO = {
+	title: 'Foxi | Contáctanos',
+	description:
+		'¿Tienes preguntas o necesitas asistencia? Contacta a Foxi hoy para recibir soporte, consultas o comentarios. Nuestro equipo está aquí para ayudarte a aprovechar al máximo tu experiencia con Foxi.'
+}
+// - Page Header
+const header = {
+	title: 'Obtén respuestas a tus <strong>preguntas</strong> sobre Foxi.',
+	text: 'Ya sea que tengas una pregunta, necesites soporte o simplemente quieras compartir tus comentarios, estamos aquí para escucharte. Contáctanos y te responderemos lo antes posible.'
+}
+// - FormHero
+const formdata = {
+	title: 'Ponte en Contacto',
+	field: {
+		firstName: 'Nombre',
+		lastName: 'Apellido',
+		email: {
+			label: 'Correo Electrónico',
+			value: 'nombre@tuemail.com'
+		},
+		phone: 'Número de Teléfono',
+		message: 'Tu Mensaje',
+		button: 'Enviar'
+	}
+}
+
+// - ContactCards Data
+import CardData from '../../data/json-files/es/contactCardsData.json'
+const contactCardsData = {
+	title: '¿Tienes una solicitud especial? ¡Estamos aquí para <strong>ayudarte!</strong>',
+	text: 'Elija una de las opciones siguientes para obtener la ayuda específica que necesita. Ya se trate de atención al cliente, consultas sobre ventas, solicitudes de funciones o comentarios generales, estamos aquí para proporcionarle la mejor asistencia posible.'
+}
+// - SocialProof Data
+const SocialProofData = {
+	title: 'Confiado por <strong>50,000+</strong> empresas'
+}
+// - CTA Data
+const ctaData = {
+	title: '¡Únete a más de 30,000 usuarios satisfechos!',
+	text: 'Descubre por qué miles de profesionales confían en nuestra plataforma para optimizar su flujo de trabajo y mejorar la productividad. ¡Empieza hoy y comprueba la diferencia por ti mismo!',
+	chipNotification: {
+		text: 'Producto del Año #1',
+		highlight: 'Product Hunt'
+	},
+	button: {
+		size: 'lg',
+		style: 'primary',
+		text: '¡Empieza ahora!'
+	}
+}
+---
+
+<Layout title={SEO.title} description={SEO.description} lang="es">
+	<FormHero
+		title={header.title}
+		text={header.text}
+		formData={formdata}
+		id="contact"
+		classes="bg-neutral-50 dark:bg-neutral-950/80"
+	/>
+	<ContactCards
+		title={contactCardsData.title}
+		text={contactCardsData.text}
+		cardData={CardData}
+		classes="dark:bg-neutral-950/80"
+	/>
+	<SocialProof data={SocialProofData} classes="dark:bg-neutral-950/80" />
+	<CTA data={ctaData} />
+</Layout>

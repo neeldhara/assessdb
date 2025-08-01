@@ -1,0 +1,86 @@
+{
+	"en": {
+		"pagination": {
+			"helperTextShowing": "Showing",
+			"helperTextOf": "of",
+			"helperTextResults": "results"
+		},
+		"blogPostHero": {
+			"writtenBy": "Written by",
+			"dateOn": "on",
+			"publishedOn": "Published on"
+		},
+		"blogCard": {
+			"dateBy": "By",
+			"dateOn": "on",
+			"postedOn": "Posted on"
+		},
+		"collectionNavigation": {
+			"allButton": "All"
+		},
+		"modal": {
+			"title": "Sign up",
+			"signupText": "Enter your email below to get started with Foxi.",
+			"emailLabel": "Your Email",
+			"signupButton": "Sign up",
+			"or": "or",
+			"googleSignupButton": "Signup with Google"
+		},
+		"videoPopup": {
+			"helperText": "Your browser does not support the video tag."
+		},
+		"toast": {
+			"headline": "Ready to see more?",
+			"body": "Visit <a href='https://oxygenna.com/' target='_blank' class='font-bold text-white !underline'>Oxygenna</a> to explore our complete collection of themes and services."
+		}
+	},
+	"es": {
+		"pagination": {
+			"helperTextShowing": "Mostrando",
+			"helperTextOf": "de",
+			"helperTextResults": "resultados"
+		},
+		"blogPostHero": {
+			"writtenBy": "Escrito por",
+			"dateOn": "el",
+			"publishedOn": "Publicado el"
+		},
+		"blogCard": {
+			"dateBy": "Por",
+			"dateOn": "el",
+			"postedOn": "Publicado el"
+		},
+		"collectionNavigation": {
+			"allButton": "Todos"
+		},
+		"modal": {
+			"title": "Regístrate",
+			"signupText": "Ingresa tu correo electrónico a continuación para comenzar con Foxi.",
+			"emailLabel": "Tu correo electrónico",
+			"signupButton": "Regístrate",
+			"or": "o en",
+			"googleSignupButton": "Regístrate con Google"
+		},
+		"videoPopup": {
+			"helperText": "Tu navegador no admite la etiqueta de video."
+		},
+		"blog": "blog",
+		"advanced-reporting-analytics": "análisis de informes avanzados",
+		"celebrating-milestones": "celebrando hitos",
+		"eco-friendly-initiative": "iniciativa ecológica",
+		"enhancing-accessibility": "mejorando la accesibilidad",
+		"foxi-for-education": "foxi para la educación",
+		"integrating-foxi-with-favorite-tools": "integrando foxi con herramientas favoritas",
+		"mobile-app": "aplicación móvil",
+		"security": "seguridad",
+		"team-collaboration": "colaboración en equipo",
+		"user-feedback": "comentarios de usuarios",
+		"user-stories": "historias de usuarios",
+		"welcome": "bienvenido",
+		"eguides": "guías",
+		"toast": {
+			"headline": "¿Listo para ver más?",
+			"body": "Visita <a href='https://oxygenna.com/' target='_blank' class='font-bold text-white !underline'>Oxygenna</a> para explorar nuestra completa colección de temas y servicios."
+		}
+	}
+}

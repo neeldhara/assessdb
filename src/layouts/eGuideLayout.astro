@@ -1,0 +1,33 @@
+---
+// Imports
+const { frontmatter } = Astro.props
+
+//Layout Components
+import Layout from './Layout.astro'
+
+// Section Components
+import EGuideHero from '../components/blocks/eGuides/eGuideHero.astro'
+
+// Content
+// - SEO
+const SEO = {
+	title: `${frontmatter.title} | Foxi`,
+	description: `${frontmatter.description}`
+}
+// - Props
+const { lang } = Astro.props
+---
+
+<Layout title={SEO.title} description={SEO.description} lang={lang}>
+	<EGuideHero categories={frontmatter.categories} title={frontmatter.title} />
+	<div class="collection-body basic-text basic-text--lg">
+		<slot />
+	</div>
+	{frontmatter.categories}
+</Layout>
+
+<style>
+	.collection-body {
+		@apply mx-auto max-w-3xl px-6 py-12 lg:py-24;
+	}
+</style>

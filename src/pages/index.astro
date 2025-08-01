@@ -1,0 +1,34 @@
+---
+// Components
+// - Layout
+import Layout from '../layouts/Layout.astro'
+// - UI
+import Hero from '../components/blocks/hero/HomeCTALottie.astro'
+import Features from '../components/blocks/features/FeatureList.astro'
+
+// - SEO
+const SEO = {
+	title: 'Assessment Database | Undergraduate Course Resources',
+	description:
+		'Find here a curated collection of assessments and activities for your classroom, covering a variety of needs. Use these to generate practice problem sets, quizzes, exams, classroom activities, and more.'
+}
+// - Hero Data
+const heroData = {
+	title: 'Assessments for Undergraduate Courses',
+	text: 'Find here a curated collection of assessments and activities for your classroom, covering a variety of needs. Use these to generate practice problem sets, quizzes, exams, classrom activities, and more.',
+	actions: {
+		primary: 'Get started for free',
+		neutral: 'Contact us'
+	}
+}
+// - Feature Data
+import featureData from '../data/json-files/en/featuresData.json'
+---
+
+<Layout title={SEO.title} description={SEO.description}>
+	<Hero data={heroData} />
+	<Features
+		title={`Discover Assessments`}
+		features={featureData}
+	/>
+</Layout>

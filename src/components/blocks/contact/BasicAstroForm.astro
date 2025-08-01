@@ -1,0 +1,51 @@
+---
+// Basic Astro Contact Form
+// ------------
+// Description: A basic contact form with fields for first name, last name, email, phone number and message.
+// Properties:
+// - classes: Additional classes to be added to the block
+// ------------
+
+// Components
+// - UI
+import Card from '../../ui/cards/partials/Card.astro'
+import CardBody from '../../ui/cards/partials/CardBody.astro'
+import AstroForm from '../../ui/forms/AstroForm.astro'
+import FormField from '../../ui/forms/partials/FormField.astro'
+import InputField from '../../ui/forms/form-elements/InputField.astro'
+import TextArea from '../../ui/forms/form-elements/TextArea.astro'
+import Button from '../../ui/Button.astro'
+
+// Props
+type Props = {
+	data?: any
+	classes?: string
+}
+const { data, classes } = Astro.props
+---
+
+<Card classes={classes}>
+	<CardBody>
+		<AstroForm>
+			<h2 class="text-2xl" set:html={data.title} />
+			<FormField>
+				<InputField type="text" id="firstName" label={data.field.firstName} />
+				<InputField type="text" id="lastName" label={data.field.lastName} />
+			</FormField>
+			<FormField>
+				<InputField
+					type="email"
+					id="email"
+					label={data.field.email.label}
+					required
+					value={data.field.email.value}
+				/>
+			</FormField>
+			<FormField>
+				<InputField type="tel" id="phone" label={data.field.phone} />
+			</FormField>
+			<FormField><TextArea id="message" label={data.field.message} /></FormField>
+			<Button style="primary" type="submit">{data.field.button}</Button>
+		</AstroForm>
+	</CardBody>
+</Card>

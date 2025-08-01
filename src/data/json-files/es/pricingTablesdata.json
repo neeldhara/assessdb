@@ -1,0 +1,366 @@
+{
+	"basic": [
+		{
+			"header": {
+				"title": "Básico",
+				"subtitle": "Ideal para desarrolladores individuales.",
+				"currency": "$",
+				"price": "19",
+				"priceLabel": "mes, facturado anualmente",
+				"priceMontly": "25",
+				"priceLabelMontly": "mes",
+				"buttonName": "Prueba gratis",
+				"buttonLink": "/"
+			},
+			"body": {
+				"listItems": [
+					{
+						"text": "Únete a otros arquitectos"
+					},
+					{
+						"text": "Presenta tus proyectos con estilo y cautiva a tu audiencia."
+					},
+					{
+						"text": "Sumérgete en el dinámico mundo de la arquitectura."
+					}
+				]
+			},
+			"footer": {
+				"buttonName": "Ver todas las características",
+				"buttonLink": "/"
+			},
+			"style": "basic"
+		},
+		{
+			"header": {
+				"title": "Equipo",
+				"subtitle": "Ideal para pequeños equipos",
+				"currency": "$",
+				"price": "29",
+				"priceLabel": "mes, facturado anualmente",
+				"priceMontly": "35",
+				"priceLabelMontly": "mes",
+				"buttonName": "Prueba gratis",
+				"buttonLink": "/"
+			},
+			"body": {
+				"listItems": [
+					{
+						"text": "Únete a otros arquitectos"
+					},
+					{
+						"text": "Presenta tus proyectos con estilo y cautiva a tu audiencia."
+					},
+					{
+						"text": "Sumérgete en el dinámico mundo de la arquitectura."
+					},
+					{
+						"text": "Desbloquea inspiración infinita"
+					}
+				]
+			},
+			"footer": {
+				"buttonName": "Ver todas las características",
+				"buttonLink": "/"
+			},
+			"style": "featured"
+		},
+		{
+			"header": {
+				"title": "Empresa",
+				"subtitle": "Ideal para empresas",
+				"currency": "$",
+				"price": "49",
+				"priceLabel": "mes, facturado anualmente",
+				"priceMontly": "65",
+				"priceLabelMontly": "mes",
+				"buttonName": "Prueba gratis",
+				"buttonLink": "/"
+			},
+			"body": {
+				"listItems": [
+					{
+						"text": "Únete a otros arquitectos"
+					},
+					{
+						"text": "Presenta tus proyectos con estilo y cautiva a tu audiencia."
+					},
+					{
+						"text": "Sumérgete en el dinámico mundo de la arquitectura."
+					}
+				]
+			},
+			"footer": {
+				"buttonName": "Ver todas las características",
+				"buttonLink": "/"
+			},
+			"style": "basic"
+		}
+	],
+	"list": [
+		{
+			"header": {
+				"title": "Equipo",
+				"subtitle": "Ideal para pequeños equipos",
+				"currency": "$",
+				"price": "29",
+				"priceLabel": "mes, facturado anualmente",
+				"priceMontly": "35",
+				"priceLabelMontly": "mes",
+				"buttonName": "Prueba gratis",
+				"buttonLink": "/"
+			},
+			"body": {
+				"listItems": [
+					{
+						"text": "Dominios personalizados",
+						"icon": "check-circle",
+						"label": "4"
+					},
+					{
+						"text": "Gestión de proveedores",
+						"icon": "check-circle",
+						"label": "1"
+					},
+					{
+						"text": "Acceso a API",
+						"icon": "check-circle",
+						"label": "Básico"
+					},
+					{
+						"text": "Informes mensuales",
+						"icon": "check-circle",
+						"label": "Sí"
+					},
+					{
+						"text": "Colaboración en equipo",
+						"icon": "check-circle",
+						"label": "Sí"
+					},
+					{
+						"text": "Cifrado de datos",
+						"icon": "check-circle",
+						"label": "Estándar"
+					},
+					{
+						"text": "Registros de auditoría",
+						"icon": "check-circle",
+						"label": "Sí"
+					},
+					{
+						"text": "Control de acceso basado en roles",
+						"icon": "check-circle",
+						"label": "Básico"
+					},
+					{
+						"text": "Acceso a cuenta",
+						"icon": "x-mark",
+						"label": "No"
+					},
+					{
+						"text": "Reenvío de recibos",
+						"icon": "x-mark",
+						"label": "No"
+					},
+					{
+						"text": "Soporte prioritario",
+						"icon": "x-mark",
+						"label": "No"
+					},
+					{
+						"text": "Soporte 24/7",
+						"icon": "x-mark",
+						"label": "No"
+					},
+					{
+						"text": "Panel de control personalizable",
+						"icon": "x-mark",
+						"label": "No"
+					},
+					{
+						"text": "Integración SSO",
+						"icon": "x-mark",
+						"label": "No"
+					}
+				]
+			},
+			"style": "basic"
+		},
+		{
+			"header": {
+				"title": "Pequeñas Empresas",
+				"subtitle": "Ideal para equipos grandes",
+				"currency": "$",
+				"price": "49",
+				"priceLabel": "mes, facturado anualmente",
+				"priceMontly": "65",
+				"priceLabelMontly": "mes",
+				"buttonName": "Prueba gratis",
+				"buttonLink": "/"
+			},
+			"body": {
+				"listItems": [
+					{
+						"text": "Dominios personalizados",
+						"icon": "check-circle",
+						"label": "10"
+					},
+					{
+						"text": "Gestión de proveedores",
+						"icon": "check-circle",
+						"label": "10"
+					},
+					{
+						"text": "Acceso a API",
+						"icon": "check-circle",
+						"label": "Avanzado"
+					},
+					{
+						"text": "Informes mensuales",
+						"icon": "check-circle",
+						"label": "Sí"
+					},
+					{
+						"text": "Colaboración en equipo",
+						"icon": "check-circle",
+						"label": "Sí"
+					},
+					{
+						"text": "Cifrado de datos",
+						"icon": "check-circle",
+						"label": "Avanzado"
+					},
+					{
+						"text": "Registros de auditoría",
+						"icon": "check-circle",
+						"label": "Sí"
+					},
+					{
+						"text": "Control de acceso basado en roles",
+						"icon": "check-circle",
+						"label": "Avanzado"
+					},
+					{
+						"text": "Acceso a cuenta",
+						"icon": "check-circle",
+						"label": "800"
+					},
+					{
+						"text": "Reenvío de recibos",
+						"icon": "check-circle",
+						"label": "Ilimitado"
+					},
+					{
+						"text": "Soporte prioritario",
+						"icon": "check-circle",
+						"label": "Sí"
+					},
+					{
+						"text": "Soporte 24/7",
+						"icon": "check-circle",
+						"label": "Sí"
+					},
+					{
+						"text": "Panel de control personalizable",
+						"icon": "x-mark",
+						"label": "No"
+					},
+					{
+						"text": "Integración SSO",
+						"icon": "x-mark",
+						"label": "No"
+					}
+				]
+			},
+			"style": "featured"
+		},
+		{
+			"header": {
+				"title": "Empresa",
+				"subtitle": "Ideal para empresas",
+				"currency": "$",
+				"price": "79",
+				"priceLabel": "mes, facturado anualmente",
+				"priceMontly": "105",
+				"priceLabelMontly": "mes",
+				"buttonName": "Prueba gratis",
+				"buttonLink": "/"
+			},
+			"body": {
+				"listItems": [
+					{
+						"text": "Dominios personalizados",
+						"icon": "check-circle",
+						"label": "Ilimitado"
+					},
+					{
+						"text": "Gestión de proveedores",
+						"icon": "check-circle",
+						"label": "Ilimitado"
+					},
+					{
+						"text": "Acceso a API",
+						"icon": "check-circle",
+						"label": "Empresarial"
+					},
+					{
+						"text": "Informes mensuales",
+						"icon": "check-circle",
+						"label": "Sí"
+					},
+					{
+						"text": "Colaboración en equipo",
+						"icon": "check-circle",
+						"label": "Sí"
+					},
+					{
+						"text": "Cifrado de datos",
+						"icon": "check-circle",
+						"label": "Empresarial"
+					},
+					{
+						"text": "Registros de auditoría",
+						"icon": "check-circle",
+						"label": "Sí"
+					},
+					{
+						"text": "Control de acceso basado en roles",
+						"icon": "check-circle",
+						"label": "Empresarial"
+					},
+					{
+						"text": "Acceso a cuenta",
+						"icon": "check-circle",
+						"label": "Ilimitado"
+					},
+					{
+						"text": "Reenvío de recibos",
+						"icon": "check-circle",
+						"label": "Ilimitado"
+					},
+					{
+						"text": "Soporte prioritario",
+						"icon": "check-circle",
+						"label": "Sí"
+					},
+					{
+						"text": "Soporte 24/7",
+						"icon": "check-circle",
+						"label": "Sí"
+					},
+					{
+						"text": "Panel de control personalizable",
+						"icon": "check-circle",
+						"label": "Sí"
+					},
+					{
+						"text": "Integración SSO",
+						"icon": "check-circle",
+						"label": "Sí"
+					}
+				]
+			},
+			"style": "basic"
+		}
+	]
+}

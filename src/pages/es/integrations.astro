@@ -1,0 +1,73 @@
+---
+// Components
+// - Layout
+import Layout from '../../layouts/Layout.astro'
+// - UI
+import Feature from '../../components/blocks/features/FeatureStickyCards.astro'
+import Hero from '../../components/blocks/hero/PageHeader.astro'
+import CTA from '../../components/blocks/CTA/BasicDark.astro'
+
+// Data
+import integrationData from '../../data/json-files/es/integrationData.json'
+// - Feature Categories
+const integrationsCommunication = integrationData.filter(
+	(integration) => integration.category === 'Comunicación'
+)
+const integrationsProductivity = integrationData.filter(
+	(integration) => integration.category === 'Productividad'
+)
+const integrationsSupport = integrationData.filter(
+	(integration) => integration.category === 'Soporte al Cliente'
+)
+
+// Content
+// - SEO
+// SEO Configuration
+const SEO = {
+	title: 'Foxi | Integraciones Sin Problemas con Tus Herramientas Favoritas',
+	description:
+		'Descubre cómo Foxi se integra sin esfuerzo con tus herramientas y plataformas preferidas para mejorar la productividad, optimizar flujos de trabajo y mejorar la comunicación. Explora nuestra amplia gama de integraciones y ve cómo Foxi puede funcionar sin problemas dentro de tu ecosistema existente.'
+}
+
+// Page Header
+const header = {
+	title: 'Integra Foxi con Tus <strong>Herramientas</strong> Favoritas',
+	text: 'Desbloquea nuevas posibilidades conectando Foxi con las herramientas que ya usas. ¡Mejora tu flujo de trabajo y mantente productivo con nuestras poderosas integraciones!'
+}
+// - CTA Data
+const ctaData = {
+	title: '¡Únete a más de 30,000 usuarios satisfechos!',
+	text: 'Descubre por qué miles de profesionales confían en nuestra plataforma para optimizar su flujo de trabajo y mejorar la productividad. ¡Empieza hoy y comprueba la diferencia por ti mismo!',
+	chipNotification: {
+		text: 'Producto del Año #1',
+		highlight: 'Product Hunt'
+	},
+	button: {
+		size: 'lg',
+		style: 'primary',
+		text: '¡Empieza ahora!'
+	}
+}
+---
+
+<Layout title={SEO.title} description={SEO.description} lang="es">
+	<Hero title={header.title} text={header.text} />
+	<Feature
+		title="Comunicación Optimizada"
+		text="Integra tus herramientas de comunicación favoritas con Foxi para gestionar llamadas y notificaciones sin problemas."
+		data={integrationsCommunication}
+	/>
+	<Feature
+		title="Aumenta Tu Productividad"
+		text="Optimiza la gestión de proyectos y tareas con Foxi para mejorar la productividad y optimizar tu flujo de trabajo."
+		data={integrationsProductivity}
+		classes="bg-neutral-50 dark:bg-neutral-900"
+	/>
+	<Feature
+		title="Soporte Confiable"
+		text="Accede a un soporte y asistencia al cliente completos para resolver cualquier problema y asegurar operaciones fluidas."
+		data={integrationsSupport}
+	/>
+
+	<CTA data={ctaData} />
+</Layout>

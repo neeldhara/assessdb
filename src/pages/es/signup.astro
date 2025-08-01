@@ -1,0 +1,120 @@
+---
+// Components
+// - Layout
+import Layout from '../../layouts/Layout.astro'
+import Section from '../../components/ui/Section.astro'
+import Row from '../../components/ui/Row.astro'
+import Col from '../../components/ui/Col.astro'
+// - UI
+import { Icon } from 'astro-icon/components'
+import { Image } from 'astro:assets'
+import SignupForm from '../../components/blocks/contact/SignupForm.astro'
+import Spacer from '../../components/ui/Spacer.astro'
+import Button from '../../components/ui/Button.astro'
+import ModeSwitcher from '../../components/ui/ModeSwitcher.astro'
+
+// Content
+// - Images
+
+import SignupImage from '../../assets/signup-bg.jpg'
+
+// - SEO
+const SEO = {
+	title: 'Foxi | Tu Kit de Herramientas de Productividad',
+	description:
+		'Foxi es un potente kit de herramientas de productividad diseñado para mejorar tu flujo de trabajo y aumentar tu productividad. Con funciones como análisis, seguridad e integraciones, Foxi es la solución perfecta para tu negocio.'
+}
+// - Form Data
+const formData = {
+	title: 'Regístrate',
+	text: 'Regístrate hoy para comenzar a construir con Foxi.',
+	formFields: {
+		email: {
+			value: 'nombre@tuemail.com',
+			label: 'Correo Electrónico'
+		},
+		password: {
+			value: 'contraseña',
+			label: 'Contraseña',
+			type: 'password'
+		},
+		forgotPassword: '¿Olvidaste tu contraseña?',
+		button: 'Regístrate'
+	}
+}
+---
+
+<Layout title={SEO.title} description={SEO.description} navigation="none" footer="none" lang="es">
+	<Section fullWidth padding="none" vAlign="center" classes="min-h-screen">
+		<Row>
+			<Col span="7" classes="hidden lg:flex lg:h-screen">
+				<Image
+					src={SignupImage}
+					alt="Bloque de Características"
+					width={1200}
+					height={800}
+					class="h-full w-full object-cover"
+				/>
+			</Col>
+			<Col span="5" classes="min-h-screen flex items-center justify-center relative">
+				<div class="signup__form p-6">
+					<SignupForm data={formData} />
+					<Spacer size="4" desktopSize="8" />
+					<p class="signup__or-text">o regístrate con</p>
+					<div class="signup__or-actions">
+						<Button style="neutral" type="link" variation="outline" classes="!w-full">
+							<Icon name="fb-icon" /> Facebook
+						</Button>
+						<Button style="neutral" type="link" variation="outline" classes="!w-full">
+							<Icon name="google-icon" /> Google
+						</Button>
+					</div>
+					<Spacer size="4" desktopSize="8" />
+					<p class="signup__existing-account">
+						¿Ya tienes una cuenta? <a href="#">Inicia sesión</a>
+					</p>
+					<p class="signup__terms">
+						Al registrarte, aceptas nuestros <a href="#"> Términos de Servicio </a> y nuestra <a
+							href="#"
+						>
+							Política de Privacidad</a
+						>
+					</p>
+					<Button
+						style="primary"
+						type="link"
+						link="/es"
+						variation="link"
+						classes="absolute top-4 right-6"
+					>
+						Volver al Inicio
+					</Button>
+				</div>
+			</Col>
+		</Row>
+	</Section>
+</Layout>
+
+<style>
+	.signup__menu {
+		@apply absolute right-4 top-4 flex flex-row-reverse items-center justify-center gap-4 text-sm;
+	}
+	.signup__form {
+		@apply w-full max-w-[31rem];
+	}
+	.signup__or-text {
+		@apply relative block whitespace-nowrap text-center before:absolute before:left-0 before:top-1/2 before:block before:w-1/4 before:border-t before:border-t-neutral-400 before:content-[''] after:absolute after:right-0 after:top-1/2 after:block after:w-1/4 after:border-t after:border-t-neutral-400 after:content-[''] md:before:w-1/3 md:after:w-1/3;
+	}
+	.signup__or-actions {
+		@apply flex flex-col items-center justify-center gap-4 md:flex-row;
+	}
+	.signup__existing-account {
+		@apply text-center text-sm;
+	}
+	.signup__terms {
+		@apply absolute bottom-4 left-0 right-0 text-center text-xs;
+	}
+	.signup__content {
+		@apply flex flex-col gap-4 p-12;
+	}
+</style>

@@ -1,0 +1,837 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { Client } from '@notionhq/client';
+import UserbaseAuth from '../components/ui/UserbaseAuth.astro';
+import BookmarkManager from '../components/ui/BookmarkManager.astro';
+
+// Initialize Notion client
+const notion = new Client({
+  auth: import.meta.env.NOTION_API_KEY
+});
+
+// Get database ID
+const databaseId = "23c05d2578808077b28be0afcc89994f";
+
+// Function to summarize problem statements
+function summarizeProblemStatement(statement: string, maxLength: number = 100): string {
+  if (!statement) return 'No problem statement available.';
+  
+  // Remove extra whitespace and newlines
+  let cleaned = statement.replace(/\s+/g, ' ').trim();
+  
+  // Remove the "Problem:" prefix if it exists
+  if (cleaned.toLowerCase().startsWith('problem:')) {
+    cleaned = cleaned.substring(8).trim();
+  }
+  
+  // Truncate to maxLength and add ellipsis if needed
+  if (cleaned.length > maxLength) {
+    return cleaned.substring(0, maxLength) + '...';
+  }
+  
+  return cleaned;
+}
+
+// Function to normalize difficulty values (remove emojis and extra text)
+function normalizeDifficulty(difficulty: string): string {
+  const cleaned = difficulty.toLowerCase().trim();
+  
+  // Remove common emojis and extract the actual difficulty level
+  if (cleaned.includes('easy')) return 'easy';
+  if (cleaned.includes('medium')) return 'medium';
+  if (cleaned.includes('hard')) return 'hard';
+  
+  return 'unknown';
+}
+
+// Function to get difficulty color classes
+function getDifficultyStyles(difficulty: string): { bg: string, border: string, text: string } {
+  const normalizedDifficulty = normalizeDifficulty(difficulty);
+  
+  switch (normalizedDifficulty) {
+    case 'easy':
+      return {
+        bg: 'bg-green-50 dark:bg-green-950/20',
+        border: 'border-green-200 dark:border-green-800',
+        text: 'text-green-700 dark:text-green-300'
+      };
+    case 'medium':
+      return {
+        bg: 'bg-yellow-50 dark:bg-yellow-950/20',
+        border: 'border-yellow-200 dark:border-yellow-800',
+        text: 'text-yellow-700 dark:text-yellow-300'
+      };
+    case 'hard':
+      return {
+        bg: 'bg-red-50 dark:bg-red-950/20',
+        border: 'border-red-200 dark:border-red-800',
+        text: 'text-red-700 dark:text-red-300'
+      };
+    default:
+      return {
+        bg: 'bg-gray-50 dark:bg-gray-950/20',
+        border: 'border-gray-200 dark:border-gray-800',
+        text: 'text-gray-700 dark:text-gray-300'
+      };
+  }
+}
+
+let assessments = [];
+
+try {
+  const response = await notion.databases.query({
+    database_id: databaseId,
+    page_size: 100
+  });
+
+  assessments = response.results.map((page: any) => {
+    const title = page.properties.Title?.title?.[0]?.plain_text || 'Untitled';
+    const problemStatement = page.properties["Problem Statement"]?.rich_text?.[0]?.plain_text || '';
+    const difficulty = page.properties.Difficulty?.select?.name || 'Unknown';
+    
+    const normalizedDifficulty = normalizeDifficulty(difficulty);
+    const styles = getDifficultyStyles(difficulty);
+    
+    return {
+      id: page.id,
+      title,
+      problemStatement,
+      summary: summarizeProblemStatement(problemStatement),
+      difficulty,
+      normalizedDifficulty,
+      styles
+    };
+  });
+} catch (error) {
+  console.error('Error fetching assessments:', error);
+}
+---
+
+<Layout title="CS101 - Introduction to Programming">
+
+  <!-- Include Userbase components -->
+  <BookmarkManager />
+  
+  <div class="container mx-auto px-4 py-8">
+    <div class="text-center mb-12">
+      <h1 class="text-3xl md:text-4xl font-bold mb-4">CS101 - Introduction to Programming</h1>
+      <p class="text-lg text-gray-600 max-w-3xl mx-auto">
+        Foundational programming problems covering basic concepts, data structures, and problem-solving techniques. Perfect for beginners learning their first programming language.
+      </p>
+    </div>
+
+    {assessments.length === 0 ? (
+      <div class="text-center py-12">
+        <p class="text-xl text-gray-600">No assessments found.</p>
+      </div>
+    ) : (
+      <div>
+        <!-- Search and Filter Section -->
+        <div class="max-w-4xl mx-auto mb-8">
+          <!-- Search Bar -->
+          <div class="max-w-md mx-auto mb-6">
+            <div class="relative">
+              <input
+                type="text"
+                id="searchInput"
+                placeholder="Search assessments by title..."
+                class="w-full px-4 py-3 pl-12 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-800 dark:border-gray-600 dark:text-white"
+              />
+              <svg class="absolute left-4 top-1/2 transform -translate-y-1/2 h-5 w-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+              </svg>
+            </div>
+          </div>
+
+          <!-- Filter Buttons -->
+          <div class="flex flex-wrap justify-center gap-2 mb-6">
+            <!-- Difficulty Filters -->
+            <button class="difficulty-filter px-4 py-2 text-sm font-medium rounded-lg border transition-colors" data-difficulty="all">
+              All
+            </button>
+            <button class="difficulty-filter px-4 py-2 text-sm font-medium rounded-lg border transition-colors" data-difficulty="easy">
+              Easy
+            </button>
+            <button class="difficulty-filter px-4 py-2 text-sm font-medium rounded-lg border transition-colors" data-difficulty="medium">
+              Medium
+            </button>
+            <button class="difficulty-filter px-4 py-2 text-sm font-medium rounded-lg border transition-colors" data-difficulty="hard">
+              Hard
+            </button>
+            
+            <!-- Bookmark Filters -->
+            <div class="border-l border-gray-300 mx-2"></div>
+            <button id="bookmark-filter-all" class="bookmark-filter px-4 py-2 text-sm font-medium rounded-lg border transition-colors active" data-bookmark="all">
+              All Problems
+            </button>
+            <button id="bookmark-filter-bookmarked" class="bookmark-filter px-4 py-2 text-sm font-medium rounded-lg border transition-colors" data-bookmark="bookmarked">
+              📚 Bookmarked
+            </button>
+            <button id="bookmark-filter-unbookmarked" class="bookmark-filter px-4 py-2 text-sm font-medium rounded-lg border transition-colors" data-bookmark="unbookmarked">
+              Unbookmarked
+            </button>
+          </div>
+
+
+        </div>
+
+        <!-- Pagination Info -->
+        <div class="text-center mb-6">
+          <p id="paginationInfo" class="text-gray-600 dark:text-gray-400"></p>
+        </div>
+
+        <!-- No Results Message -->
+        <div id="noResults" class="text-center py-12 hidden">
+          <p class="text-xl text-gray-600">No assessments found matching your criteria.</p>
+        </div>
+
+        <!-- Assessments Grid -->
+        <div id="assessmentsGrid" class="grid gap-6 md:gap-8 grid-cols-1 md:grid-cols-2 lg:grid-cols-3 mb-8">
+        {
+          assessments.map(assessment => (
+            <div class={`assessment-card flex flex-col overflow-hidden rounded border-2 ${assessment.styles.border} ${assessment.styles.bg} text-neutral-500 shadow-lg shadow-neutral-700/5 dark:shadow-neutral-950/50 h-full`} data-difficulty={assessment.normalizedDifficulty}>
+              <div class="p-6 flex flex-col h-full">
+                <div class="flex justify-between items-start mb-3">
+                  <h3 class="assessment-title text-lg font-semibold text-neutral-900 dark:text-neutral-100 flex-1">
+                    <a href={`/cs101/${assessment.id}`} class="hover:text-blue-600 dark:hover:text-blue-400 transition-colors">
+                      {assessment.title}
+                    </a>
+                  </h3>
+                  <div class="flex items-center gap-2 ml-3">
+                    <button 
+                      class="bookmark-btn p-1 rounded hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors" 
+                      data-problem-id={assessment.id}
+                      data-problem-title={assessment.title}
+                      title="Bookmark this problem"
+                    >
+                      <span class="bookmark-icon text-lg">🔖</span>
+                    </button>
+                    <span class={`px-2 py-1 text-xs font-medium rounded-full ${assessment.styles.text} ${assessment.styles.bg} border ${assessment.styles.border}`}>
+                      {assessment.difficulty}
+                    </span>
+                  </div>
+                </div>
+                
+                <p class="text-neutral-600 dark:text-neutral-400 mb-4 flex-1">
+                  {assessment.summary}
+                </p>
+                
+                <div class="mt-auto">
+                  <a 
+                    href={`/cs101/${assessment.id}`}
+                    class="inline-flex items-center text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300 font-medium transition-colors"
+                  >
+                    View Details
+                    <svg class="ml-1 h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                    </svg>
+                  </a>
+                </div>
+              </div>
+            </div>
+          ))
+        }
+        </div>
+
+        <!-- Pagination Info -->
+        <div id="paginationInfo" class="text-center text-sm text-gray-600 dark:text-gray-400 mb-4">
+          Showing <span id="currentPageInfo">1-12</span> of <span id="totalCount">0</span> assessments
+        </div>
+
+        <!-- Pagination Controls -->
+        <div id="paginationControls" class="flex justify-center items-center space-x-4 mt-8">
+          <button
+            id="prevPage"
+            class="px-4 py-2 text-sm font-medium text-gray-500 bg-white border border-gray-300 rounded-lg hover:bg-gray-50 hover:text-gray-700 disabled:opacity-50 disabled:cursor-not-allowed dark:bg-gray-800 dark:border-gray-600 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-gray-300"
+            disabled
+          >
+            <svg class="w-4 h-4 mr-2 inline" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
+            </svg>
+            Previous
+          </button>
+          
+          <div id="pageNumbers" class="flex space-x-2">
+            <!-- Page numbers will be dynamically generated -->
+          </div>
+          
+          <button
+            id="nextPage"
+            class="px-4 py-2 text-sm font-medium text-gray-500 bg-white border border-gray-300 rounded-lg hover:bg-gray-50 hover:text-gray-700 disabled:opacity-50 disabled:cursor-not-allowed dark:bg-gray-800 dark:border-gray-600 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-gray-300"
+          >
+            Next
+            <svg class="w-4 h-4 ml-2 inline" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+            </svg>
+          </button>
+        </div>
+      </div>
+    )}
+  </div>
+  
+  <style>
+    .difficulty-filter.active {
+      @apply ring-2 ring-blue-500 bg-blue-100 text-blue-700;
+    }
+    .dark .difficulty-filter.active {
+      @apply bg-blue-900/30 text-blue-300;
+    }
+    
+    .bookmark-filter.active {
+      @apply ring-2 ring-blue-500 bg-blue-100 text-blue-700;
+    }
+    .dark .bookmark-filter.active {
+      @apply bg-blue-900/30 text-blue-300;
+    }
+    
+    .bookmark-btn:hover .bookmark-icon {
+      transform: scale(1.1);
+      transition: transform 0.2s ease;
+    }
+  </style>
+
+  <script>
+    // Prevent multiple initializations
+    let isCS101Initialized = false;
+    
+    // Client-side search, filter, and pagination functionality
+    function initializeCS101Page() {
+      // Prevent multiple initializations
+      if (isCS101Initialized) {
+        return;
+      }
+      
+      const searchInput = document.getElementById('searchInput') as HTMLInputElement;
+      const assessmentsGrid = document.getElementById('assessmentsGrid');
+      const noResults = document.getElementById('noResults');
+      const difficultyFilters = document.querySelectorAll('.difficulty-filter');
+      const paginationInfo = document.getElementById('paginationInfo');
+      const paginationControls = document.getElementById('paginationControls');
+      const currentPageInfo = document.getElementById('currentPageInfo');
+      const totalCount = document.getElementById('totalCount');
+      const prevPageBtn = document.getElementById('prevPage');
+      const nextPageBtn = document.getElementById('nextPage');
+      const pageNumbers = document.getElementById('pageNumbers');
+      
+      if (!searchInput || !assessmentsGrid || !noResults) {
+        console.error('CS101: Required elements not found', {
+          searchInput: !!searchInput,
+          assessmentsGrid: !!assessmentsGrid,
+          noResults: !!noResults
+        });
+        return;
+      }
+      
+      console.log('CS101: Initializing pagination...');
+      
+      const assessmentCards = Array.from(assessmentsGrid.querySelectorAll('.assessment-card'));
+      const bookmarkFilters = document.querySelectorAll('.bookmark-filter');
+      let currentSearchTerm = '';
+      let currentDifficultyFilter = 'all';
+      let currentBookmarkFilter = 'all';
+      let currentPage = 1;
+      const itemsPerPage = 12;
+      
+      // Get filtered cards based on current search, difficulty, and bookmark filters
+      function getFilteredCards() {
+        return assessmentCards.filter(card => {
+          const titleElement = card.querySelector('.assessment-title');
+          const htmlCard = card as HTMLElement;
+          
+          if (!titleElement || !titleElement.textContent) return false;
+          
+          const title = titleElement.textContent.toLowerCase();
+          const difficulty = htmlCard.getAttribute('data-difficulty') || '';
+          
+          // Check if card matches search term
+          const matchesSearch = currentSearchTerm === '' || title.includes(currentSearchTerm);
+          
+          // Check if card matches difficulty filter
+          const matchesDifficulty = currentDifficultyFilter === 'all' || difficulty === currentDifficultyFilter;
+          
+          // Check if card matches bookmark filter
+          let matchesBookmark = true;
+          if (currentBookmarkFilter !== 'all') {
+            const bookmarkBtn = card.querySelector('.bookmark-btn');
+            const problemId = bookmarkBtn?.getAttribute('data-problem-id');
+            const isBookmarked = window.bookmarkManager && problemId ? window.bookmarkManager.isBookmarked(problemId) : false;
+            
+            if (currentBookmarkFilter === 'bookmarked') {
+              matchesBookmark = isBookmarked;
+            } else if (currentBookmarkFilter === 'unbookmarked') {
+              matchesBookmark = !isBookmarked;
+            }
+          }
+          
+          return matchesSearch && matchesDifficulty && matchesBookmark;
+        });
+      }
+      
+      // Update pagination info and controls
+      function updatePagination(filteredCards: Element[]) {
+        const totalItems = filteredCards.length;
+        const totalPages = Math.ceil(totalItems / itemsPerPage);
+        
+        // Update pagination info
+        if (totalItems === 0) {
+          currentPageInfo!.textContent = '0-0';
+          totalCount!.textContent = '0';
+        } else {
+          const startItem = (currentPage - 1) * itemsPerPage + 1;
+          const endItem = Math.min(currentPage * itemsPerPage, totalItems);
+          currentPageInfo!.textContent = `${startItem}-${endItem}`;
+          totalCount!.textContent = totalItems.toString();
+        }
+        
+        // Update pagination controls
+        if (prevPageBtn && nextPageBtn) {
+          (prevPageBtn as HTMLButtonElement).disabled = currentPage <= 1;
+          (nextPageBtn as HTMLButtonElement).disabled = currentPage >= totalPages;
+        }
+        
+        // Generate page numbers
+        if (pageNumbers) {
+          pageNumbers.innerHTML = '';
+          
+          // Show pagination only if there are multiple pages
+          if (totalPages > 1) {
+            const maxVisiblePages = 5;
+            let startPage = Math.max(1, currentPage - Math.floor(maxVisiblePages / 2));
+            let endPage = Math.min(totalPages, startPage + maxVisiblePages - 1);
+            
+            // Adjust start page if we're near the end
+            if (endPage - startPage + 1 < maxVisiblePages) {
+              startPage = Math.max(1, endPage - maxVisiblePages + 1);
+            }
+            
+            for (let i = startPage; i <= endPage; i++) {
+              const pageBtn = document.createElement('button');
+              pageBtn.textContent = i.toString();
+              pageBtn.className = `px-3 py-2 text-sm font-medium rounded-lg ${
+                i === currentPage
+                  ? 'bg-blue-600 text-white'
+                  : 'text-gray-500 bg-white border border-gray-300 hover:bg-gray-50 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-600 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-gray-300'
+              }`;
+              
+              pageBtn.addEventListener('click', () => {
+                currentPage = i;
+                updateDisplay();
+              });
+              
+              pageNumbers.appendChild(pageBtn);
+            }
+          }
+        }
+        
+        // Show/hide pagination controls
+        if (paginationControls) {
+          paginationControls.style.display = totalPages > 1 ? 'flex' : 'none';
+        }
+        if (paginationInfo) {
+          paginationInfo.style.display = totalItems > 0 ? 'block' : 'none';
+        }
+      }
+      
+      // Update the display based on current filters and pagination
+      function updateDisplay() {
+        const filteredCards = getFilteredCards();
+        const totalItems = filteredCards.length;
+        
+        // Hide all cards first
+        assessmentCards.forEach(card => {
+          (card as HTMLElement).style.display = 'none';
+        });
+        
+        if (totalItems === 0) {
+          // Show no results message
+          noResults?.classList.remove('hidden');
+          assessmentsGrid?.classList.add('hidden');
+        } else {
+          // Hide no results message and show grid
+          noResults?.classList.add('hidden');
+          assessmentsGrid?.classList.remove('hidden');
+          
+          // Calculate pagination
+          const startIndex = (currentPage - 1) * itemsPerPage;
+          const endIndex = startIndex + itemsPerPage;
+          const cardsToShow = filteredCards.slice(startIndex, endIndex);
+          
+          // Show cards for current page
+          cardsToShow.forEach(card => {
+            (card as HTMLElement).style.display = 'flex';
+          });
+        }
+        
+        // Update pagination
+        updatePagination(filteredCards);
+      }
+      
+      // Search functionality
+      searchInput.addEventListener('input', function() {
+        currentSearchTerm = this.value.toLowerCase().trim();
+        currentPage = 1; // Reset to first page when searching
+        updateDisplay();
+      });
+      
+      // Difficulty filter functionality
+      difficultyFilters.forEach(filter => {
+        filter.addEventListener('click', function() {
+          // Remove active class from all filters
+          difficultyFilters.forEach(f => f.classList.remove('active'));
+          
+          // Add active class to clicked filter
+          this.classList.add('active');
+          
+          // Update current filter
+          currentDifficultyFilter = this.getAttribute('data-difficulty') || 'all';
+          currentPage = 1; // Reset to first page when filtering
+          updateDisplay();
+        });
+      });
+      
+      // Bookmark filter functionality
+      bookmarkFilters.forEach(filter => {
+        filter.addEventListener('click', function() {
+          // Remove active class from all bookmark filters
+          bookmarkFilters.forEach(f => f.classList.remove('active'));
+          
+          // Add active class to clicked filter
+          this.classList.add('active');
+          
+          // Update current bookmark filter
+          currentBookmarkFilter = this.getAttribute('data-bookmark') || 'all';
+          currentPage = 1; // Reset to first page when filtering
+          updateDisplay();
+        });
+      });
+      
+      // Bookmark button functionality
+      function setupBookmarkButtons() {
+        const bookmarkButtons = document.querySelectorAll('.bookmark-btn');
+        bookmarkButtons.forEach(btn => {
+          btn.addEventListener('click', async function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            
+            const problemId = this.getAttribute('data-problem-id');
+            const problemTitle = this.getAttribute('data-problem-title') || '';
+            
+            if (!problemId) return;
+            
+            // Check if user is logged in
+            if (!window.loginModal || !window.loginModal.isLoggedIn()) {
+              // Enhanced user-friendly notification
+              this.classList.add('animate-pulse');
+              const originalTitle = this.getAttribute('title');
+              this.setAttribute('title', 'Please log in to bookmark problems');
+              
+              // Show a subtle toast notification
+              showBookmarkToast('Please log in to bookmark problems');
+              
+              // Reset after 2 seconds
+              setTimeout(() => {
+                this.classList.remove('animate-pulse');
+                this.setAttribute('title', originalTitle || 'Bookmark this problem');
+              }, 2000);
+              
+              // Trigger login modal if available
+              const loginEvent = new CustomEvent('showLoginModal');
+              document.dispatchEvent(loginEvent);
+              return;
+            }
+            
+            // Toggle bookmark
+            if (window.bookmarkManager) {
+              const wasBookmarked = window.bookmarkManager.isBookmarked(problemId);
+              const success = await window.bookmarkManager.toggleBookmark(problemId, problemTitle);
+              if (success) {
+                const isNowBookmarked = window.bookmarkManager.isBookmarked(problemId);
+                updateBookmarkIcon(this, isNowBookmarked);
+                
+                // Show success toast
+                const action = isNowBookmarked ? 'added to' : 'removed from';
+                showBookmarkToast(`Problem ${action} bookmarks`);
+                
+                // Update display if we're filtering by bookmarks
+                if (currentBookmarkFilter !== 'all') {
+                  updateDisplay();
+                }
+              }
+            }
+          });
+        });
+      }
+      
+      // Update bookmark icon based on bookmark status
+      function updateBookmarkIcon(button: Element, isBookmarked: boolean) {
+        const icon = button.querySelector('.bookmark-icon');
+        if (icon) {
+          icon.textContent = isBookmarked ? '📚' : '🔖';
+          button.setAttribute('title', isBookmarked ? 'Remove bookmark' : 'Bookmark this problem');
+        }
+      }
+      
+      // Update all bookmark icons based on current bookmark state
+      function updateAllBookmarkIcons() {
+        if (!window.bookmarkManager) return;
+        
+        const bookmarkButtons = document.querySelectorAll('.bookmark-btn');
+        bookmarkButtons.forEach(btn => {
+          const problemId = btn.getAttribute('data-problem-id');
+          if (problemId) {
+            const isBookmarked = window.bookmarkManager.isBookmarked(problemId);
+            updateBookmarkIcon(btn, isBookmarked);
+          }
+        });
+      }
+      
+      // Show a subtle toast notification for bookmark actions
+      function showBookmarkToast(message: string) {
+        // Remove any existing toast
+        const existingToast = document.querySelector('.bookmark-toast');
+        if (existingToast) {
+          existingToast.remove();
+        }
+        
+        // Create toast element
+        const toast = document.createElement('div');
+        toast.className = 'bookmark-toast fixed top-4 right-4 bg-blue-600 text-white px-4 py-2 rounded-lg shadow-lg z-50 transform translate-x-full transition-transform duration-300';
+        toast.textContent = message;
+        
+        // Add to page
+        document.body.appendChild(toast);
+        
+        // Animate in
+        setTimeout(() => {
+          toast.classList.remove('translate-x-full');
+        }, 10);
+        
+        // Auto-remove after 3 seconds
+        setTimeout(() => {
+          toast.classList.add('translate-x-full');
+          setTimeout(() => {
+            if (toast.parentNode) {
+              toast.parentNode.removeChild(toast);
+            }
+          }, 300);
+        }, 3000);
+      }
+      
+      // Pagination button functionality
+      prevPageBtn?.addEventListener('click', () => {
+        if (currentPage > 1) {
+          currentPage--;
+          updateDisplay();
+        }
+      });
+      
+      nextPageBtn?.addEventListener('click', () => {
+        const filteredCards = getFilteredCards();
+        const totalPages = Math.ceil(filteredCards.length / itemsPerPage);
+        if (currentPage < totalPages) {
+          currentPage++;
+          updateDisplay();
+        }
+      });
+      
+      // Set initial active filter
+      document.querySelector('.difficulty-filter[data-difficulty="all"]')?.classList.add('active');
+      
+      // Force initial pagination display
+      function initializePagination() {
+        const totalItems = assessmentCards.length;
+        const totalPages = Math.ceil(totalItems / itemsPerPage);
+        
+        // Always show pagination info if there are items
+        if (paginationInfo && totalItems > 0) {
+          paginationInfo.style.display = 'block';
+          if (currentPageInfo) {
+            const endItem = Math.min(itemsPerPage, totalItems);
+            currentPageInfo.textContent = `1-${endItem}`;
+          }
+          if (totalCount) {
+            totalCount.textContent = totalItems.toString();
+          }
+        }
+        
+        // Show pagination controls if there are multiple pages
+        if (paginationControls && totalPages > 1) {
+          paginationControls.style.display = 'flex';
+        }
+        
+        // Initialize page numbers
+        if (pageNumbers && totalPages > 1) {
+          pageNumbers.innerHTML = '';
+          const maxVisiblePages = 5;
+          const endPage = Math.min(totalPages, maxVisiblePages);
+          
+          for (let i = 1; i <= endPage; i++) {
+            const pageBtn = document.createElement('button');
+            pageBtn.textContent = i.toString();
+            pageBtn.className = `px-3 py-2 text-sm font-medium rounded-lg ${
+              i === 1
+                ? 'bg-blue-600 text-white'
+                : 'text-gray-500 bg-white border border-gray-300 hover:bg-gray-50 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-600 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-gray-300'
+            }`;
+            
+            pageBtn.addEventListener('click', () => {
+              currentPage = i;
+              updateDisplay();
+            });
+            
+            pageNumbers.appendChild(pageBtn);
+          }
+        }
+        
+        // Set initial button states
+        if (prevPageBtn) {
+          (prevPageBtn as HTMLButtonElement).disabled = true;
+        }
+        if (nextPageBtn) {
+          (nextPageBtn as HTMLButtonElement).disabled = totalPages <= 1;
+        }
+      }
+      
+      // Initialize pagination immediately
+      initializePagination();
+      
+      // Setup bookmark buttons
+      setupBookmarkButtons();
+      
+      // Listen for bookmark updates
+      document.addEventListener('bookmarksUpdated', function() {
+        updateAllBookmarkIcons();
+        // Update display if we're filtering by bookmarks
+        if (currentBookmarkFilter !== 'all') {
+          updateDisplay();
+        }
+      });
+      
+      // Listen for login/logout events to update bookmark icons
+      document.addEventListener('userbaseLogin', function() {
+        setTimeout(() => {
+          updateAllBookmarkIcons();
+        }, 100); // Small delay to ensure bookmark manager is ready
+      });
+      
+      document.addEventListener('userbaseLogout', function() {
+        updateAllBookmarkIcons();
+        // Reset bookmark filter to 'all' when user logs out
+        if (currentBookmarkFilter !== 'all') {
+          currentBookmarkFilter = 'all';
+          bookmarkFilters.forEach(f => f.classList.remove('active'));
+          document.querySelector('.bookmark-filter[data-bookmark="all"]')?.classList.add('active');
+          updateDisplay();
+        }
+      });
+      
+      // Initial display
+      updateDisplay();
+      
+      // Update bookmark icons after a short delay to ensure components are loaded
+      setTimeout(() => {
+        updateAllBookmarkIcons();
+      }, 500);
+      
+      // Mark as initialized
+      isCS101Initialized = true;
+      console.log('CS101: Pagination initialized successfully');
+    }
+    
+    // Use MutationObserver to detect when pagination elements are added to DOM
+    function observeForPaginationElements() {
+      const observer = new MutationObserver((mutations) => {
+        mutations.forEach((mutation) => {
+          if (mutation.type === 'childList') {
+            // Check if pagination elements were added
+            const paginationInfo = document.getElementById('paginationInfo');
+            const paginationControls = document.getElementById('paginationControls');
+            
+            if (paginationInfo && paginationControls && !isCS101Initialized) {
+              console.log('CS101: Pagination elements detected, initializing...');
+              initializeCS101Page();
+              observer.disconnect(); // Stop observing once initialized
+            }
+          }
+        });
+      });
+      
+      // Start observing
+      observer.observe(document.body, {
+        childList: true,
+        subtree: true
+      });
+      
+      // Fallback: stop observing after 5 seconds
+      setTimeout(() => {
+        observer.disconnect();
+      }, 5000);
+    }
+    
+    // Force initialization with multiple attempts
+    function forceInitialization() {
+      // Reset initialization flag
+      isCS101Initialized = false;
+      
+      // Try immediate initialization
+      initializeCS101Page();
+      
+      // If that didn't work, start observing for elements
+      if (!isCS101Initialized) {
+        console.log('CS101: Initial attempt failed, starting DOM observer...');
+        observeForPaginationElements();
+        
+        // Also try with delays as backup
+        setTimeout(() => {
+          if (!isCS101Initialized) {
+            isCS101Initialized = false;
+            initializeCS101Page();
+          }
+        }, 100);
+        
+        setTimeout(() => {
+          if (!isCS101Initialized) {
+            isCS101Initialized = false;
+            initializeCS101Page();
+          }
+        }, 500);
+        
+        setTimeout(() => {
+          if (!isCS101Initialized) {
+            isCS101Initialized = false;
+            initializeCS101Page();
+          }
+        }, 1000);
+      }
+    }
+    
+    // Initialize on DOM ready
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', forceInitialization);
+    } else {
+      // DOM is already ready, initialize immediately
+      forceInitialization();
+    }
+    
+    // For SPA navigation - use a more aggressive approach
+    let initializationTimer: ReturnType<typeof setTimeout>;
+    function scheduleInitialization() {
+      clearTimeout(initializationTimer);
+      initializationTimer = setTimeout(forceInitialization, 100);
+    }
+    
+    // Multiple event listeners for different navigation scenarios
+    window.addEventListener('popstate', scheduleInitialization);
+    document.addEventListener('visibilitychange', function() {
+      if (!document.hidden) {
+        scheduleInitialization();
+      }
+    });
+    window.addEventListener('pageshow', scheduleInitialization);
+    window.addEventListener('focus', scheduleInitialization);
+    
+    // Listen for Astro navigation events if available
+    document.addEventListener('astro:page-load', forceInitialization);
+    document.addEventListener('astro:after-swap', forceInitialization);
+  </script>
+</Layout>

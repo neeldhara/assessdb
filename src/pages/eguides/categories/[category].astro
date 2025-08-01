@@ -1,0 +1,50 @@
+---
+// EGuides Category Page
+// ------------
+// Description: The EGuides category page is a page that displays all the EGuides tagged with a specific category.
+
+// Components
+// - Layout
+import Layout from '../../../layouts/Layout.astro'
+// - UI
+import Hero from '../../../components/blocks/hero/PageHeader.astro'
+import EGuidePosts from '../../../components/blocks/eGuides/eGuidePosts.astro'
+
+// Data
+import { getCollection } from 'astro:content'
+export async function getStaticPaths() {
+	const allEguides = await getCollection('eguides', ({ id }) => {
+		return id.startsWith('en/')
+	})
+	const uniqueCategories = [...new Set(allEguides.map((eguide) => eguide.data.badges).flat())]
+
+	return uniqueCategories.map((category) => {
+		const filteredGuides = allEguides.filter((eguide) => eguide.data.badges.includes(category))
+		return {
+			params: { category },
+			props: { eguides: filteredGuides }
+		}
+	})
+}
+const { category } = Astro.params
+const { eguides } = Astro.props
+
+// Content
+// - SEO
+const SEO = {
+	title: `Foxi | eguides tagges as ` + category,
+	description:
+		"Explore Foxi's latest news designed to enhance productivity, ensure top-notch security, and integrate seamlessly with your favorite tools. Join thousands of satisfied users and transform your workflow with Foxi today!"
+}
+
+// - Page Header
+const header = {
+	title: `Foxi eguides about <br><strong class="capitalize">` + category + `</strong>`,
+	text: `Stay informed, stay productive with all the latest from Foxi.`
+}
+---
+
+<Layout title={SEO.title} description={SEO.description} noindex>
+	<Hero title={header.title} text={header.text} />
+	<EGuidePosts data={eguides} lang="en" />
+</Layout>

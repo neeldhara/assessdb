@@ -1,0 +1,73 @@
+---
+// Components
+// - Layout
+import Layout from '../layouts/Layout.astro'
+// - UI
+import Hero from '../components/blocks/hero/PageHeader.astro'
+import CTA from '../components/blocks/CTA/BasicDark.astro'
+import Feature from '../components/blocks/features/FeatureList.astro'
+import Testimonial from '../components/blocks/testimonials/BasicDark.astro'
+
+// Content
+// - SEO
+const SEO = {
+	title: 'Foxi | Features to Boost Productivity & Security',
+	description:
+		"Explore Foxi's powerful features designed to enhance productivity, ensure top-notch security, and integrate seamlessly with your favorite tools. Join thousands of satisfied users and transform your workflow with Foxi today!"
+}
+// - Page Header
+const header = {
+	title: 'Unlock the <strong>Power</strong> of Foxi',
+	text: "Experience the benefits of Foxi's powerful features designed to simplify your tasks and improve your results."
+}
+// - Feature Data
+import featureData from '../data/json-files/en/featuresData.json'
+// - Testimonial data
+import testimonialBackground from '../assets/testimonial-bg-03.webp'
+const testimonialData = {
+	blockquote:
+		"Foxi isn't just an app—it's like having a mischievous yet brilliant sidekick for your business. It streamlines tasks and also cracks jokes to keep spirits high",
+	figcaption: 'Max Widgetson',
+	cite: ' CEO, Widgetify Ltd'
+}
+// - CTA Data
+const ctaData = {
+	title: 'Join Over 30,000 Satisfied Users!',
+	text: 'Discover why thousands of professionals trust our platform to streamline their workflow and enhance productivity. Get started today and see the difference for yourself!',
+	chipNotification: {
+		text: '#1 Product of the Year',
+		highlight: 'Product Hunt'
+	},
+	button: {
+		size: 'lg',
+		style: 'primary',
+		text: 'Get started now!'
+	}
+}
+---
+
+<Layout title={SEO.title} description={SEO.description}>
+	<Hero title={header.title} text={header.text} />
+	<Feature
+		title="Core <strong>Features</strong> for Every Foxi Plan"
+		text="Discover the essential tools that come with every Foxi plan, designed to enhance your productivity and streamline your workflow."
+		sliceStart={0}
+		sliceEnd={8}
+		features={featureData}
+	/>
+	<Testimonial
+		bg={testimonialBackground}
+		bgPosition="left"
+		blockquote={testimonialData.blockquote}
+		figcaption={testimonialData.figcaption}
+		cite={testimonialData.cite}
+	/>
+	<Feature
+		title="Advanced Features to Take Your <strong>Workflow</strong> Further"
+		text="Explore the extra capabilities available in our advanced plans. These features are tailored for users seeking deeper insights and more powerful tools to optimize their operations."
+		sliceStart={9}
+		sliceEnd={16}
+		features={featureData}
+	/>
+	<CTA data={ctaData} />
+</Layout>

@@ -1,0 +1,26 @@
+[
+	{
+		"title": "Informes Avanzados",
+		"image": "/cards/feature-04.svg",
+		"description": "Genera informes detallados con funciones avanzadas de análisis. Personaliza los informes para rastrear indicadores clave de rendimiento y obtener información más profunda.",
+		"column": "uno"
+	},
+	{
+		"title": "Seguimiento Avanzado de Errores",
+		"image": "/cards/feature-05.svg",
+		"description": "Rastrea tareas y proyectos con funciones avanzadas de seguimiento. Monitorea el progreso, establece hitos y gestiona tus proyectos de manera más efectiva.",
+		"column": "dos"
+	},
+	{
+		"title": "Temas Personalizables",
+		"image": "/cards/feature-03.svg",
+		"description": "Personaliza la apariencia de tu espacio de trabajo con temas personalizados. Elige entre varias opciones de diseño para adaptarlo al estilo de tu marca.",
+		"column": "uno"
+	},
+	{
+		"title": "Automatización de Tareas",
+		"image": "/cards/feature-04.svg",
+		"description": "Automatiza tareas rutinarias para mejorar la eficiencia y reducir el trabajo manual. Configura procesos automatizados para optimizar tu flujo de trabajo.",
+		"column": "dos"
+	}
+]

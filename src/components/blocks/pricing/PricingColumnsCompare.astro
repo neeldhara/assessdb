@@ -1,0 +1,101 @@
+---
+// Pricing plabs Section
+// ------------
+// Description: A section with a list of 3 pricing plans with toggle to switch between monthly and annual pricing.
+// Properties:
+// - classes: Additional classes to be added to the section
+// - pricingData: An array of pricing data with header, body, footer, style properties
+
+// Components
+// - Layout
+import Section from '../../ui/Section.astro'
+import Row from '../../ui/Row.astro'
+import Col from '../../ui/Col.astro'
+// - UI
+import PricingTableCards from '../../ui/pricing-tables/PricingTablePlan.astro'
+import Toggle from '../../ui/forms/form-elements/Toggle.astro'
+
+// Script
+import PricingSwitch from '../../scripts/PricingPlanChange.astro'
+
+// - Props
+type TableData = {
+	header: {
+		title: string
+		subtitle: string
+		currency: string
+		price: string
+		priceLabel: string
+		priceMonthly?: string
+		priceLabelMonthly?: string
+		buttonName: string
+		buttonLink: string
+	}
+	body?: {
+		listItems: Array<{
+			text: string
+			icon?: string
+			label?: string
+		}>
+	}
+	footer?: {
+		buttonName: string
+		buttonLink: string
+	}
+	style: 'basic' | 'featured'
+}
+type Props = {
+	pricingTableData: any
+	billing: {
+		option1: string
+		option2: string
+	}
+}
+const { billing, pricingTableData } = Astro.props
+
+const pricingData: TableData[] = pricingTableData.list as TableData[]
+const compareList = pricingData[0]?.body?.listItems.map((item) => ({ listItem: item.text })) || []
+---
+
+<Section stickyCol>
+	<Row>
+		<!-- Annual/Monthly toggle -->
+		<Col span="3" align="center" classes="">
+			<div
+				class="flex items-end justify-center gap-4 bg-white pb-8 lg:sticky lg:top-20 lg:h-64 dark:bg-neutral-950"
+			>
+				<span id="monthlyLabel" class="block w-24 font-semibold text-neutral-400 transition-colors">
+					{billing.option1}
+				</span>
+				<Toggle id="pricingType" label="pricing" showLabel={false} checked={true} />
+				<span
+					class="block w-24 font-semibold text-neutral-400 text-primary-500 transition-colors"
+					id="annualLabel"
+				>
+					{billing.option2}
+				</span>
+			</div>
+			<ul class="features-list">
+				{compareList.map((item) => <li class="features-list__item">{item.listItem}</li>)}
+			</ul>
+		</Col>
+		<!-- Pricing plans -->
+		{
+			pricingData.map((item, key) => (
+				<Col span="3">
+					<PricingTableCards data={item} id={`plan-${key}`} type="list" showFooter={false} />
+				</Col>
+			))
+		}
+	</Row>
+</Section>
+<PricingSwitch />
+
+<style>
+	.features-list {
+		@apply mt-6 hidden divide-y divide-neutral-100 lg:block dark:divide-neutral-800;
+	}
+	.features-list__item {
+		@apply flex items-center justify-end gap-4 px-6 py-4 text-right;
+	}
+</style>
