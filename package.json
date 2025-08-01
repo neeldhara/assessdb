@@ -22,6 +22,7 @@
     "@fontsource-variable/outfit": "^5.0.13",
     "@keystatic/astro": "^5.0.3",
     "@keystatic/core": "^0.5.39",
+    "@notionhq/client": "^4.0.1",
     "@types/react": "^18.3.12",
     "@types/react-dom": "^18.3.1",
     "@vercel/analytics": "^1.3.1",
