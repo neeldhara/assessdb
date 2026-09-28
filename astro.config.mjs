@@ -1,6 +1,7 @@
 import { defineConfig } from "astro/config";
 import partytown from "@astrojs/partytown";
-import tailwind from "@astrojs/tailwind";
+import tailwind from "tailwindcss";
+import autoprefixer from "autoprefixer";
 import icon from "astro-icon";
 import lottie from "astro-integration-lottie";
 import sitemap from "@astrojs/sitemap";
@@ -12,6 +13,7 @@ import keystatic from "@keystatic/astro";
 
 // https://astro.build/config
 export default defineConfig({
+  compressHTML: true,
   site: "https://foxi-pro.netlify.app",
   output: "server",
   adapter: netlify(),
@@ -19,8 +21,8 @@ export default defineConfig({
     defaultLocale: "en",
     locales: ["es", "en"],
   },
+  vite: { css: { postcss: { plugins: [tailwind(), autoprefixer()] } } },
   integrations: [
-    tailwind(),
     icon(),
     sitemap(),
     lottie(),
